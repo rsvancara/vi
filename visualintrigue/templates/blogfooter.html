@@ -1,0 +1,63 @@
+    </div>  
+      
+      <script src="https://code.jquery.com/jquery-2.2.0.min.js" crossorigin="anonymous"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.js"></script>
+      <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+      <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
+      <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+      <script>tinymce.init({ selector:'textarea#body',
+                             height: 500});</script>
+      <script type="text/javascript">
+        jQuery(function($){
+            
+            var fileDiv = document.getElementById("upload");
+            var fileInput = document.getElementById("photo");
+            console.log(fileInput);
+            fileInput.addEventListener("change",function(e){
+                var files = this.files
+                showThumbnail(files)
+            },false)
+        
+            fileDiv.addEventListener("click",function(e){
+                $(fileInput).show().focus().click().hide();
+                e.preventDefault();
+            },false)
+            
+            function showThumbnail(files){
+                for(var i=0;i<files.length;i++){
+                    var file = files[i]
+                    var imageType = /image.*/
+                    if(!file.type.match(imageType)){
+                        console.log("Not an Image");
+                        continue;
+                    }       
+
+                    var image = document.createElement("img");
+                    // image.classList.add("")
+                    var thumbnail = document.getElementById("thumbnail");
+                    image.file = file;
+                    //thumbnail.appendChild(image)
+                    $("#thumbnail").html(image)
+
+                    var reader = new FileReader()
+                    reader.onload = (function(aImg){
+                        return function(e){
+                            aImg.src = e.target.result;
+                        };
+                    }(image))
+            
+                    var ret = reader.readAsDataURL(file);
+                    var canvas = document.createElement("canvas");
+                    ctx = canvas.getContext("2d");
+                    image.onload= function(){
+                        ctx.drawImage(image,100,100)
+                    }
+                    
+                    $("#newimage").val("1");
+                    
+                }   
+            }
+        });        
+      </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+{% include 'header.html' %}
+<a class="btn btn-primary" href="/blog/create">Create Entry</a>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-inverse">
+    <tr>
+        <th>Title</th>
+        <th>Slug</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody class="table-striped">
+      {% for blog in blogs %}
+        <tr>
+            <td>{{ blog['title'] }}</td>
+            <td>{{ blog['slug'] }}</td>
+            <td>{{ blog['created'] |datetimefilter}}</td>
+            <td>{{ blog['updated'] |datetimefilter}}</td>
+            <td><a class="btn btn-sm btn-primary" href="/blog/edit/{{ blog['slug'] }}">Edit</a></td>
+            <td><a class="btn btn-sm btn-danger" href="/blog/delete/{{ blog['slug'] }}">Delete</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+</table>
+
+{% include 'footer.html' %}

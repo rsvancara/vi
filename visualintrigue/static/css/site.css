@@ -1,0 +1,86 @@
+body.light-bg {
+    padding-top: 70px;
+    color: #666666;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+body.dark-bg {
+    padding-top: 70px;
+    color: #ffffff;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+.container-fluid {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+#home {
+    background: url(http://visualintrigue.com/sites/all/themes/vi/rotator_images/img9998.jpg) no-repeat 50% 0 fixed;
+    height: auto;
+    margin: 0 auto;
+    min-height: 720px;
+    position: relative;
+    width: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.fp-header h1, .fp-header h2, .fp-header h3, .fp-header h4{
+    font-family: 'Roboto', sans-serif;
+}
+
+.fp-header h1 {
+    font-weight: 100;
+}
+
+.dark-bg {
+    background-color: #1c1d1f;
+}
+
+.center {
+     float: none;
+     margin-left: auto;
+     margin-right: auto;
+}
+
+/* force scrollbar */
+/*html { overflow-y: scroll; }
+
+body { font-family: sans-serif; }*/
+
+/* ---- grid ---- */
+
+.grid {
+  background: #1C1D1F;
+}
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .grid-item ---- */
+
+.grid-sizer,
+.grid-item {
+  width: 33.333%;
+}
+
+.grid-item {
+  float: left;
+}
+
+.grid-item img {
+  display: block;
+  max-width: 100%;
+  padding: 5px;
+}
+
+
+
+
