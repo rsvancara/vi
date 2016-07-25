@@ -244,8 +244,9 @@ def photo(id=None):
     
     
     image_url = siteconfig.AMAZON_BASE_URL + blog['files']['large']['path']
-    
-    return render_template('photo.html',title=("Visualintrigue-%s"%blog['title']),blog=blog,image_url=image_url)
+    lowrez_url = siteconfig.AMAZON_BASE_URL + blog["files"]['lrlarge']['path']
+    return render_template('photo.html',title=("Visualintrigue-%s"%blog['title']),blog=blog,image_url=image_url,lowrez_url=lowrez_url)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

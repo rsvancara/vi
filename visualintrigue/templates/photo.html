@@ -1,42 +1,15 @@
 {% include 'header.html' %}
-
-
-<style type="text/css">
-    #photo-display {
-        width: 100% ;
-        display: flex;
-        display: -webkit-flex;
-        height: 755px;
-    }
-
-
-    
-    #photo-region {
-        -webkit-flex: 2 0 0; 
-        flex: 2 0 0; 
-        background-color: #000000;
-        border: 1px solid;
-    }
-    
-    #right-region {
-        -webkit-flex: 1 0 0; 
-        flex: 1 0 0; 
-    }
-   
-    #photo {
-        
-    }   
-</style>
-
-<div id="photo-display">
-    <div id="photo-region">
-        <img id="photo" src="{{ image_url }}" class="lazy" />
+ 
+<div class="row">
+    <div class="col-md-8">
+        <img class="img-responsive" style="max-width: 100%; display: inline; margin-top: 0px;" id="photo" data-src="{{image_url}}" src="{{ lowrez_url }}" class="lazy" />
     </div>
-    <div id="right-region">
-        <p>place holder</p>
+    <div class="col-md-4">
+        text goes here
     </div>
-    <div class="clear"></div>
 </div>
+
+
 
 <div id="blurb">
     {{ blog['body'] |safe }}

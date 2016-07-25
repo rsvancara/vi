@@ -53,9 +53,12 @@
   <div class="grid-sizer"></div>
  
  {% for blog in blogs %}
+ {% if 'lrmedium' in blog['files'] %}
   <div class="grid-item">
-    <a href="/photo/{{blog['slug']}}"><img src="{{baseurl}}{{ blog['files']['medium']['path']}}" alt="{{blog['title']}}"/></a>
+    <a href="/photo/{{blog['slug']}}">
+      <img data-src="{{baseurl}}{{ blog['files']['medium']['path']}}" src="{{baseurl}}{{ blog['files']['lrmedium']['path']}}" alt="{{blog['title']}}"/></a>
   </div>
+  {% endif %}
   {% endfor %}
 
 </div>     

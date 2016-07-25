@@ -50,7 +50,6 @@ def save_file(file):
         
         orig_filename = path_uuid + "_orig.jpeg"
         
-        
         file.save(os.path.join(siteconfig.UPLOAD_PATH,orig_filename))
         
         file_array = [os.path.join(siteconfig.UPLOAD_PATH,orig_filename)]
@@ -64,7 +63,6 @@ def save_file(file):
         (width,height) = get_image_size(os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_50px.jpeg"))
         image_dict['thumb'] = {'width':width,'height':height,'path':path_uuid + "_50px.jpeg"}
         
-        
         # create medium thumb
         resize_image(os.path.join(siteconfig.UPLOAD_PATH,orig_filename),900,os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_900px.jpeg"))
         file_array.append(os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_900px.jpeg"))
@@ -73,13 +71,27 @@ def save_file(file):
         (width,height) = get_image_size(os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_900px.jpeg"))
         image_dict['medium'] = {'width':width,'height':height,'path':path_uuid + "_900px.jpeg"}
         
+        # create low rez medium image
+        resize_image(os.path.join(siteconfig.UPLOAD_PATH,orig_filename),900,os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_lowrez_900px.jpeg"),25)
+        file_array.append(os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_lowrez_900px.jpeg"))
+        
+        image_dict['lrmedium'] = {'path':path_uuid + "_lowrez_900px.jpeg"}
+        (width,height) = get_image_size(os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_lowrez_900px.jpeg"))
+        image_dict['lrmedium'] = {'width':width,'height':height,'path':path_uuid + "_lowrez_900px.jpeg"}
+        
         # create fullsize image
         resize_image(os.path.join(siteconfig.UPLOAD_PATH,orig_filename),1600,os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_1600px.jpeg"))
         file_array.append(os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_1600px.jpeg"))
-        
 
         (width,height) = get_image_size(os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_1600px.jpeg"))
         image_dict['large'] = {'width':width,'height':height,'path':path_uuid + "_1600px.jpeg"}
+
+        # creat a low rez lazy image
+        resize_image(os.path.join(siteconfig.UPLOAD_PATH,orig_filename),1600,os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_lowrez_1600px.jpeg"),25)
+        file_array.append(os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_lowrez_1600px.jpeg"))
+
+        (width,height) = get_image_size(os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_lowrez_1600px.jpeg"))
+        image_dict['lrlarge'] = {'width':width,'height':height,'path':path_uuid + "_lowrez_1600px.jpeg"}
 
         # upload file(s) to s3
         for uploadfile in file_array:
@@ -95,7 +107,9 @@ def save_file(file):
             os.remove(uploadfile)
             bare_files_list.append(os.path.basename(uploadfile))
         
-        return {'status':True,'message':"File upload was a success", 'files':image_dict}
+        exif = get_exif(os.path.join(siteconfig.UPLOAD_PATH,orig_filename))
+        
+        return {'status':True,'message':"File upload was a success", 'files':image_dict,'exif':exif}
     else:
         return {'status':False,'message':"No file provided",'files':None}
 
@@ -113,11 +127,11 @@ def delete_image(files = {}):
         bucket.delete_key(key)
     
 
-def resize_image(filepath,width,dest):
+def resize_image(filepath,width,dest,quality=100):
     """ Resize an image with fixed width and maintain aspect ratio """
     
     try:
-        proc = subprocess.Popen([siteconfig.CONVERT_COMMAND,filepath,'-quality','100','-quality','85','-resize', str(width) +'x',dest],stdout=subprocess.PIPE)
+        proc = subprocess.Popen([siteconfig.CONVERT_COMMAND,filepath,'-interlace','Plane','-quality',str(quality),'-quality','85','-resize', str(width) +'x',dest],stdout=subprocess.PIPE)
     
         output = proc.communicate()[0]
         print(output)
