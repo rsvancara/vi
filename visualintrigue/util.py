@@ -11,9 +11,15 @@ import subprocess
 import exifread
 
 def get_exif(path):
+    """
+    Extracts the EXIF information from the file
+    """
     # Return Exif tags
-    tags = exifread.process_file(f)
-
+    if os.path.exists(path):
+        try:
+            return exifread.process_file(path)
+        except Exception as e:
+            raise Exception("Could not read exif information from file %s with error %s"%(path,str(e)))
 
 def slugify(value):
     """
@@ -75,8 +81,6 @@ def save_file(file):
         (width,height) = get_image_size(os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_1600px.jpeg"))
         image_dict['large'] = {'width':width,'height':height,'path':path_uuid + "_1600px.jpeg"}
 
-        
-        
         # upload file(s) to s3
         for uploadfile in file_array:
             
