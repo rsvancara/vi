@@ -8,8 +8,11 @@ import uuid
 import boto3
 import boto.s3.connection
 import subprocess
+import exifread
 
-
+def get_exif(path):
+    # Return Exif tags
+    tags = exifread.process_file(f)
 
 
 def slugify(value):
