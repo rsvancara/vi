@@ -34,6 +34,22 @@ def index():
     
     return render_template('frontpage.html',title='Home',blogs=blogs,baseurl=siteconfig.AMAZON_BASE_URL)
 
+@app.route('/portfolio/<portfolio>')
+def portfolio(portfolio=all):
+    logger.info("requested specific portfolio")
+    
+    blogs = None
+    
+    if portfolio != 'all':
+        blogs = mongo.db.blog.find({'status':'active','homepage':'yes','portfolio':portfolio}).sort("created",-1)
+    else:
+        blogs = mongo.db.blog.find({'status':'active','homepage':'yes'}).sort("created",-1)
+        
+    
+    
+    return render_template('portfolio.html',title='Home',blogs=blogs,baseurl=siteconfig.AMAZON_BASE_URL)
+
+
 @app.route('/blog/view/<slug>')
 def blog_view(slug):
     logger.info("requested blog view")
@@ -87,6 +103,7 @@ def blog_add():
             "created": datetime.now(),
             "updated": datetime.now(),
             "files": result['files'],
+            "exif":result['exif'],
             "portfolio": form.portfolio.data,
             "keywords": form.keywords.data,
             "homepage": form.homepage.data
@@ -176,6 +193,7 @@ def blog_edit(id=None):
         form.homepage.data = blog['homepage']
     
     result['files'] = blog['files']
+    result['exif'] = blog['exif']
     
     photo = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
     if 'files' in blog:
@@ -215,6 +233,7 @@ def blog_edit(id=None):
                  "updated": datetime.now(),
                  "created": blog['created'],
                  "files": result['files'],
+                 "exif":result['exif'],
                  "portfolio": form.portfolio.data,
                  "keywords": form.keywords.data,
                  "homepage": form.homepage.data
@@ -234,7 +253,9 @@ def notfound():
 
 @app.route('/photo/<id>', methods=['GET'])
 def photo(id=None):
-    
+    """
+    Photo detail display
+    """
     blog = None
     if id is not None:
         blog = mongo.db.blog.find_one({'slug':id}) 
@@ -245,7 +266,7 @@ def photo(id=None):
     
     image_url = siteconfig.AMAZON_BASE_URL + blog['files']['large']['path']
     lowrez_url = siteconfig.AMAZON_BASE_URL + blog["files"]['lrlarge']['path']
-    return render_template('photo.html',title=("Visualintrigue-%s"%blog['title']),blog=blog,image_url=image_url,lowrez_url=lowrez_url)
+    return render_template('photo.html',title=blog['title'],blog=blog,image_url=image_url,lowrez_url=lowrez_url)
 
 
 @app.route('/login', methods=['GET', 'POST'])

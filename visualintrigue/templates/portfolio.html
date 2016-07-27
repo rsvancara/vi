@@ -14,6 +14,7 @@
       <ul class="nav navbar-nav">
         <li class="nav-item">
           <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          
         </li>
         {% if current_user.is_authenticated %}
         <li class="nav-item">
@@ -34,29 +35,8 @@
     </nav>
       
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-2 fp-header">
-          <img src="/static/images/avatar.jpeg" style="width:200px;height: 200px;" />
-        </div>
-        <div class="col-sm-5 fp-header">
-          <h1>Randall Svancara</h1>
-          <p>I'm a warm-hearted, old-school gentleman explorer who enjoys travel.</p>
-        </div>
-        <div class="col-sm-5 fp-header">
-          <h3>Portfolios</h3>
-          <ul class="list-unstyled pinfo-list portfolio-items">
-            <li><i class="fa fa-camera-retro fa-lg"></i>&nbsp;<a href="/portfolio/landscape">Landscape</a></li>
-            <li><i class="fa fa-camera-retro fa-lg"></i>&nbsp;<a href="/portfolio/cityscapes">Cityscapes</a></li>
-            <li><i class="fa fa-camera-retro fa-lg"></i>&nbsp;<a href="/portfolio/macro">Macro</a></li>
-            <li><i class="fa fa-camera-retro fa-lg"></i>&nbsp;<a href="/portfolio/street">Street</a></li>
-
-          </ul>
-        </div>
-      </div>
-      <div style="height: 10px;"></div>
- <div class="grid">
-  <div class="grid-sizer"></div>
- 
+      <div class="grid">
+        <div class="grid-sizer"></div>
  {% for blog in blogs %}
  {% if 'lrmedium' in blog['files'] %}
   <div class="grid-item" id="{{blog['slug']}}">
@@ -117,8 +97,8 @@
   </div>
   {% endif %}
   {% endfor %}
-
-</div>     
+      </div>
+    </div>     
     <script src="https://code.jquery.com/jquery-2.2.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.js"></script>
     <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
