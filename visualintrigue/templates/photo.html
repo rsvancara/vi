@@ -5,14 +5,10 @@
         <img class="img-responsive" style="max-width: 100%; display: inline; margin-top: 0px;" id="photo" data-src="{{image_url}}" src="{{ lowrez_url }}" class="lazy" />
     </div>
     <div class="col-md-4">
-        text goes here
+        <div class="photo-text-content">
+            {{ blog['body'] |safe }}
+            
+        </div>
     </div>
 </div>
-
-
-
-<div id="blurb">
-    {{ blog['body'] |safe }}
-</div>
-
 {% include 'footer.html' %}
