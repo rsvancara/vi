@@ -44,10 +44,8 @@ def portfolio(portfolio=all):
         blogs = mongo.db.blog.find({'status':'active','homepage':'yes','portfolio':portfolio}).sort("created",-1)
     else:
         blogs = mongo.db.blog.find({'status':'active','homepage':'yes'}).sort("created",-1)
-        
-    
-    
-    return render_template('portfolio.html',title='Home',blogs=blogs,baseurl=siteconfig.AMAZON_BASE_URL)
+
+    return render_template('portfolio.html',title='Portfolio' + portfolio,blogs=blogs,portfolio=portfolio,baseurl=siteconfig.AMAZON_BASE_URL)
 
 
 @app.route('/blog/view/<slug>')
@@ -273,7 +271,7 @@ def photo(id=None):
 def login():
     logger.info("requested login")
     if request.method == 'GET':
-        return render_template('login.html',title='Login')
+        return render_template('login.html',title='')
 
     email = request.form['email']
     

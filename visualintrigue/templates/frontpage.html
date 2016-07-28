@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{ title }} - microblog</title>
+    <title>{{ title }}</title>
     
     <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/css/tether-theme-arrows.css" />
@@ -65,11 +65,11 @@
       <div class="pinfo">
         <div class="button-bar">
           <a class="pinfo-title" href="/photo/{{blog['slug']}}">{{blog['title']}}</a>
-          <a class="btn btn-secondary pinfo-button" href="/photo/{{blog['slug']}}">Read More</a>
+          <a class="btn btn-secondary btn-sm pinfo-button" href="/photo/{{blog['slug']}}">Read More</a>
         </div>
         {% if 'exif' in blog %}
         <ul class="list-unstyled pinfo-list">
-          <i>
+          <li>
             <i class="fa fa-circle-o" aria-hidden="true"></i>
             <span class="pinfo-label">Camera:</span>
             <span class="pinfo-value">{{ blog['exif']['make'] }}</span>
@@ -110,7 +110,8 @@
             <span class="pinfo-value">{{ blog['exif']['exposurebias'] }}</span>            
           </li>
           
-        </ul> 
+        </ul>
+
         {% endif %}
         
       </div>
@@ -146,9 +147,11 @@
     
     $("div.grid-item").mouseover(function() {
       console.log("mouse me baby");
-      var pinfo = $(this).children('div.pinfo').eq(0);
-      pinfo.show();
-
+      console.log($(this).parent().width())
+      if ($(this).parent().width() > 479 ) {
+        var pinfo = $(this).children('div.pinfo').eq(0);
+        pinfo.show();
+      }
       
     });
     

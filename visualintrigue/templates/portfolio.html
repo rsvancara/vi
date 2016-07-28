@@ -35,6 +35,7 @@
     </nav>
       
     <div class="container-fluid">
+      <h2>{{portfolio.title()}} Photography</h2>
       <div class="grid">
         <div class="grid-sizer"></div>
  {% for blog in blogs %}
@@ -45,11 +46,11 @@
       <div class="pinfo">
         <div class="button-bar">
           <a class="pinfo-title" href="/photo/{{blog['slug']}}">{{blog['title']}}</a>
-          <a class="btn btn-secondary pinfo-button" href="/photo/{{blog['slug']}}">Read More</a>
+          <a class="btn btn-secondary btn-sm pinfo-button" href="/photo/{{blog['slug']}}">Read More</a>
         </div>
         {% if 'exif' in blog %}
         <ul class="list-unstyled pinfo-list">
-          <i>
+          <li>
             <i class="fa fa-circle-o" aria-hidden="true"></i>
             <span class="pinfo-label">Camera:</span>
             <span class="pinfo-value">{{ blog['exif']['make'] }}</span>
@@ -126,9 +127,11 @@
     
     $("div.grid-item").mouseover(function() {
       console.log("mouse me baby");
-      var pinfo = $(this).children('div.pinfo').eq(0);
-      pinfo.show();
-
+      console.log($(this).parent().width())
+      if ($(this).parent().width() > 479 ) {
+        var pinfo = $(this).children('div.pinfo').eq(0);
+        pinfo.show();
+      }
       
     });
     
