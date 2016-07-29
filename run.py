@@ -191,7 +191,9 @@ def blog_edit(id=None):
         form.homepage.data = blog['homepage']
     
     result['files'] = blog['files']
-    result['exif'] = blog['exif']
+    
+    if 'exif' in blog:  
+        result['exif'] = blog['exif']
     
     photo = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
     if 'files' in blog:
