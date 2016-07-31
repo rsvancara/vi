@@ -128,7 +128,6 @@ ul.portfolio-items>li{
 }
 
 ul.portfolio-items>li>a{
-
     color: #FFFFFF;
 }
 
@@ -138,10 +137,19 @@ ul.portfolio-items>li>a{
   margin-left: auto;
   margin-right: auto;
   width: 300px;
+  
 }
 
 @media only screen and (max-width: 479px) {
    .mobile-hide{ display: block !important; }
+}
+
+.lowertitle {
+    height: 40px;
+    width: 100%;
+    background-color: rgba(0,0,0,65);
+    display: none;
+    
 }
 
 
