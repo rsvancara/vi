@@ -82,6 +82,7 @@ def get_exif(path):
     else:
         raise Exception("Error could not find the %s for extracting exif information"%(path))
     
+    return ret
     
 def slugify(value):
     """

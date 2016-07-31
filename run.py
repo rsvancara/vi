@@ -194,6 +194,8 @@ def blog_edit(id=None):
     
     if 'exif' in blog:  
         result['exif'] = blog['exif']
+    else:
+        result['exif'] = {}
     
     photo = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
     if 'files' in blog:
