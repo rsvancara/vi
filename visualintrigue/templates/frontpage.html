@@ -61,7 +61,8 @@
  {% if 'lrmedium' in blog['files'] %}
   <div class="grid-item" id="{{blog['slug']}}">
     <a href="/photo/{{blog['slug']}}">
-      <img data-src="{{baseurl}}{{ blog['files']['medium']['path']}}" src="{{baseurl}}{{ blog['files']['lrmedium']['path']}}" alt="{{blog['title']}}"/></a>
+      <img style="width:{{blog['files']['medium']['width']}}px;" 
+           data-src="{{baseurl}}{{ blog['files']['medium']['path']}}" src="{{baseurl}}{{ blog['files']['lrmedium']['path']}}" alt="{{blog['title']}}"/></a>
       <div class="pinfo">
         <div class="button-bar">
           <a class="pinfo-title" href="/photo/{{blog['slug']}}">{{blog['title']}}</a>
