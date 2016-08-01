@@ -1,13 +1,31 @@
+body.frontpage { 
+  background: url(http://visualintrigue-vrt547.s3-website-us-west-2.amazonaws.com/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_1600px.jpeg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 55px;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  color: #ffffff;
+}
+
+
 body.light-bg {
-    padding-top: 70px;
+    padding-top: 55px;
     color: #666666;
     font-family: Roboto, Helvetica, Arial, sans-serif;
+    width: 100%;
+    padding-left: 0px;
+    padding-right:0px;
 }
 
 body.dark-bg {
-    padding-top: 70px;
+    padding-top: 55px;
     color: #ffffff;
     font-family: Roboto, Helvetica, Arial, sans-serif;
+    padding-left: 0px;
+    padding-right:0px;
+    width: 100%;
 }
 
 .container-fluid {
@@ -34,6 +52,10 @@ body.dark-bg {
 
 .fp-header h1 {
     font-weight: 100;
+}
+
+.row {
+    margin:0px;
 }
 
 .dark-bg {
@@ -89,6 +111,7 @@ body { font-family: sans-serif; }*/
     top: 0;
     left: 0;
     background-color: rgba(0,0,0,0.65);
+    cursor: pointer;
 }
 .pinfo-button{
     float: right;
@@ -144,16 +167,34 @@ ul.portfolio-items>li>a{
    .mobile-hide{ display: block !important; }
 }
 
-.lowertitle {
-    height: 40px;
+div.vi-jumbo {
+    min-height: 600px;
+    padding-top: 0px;
+    margin-top 0px;
     width: 100%;
-    background-color: rgba(0,0,0,65);
-    display: none;
+    color: #FFFFFF;
+    text-shadow: 2px 2px #000000;
+}
+
+div.vi-jumbo-center {
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 200px;
+    max-width: 600px;
+    margin-top: 100px;
+    border: 1px solid #ececec;
+    padding: 30px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: rgba(0,0,0,.34);
     
 }
 
+.frosty {
+    background-color: rgba(0,0,0,.34);
+}
 
-
-
-
-
+div.vi-jumbo h1, div.vi-jumbo p{
+    margin-left: 10px;
+    
+}
