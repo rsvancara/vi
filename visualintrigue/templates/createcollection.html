@@ -15,8 +15,7 @@
         padding:10px;
         cursor:pointer;
         margin-bottom: 50px;
-        border-radius: 5px;
-        
+        border-radius: 5px; 
     }
     
     #thumbnail img{
@@ -24,6 +23,7 @@
         /*height:100px;*/
         margin:5px;
     }
+    
     canvas{
         border:1px solid red;
     }
@@ -41,7 +41,7 @@
     }
     
 </style>
-<form action="/blog/create" method="post" enctype="multipart/form-data" id="blog-form">
+<form action="/collection/create" method="post" enctype="multipart/form-data" id="collection-form">
     <div class="row">
         <div class="col-md-8">
             <fieldset>
@@ -54,26 +54,10 @@
            <legend>General</legend>
            {{ render_field(form.title) }}
            {{ render_field(form.slug) }}
+           {{ render_field(form.collection  ) }}
            {{ render_field(form.active) }}
            {{ render_field(form.keywords) }}
-           {{ render_field(form.homepage) }}
-           {{ render_field(form.portfolio) }}
-           {{ render_field(form.collection) }}
-           {{ render_field(form.displayorder) }}
         </fieldset>
-
-        <fieldset id="photo-upload-fieldset">
-            <legend>Photo</legend>
-            <div id="thumbnail"></div>
-            <div id="upload" class="drop-area">
-            Upload File
-            </div>
-            
-
-            {{ render_field(form.photo) }} 
-        
-        </fieldset>
-        <input id="newimage" type="hidden" name="newimage" value="{{ form.newimage.data }}" />
         {{ form.csrf_token }}
         <p><input class="btn btn-primary" type=submit value=Post></p>
         </div>

@@ -15,9 +15,17 @@
         <li class="nav-item">
           <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right pull-xs-right">
         {% if current_user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="/blog/list">Manage Blogs <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/collection/list">Manage Collections <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('logout') }}">LogOut [ {{ current_user.id }} ] <span class="sr-only">(current)</span></a>
@@ -26,10 +34,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('login') }}">Log In <span class="sr-only">(current)</span></a>
         </li>
-        {% endif %}
-        <li class="nav-item">
-          <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
-        </li>
+        {% endif %}        
       </ul>
     </nav>
       
@@ -42,13 +47,6 @@
       </div>
       
       <div class="row">
-        <!--<div class="col-sm-2 fp-header">
-          <img src="/static/images/avatar.jpeg" style="width:200px;height: 200px;" />
-        </div>
-        <div class="col-sm-5 fp-header">
-          <h1>Randall Svancara</h1>
-          <p>I am an ambitious outdoor photographer and adventurer</p>
-        </div>-->
         <div class="col-sm-12 fp-header frosty">
           <h3>Collections</h3>
           <ul class="list-unstyled pinfo-list portfolio-items">

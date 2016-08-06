@@ -103,7 +103,17 @@ body { font-family: sans-serif; }*/
   padding: 5px;
 }
 
-.pinfo {
+.image-body {
+  position: relative;
+}
+
+.image-body img{
+  display: block;
+  padding: 5px;
+  max-width: 100%;
+}
+
+.pinfo, .img-overlay {
     display: none;
     width: 100%;
     height: 100%;
@@ -112,7 +122,9 @@ body { font-family: sans-serif; }*/
     left: 0;
     background-color: rgba(0,0,0,0.65);
     cursor: pointer;
+    color: #FFFFFF;
 }
+
 .pinfo-button{
     float: right;
 }
@@ -129,10 +141,16 @@ body { font-family: sans-serif; }*/
     padding-right: 30px;
     width: 100%;
 }
+
+.button-bar hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 ul.pinfo-list {
     padding-left: 30px;
     padding-top: 30px;
 }
+
 ul.pinfo-list>li>span {
     display: inline-block;
     width: 30%;
@@ -150,9 +168,6 @@ ul.portfolio-items>li{
     color: #FFFFFF;
 }
 
-ul.portfolio-items>li>a{
-    color: #FFFFFF;
-}
 
 
 .center-block {

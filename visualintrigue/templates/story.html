@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/css/tether-theme-arrows.css" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/static/css/site.css" />
+    <script src="https://use.fontawesome.com/df0741c26d.js"></script>
+  </head>
+  <body class="story">
+    <nav class="navbar navbar-dark bg-inverse navbar-fixed-top">
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right pull-xs-right">
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="/blog/list">Manage Blogs <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/collection/list">Manage Collections <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('logout') }}">LogOut [ {{ current_user.id }} ] <span class="sr-only">(current)</span></a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('login') }}">Log In <span class="sr-only">(current)</span></a>
+        </li>
+        {% endif %}        
+      </ul>
+    </nav>
+      
+    <div class="container-fluid">
+       <div class="top-spacer" style="height: 100px;"></div> 
+       <div class="row">
+           <div class="col-md-2"></div>
+           <div class="col-md-6">
+            <h2>{{collection['title']}}</h2>
+               {{ collection['body'] |safe }}
+           </div>
+       </div>
+       {% for blog in blogs %}
+       <div class="row">
+          <div class="col-md-2">&nbsp;</div>
+          <div class="col-md-6">
+            <h3>{{blog['title']}}</h3>
+            <div class="content-body">
+              {{ blog['body']|safe }}
+            </div>
+            <div class="image-body">
+              <img 
+                  data-src="{{baseurl}}{{ blog['files']['medium']['path']}}"
+                  src="{{baseurl}}{{ blog['files']['lrmedium']['path']}}"
+                  alt="{{blog['title']}}"/>
+              <div id="{{blog['slug']}}" class="img-overlay">
+                <div class="button-bar">
+                  <a class="pinfo-title" href="/photo/{{blog['slug']}}">{{blog['title']}}</a>
+                  <hr style="color: #FFFFFF; width: 100%;"/>
+                </div>
+                
+                {% if 'exif' in blog %}
+                <ul class="list-unstyled pinfo-list">
+                  <li>
+                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                    <span class="pinfo-label">Camera:</span>
+                    <span class="pinfo-value">{{ blog['exif']['make'] }}</span>
+                  </li>
+                  <!--<li>
+                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                    <span class="pinfo-label">Model:</span>
+                    <span class="pinfo-value">{{ blog['exif']['model'] }}</span>            
+                  </li>-->
+                  <li>
+                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                    <span class="pinfo-label">Exposure Time:</span>
+                    <span class="pinfo-value">{{ blog['exif']['exposuretime'] }}</span>            
+                  </li>
+                  <li>
+                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                    <span class="pinfo-label">Aperture:</span>
+                    <span class="pinfo-value">{{ blog['exif']['aperture'] }}</span>            
+                  </li>
+                  <li>
+                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                    <span class="pinfo-label">ISO:</span>
+                    <span class="pinfo-value">{{ blog['exif']['iso'] }}</span>            
+                  </li>
+                  <li>
+                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                    <span class="pinfo-label">Focal Length:</span>
+                    <span class="pinfo-value">{{ blog['exif']['focallength'] }}</span>            
+                  </li>
+                  <li>
+                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                    <span class="pinfo-label">Exposure Program:</span>
+                    <span class="pinfo-value">{{ blog['exif']['exposureprogram'] }}</span>            
+                  </li>
+                  <li>
+                    <i class="fa fa-circle-o" aria-hidden="true"></i>
+                    <span class="pinfo-label">Exposure Bias:</span>
+                    <span class="pinfo-value">{{ blog['exif']['exposurebias'] }}</span>            
+                  </li>
+                </ul>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+       </div>
+       {% endfor %}
+    </div>  
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.js"></script>
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
+    <script src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
+    <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
+    <script type="text/javascript">
+    
+    $("div.image-body").mouseover(function() {
+      console.log("mouse me baby");
+      //console.log($(this).parent().width())
+      var ibody = $(this).children('div.img-overlay').eq(0);
+      ibody.show();
+      console.log(ibody.attr('id'))
+    });
+    
+    $("div.image-body").mouseout(function() {
+      console.log("mouse out baby");
+      var ibody = $(this).children('div.img-overlay').eq(0);
+      ibody.hide();
+    });
+    
+    $("div.image-body").click(function() {
+      var ibody = $(this).children('div.img-overlay');
+      var id = ibody.attr('id');
+      window.location.href = "/photo/" + id;
+    });
+        
+
+    </script>
+      
+
+  </body>
+</html>
+

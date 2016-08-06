@@ -4,9 +4,12 @@ from flask.ext.pymongo import PyMongo
 from visualintrigue import siteconfig
 from visualintrigue import util
 from visualintrigue.blog import BlogForm
+from visualintrigue.collection import CollectionForm
 import logging
 from visualintrigue.user import User
 from werkzeug.contrib.fixers import ProxyFix
+import pymongo
+
 
 
 #from wtforms import Form, BooleanField, TextField, PasswordField, SelectField, validators
@@ -47,50 +50,141 @@ def portfolio(portfolio=all):
 
     return render_template('portfolio.html',title='Portfolio' + portfolio,blogs=blogs,portfolio=portfolio,baseurl=siteconfig.AMAZON_BASE_URL)
 
-
 @app.route('/blog/view/<slug>')
 def blog_view(slug):
     logger.info("requested blog view")
     return render_template('about.html',title=slug)
-
 
 @app.route('/about')
 def about():
     logger.info("requested about")
     return render_template('about.html',title='About')
 
+@app.route('/collection/create', methods=['GET', 'POST'])
+@flask_login.login_required
+def collection_add():
+    logger.info("requested add collection")
+
+    form = CollectionForm(request.form)
+
+    if(request.method == 'POST' and form.validate()):
+        # Make sure that this contains a unique slug, since we are basing URLS off the slug
+        # and these should be unqiue
+        collection = mongo.db.collections.find_one({'slug':form.slug.data})
+
+        if collection:
+            flash('Slug already exists for collection entry, please use a different one.','alert-warning')
+            return render_template('createcollection.html',title='Create New Collection Post',form=form)
+        
+        mongo.db.collections.insert(
+          {
+            "slug": util.slugify(form.slug.data),
+            "title": form.title.data,
+            "body": form.body.data,
+            "status": "active",
+            "created": datetime.now(),
+            "updated": datetime.now(),
+            "keywords": form.keywords.data,
+            "collection": form.collection.data
+          }
+        )
+        
+        flash('Collection entry successfully created','alert-success')
+        return redirect('/collection/list')
+    
+    return render_template('createcollection.html',title='Create New Collection',form=form)
+
+@app.route('/collection/edit/<id>',methods=['GET', 'POST'])
+@flask_login.login_required
+def collection_edit(id=None):
+    logger.info("requested add collection")
+    
+    if id is None:
+        flash('Could not find blog entry for id provided','alert-warning')
+        
+    result = {}
+    form = CollectionForm()
+    # Make sure that this contains a unique slug, since we are basing URLS off the slug
+    # and these should be unqiue
+    collection = mongo.db.collections.find_one({'slug':id})    
+
+    #form = BlogForm(request.form)
+    form.body.data = collection['body']
+    form.title.data = collection['title']
+    form.slug.data = collection['slug']
+    form.active.data = collection['status']
+    if 'collection' in collection:
+        form.collection.data = collection['collection']
+    if 'kewords' in collection:
+        form.keywords.data = collection['keywords']     
+
+    if(request.method == 'POST'):
+        form = CollectionForm(request.form)
+
+        if(form.validate()):
+            
+            # If the slug is different, then we need to check that it is not in use 
+            if collection['slug'] != form.slug.data:
+                logger.info("Found duplicate slug")
+                slugcount = mongo.db.collections.count({'slug':form.slug.data})
+                if slugcount >= 1:
+                    flash('Slug already in use. Please select a unique slug','alert-warning')
+                    return render_template('editcollection.html',title='Edit Collection Post',id=id,form=form, collection=collection) 
+            
+            mongo.db.collections.update(
+               {
+                "slug":id,
+               },
+               {
+                 "slug": util.slugify(form.slug.data),
+                 "title": form.title.data,
+                 "body": form.body.data,
+                 "status": form.active.data,    
+                 "updated": datetime.now(),
+                 "created": collection['created'],
+                 "collection": form.collection.data
+               }            
+            )
+
+            return redirect('/collection/list')
+        else:
+            flash('Validation Error','alert-warning')
+            
+    return render_template('editcollection.html',title='Edit Collection Post',id=id,form=form, collection=collection)    
+
 @app.route('/blog/create', methods=['GET', 'POST'])
 @flask_login.login_required
 def blog_add():
     logger.info("requested add blog")
+    collections = mongo.db.collections.find().sort([("collection",pymongo.ASCENDING),])
+    # generate array of tuples
+    collection_list = [('none','none'),]
+    for collection in collections:
+        if 'collection' in collection:
+            collection_list.append((collection['collection'],collection['collection']))
+            logger.debug(collection['collection'])
+    
     form = BlogForm(request.form)
+    form.collection.choices = collection_list
 
-    if(request.method == 'POST' and form.validate()):
-        
+    if(request.method == 'POST' and form.validate()):        
+        form.collection.choices = collection_list
         logger.info("dumping " + str(request.files['photo']))
-        
         result = util.save_file(request.files['photo'])
         if result['status'] is False:
             flash("No file has been provided, please select a file","alert-warning")
             return render_template('createblog.html',title='Create New Blog Post',form=form)
-        
-        
         form.newimage = 1
-        
-        # Grab the file from the request...WTF filefield does not seem to be working
-        #file = request.files['photo']
-        #if file:
-        #    filename = secure_filename(file.filename)
-        #    file.save(os.path.join(siteconfig.UPLOAD_PATH, filename))
         
         # Make sure that this contains a unique slug, since we are basing URLS off the slug
         # and these should be unqiue
         blog = mongo.db.blog.find_one({'slug':form.slug.data})
 
+        collection_single = mongo.db.collections.find_one({"collection":form.collection.data})
+
         if blog:
             flash('Slug already exists for blog entry, please use a different one.','alert-warning')
             return render_template('createblog.html',title='Create New Blog Post',form=form)
-        
         
         mongo.db.blog.insert(
           {
@@ -104,7 +198,11 @@ def blog_add():
             "exif":result['exif'],
             "portfolio": form.portfolio.data,
             "keywords": form.keywords.data,
-            "homepage": form.homepage.data
+            "homepage": form.homepage.data,
+            "displayorder": form.displayorder.data,
+            "collection": form.collection.data,
+            "collection_slug": collection_single['slug']
+            
           }
         )
         
@@ -117,13 +215,41 @@ def blog_add():
 @flask_login.login_required
 def blog_list():
     logger.info("requested blog list")
-    
-    #blogs = mongo.db.blogs.find({"$or": [{"status":"deleted"},{"status":"active"}]})
-    blogs = mongo.db.blog.find().sort("created",-1)
-    #for blog in blogs:
-    #    logger.info("found")
-    
+    blogs = mongo.db.blog.find().sort("created",-1)    
     return render_template('blog_list.html',title='Manage Blog Entries',blogs=blogs)
+
+@app.route('/collection/list')
+@flask_login.login_required
+def collection_list():
+    logger.info("requested blog list")
+    collections = mongo.db.collections.find().sort("created",-1)
+    return render_template('collection_list.html',title='Collection List',collections=collections)
+
+@app.route('/collection/delete/<id>',methods=['GET'])
+@flask_login.login_required
+def collection_delete(id=None):
+    
+    if id is None:
+        flash("Invalid blog id passed to delete function!",'alert-warning')
+        return redirect(url_for('blog_list'))
+    
+    collection = mongo.db.collections.find_one({'slug':id})
+    if collection:
+        slugcount = mongo.db.blog.count({'collection':collection['collection']})
+        if slugcount >= 1:
+            flash('Collection has blogs associated with it, please remove them before deleting the collection','alert-warning')
+            return redirect(url_for('collection_list')) 
+
+        mongo.db.collections.remove({'slug':id})
+        
+        flash("Collection entry deleted",'alert-success')
+    
+        logger.info("requested collection delete")
+        return redirect(url_for('collection_list'))
+
+    flash('Error deleting collection entry.  Please see logs for details.')
+    return redirect(url_for('error'))
+
 
 @app.route('/blog/delete/<id>',methods=['GET'])
 @flask_login.login_required
@@ -150,7 +276,19 @@ def blog_delete(id=None):
     flash('Error deleting blog entry.  Please see logs for details.')
     return redirect(url_for('error'))
 
+def getCollectionChoices():
+    blog = mongo.db.blog.find_one({'slug':id})    
 
+    collections = mongo.db.collections.find().sort([("collection",pymongo.ASCENDING),])
+
+    # generate array of tuples
+    collection_list = [('none','none'),]
+    for collection in collections:
+        if 'collection' in collection:
+            collection_list.append((collection['collection'],collection['collection']))
+    
+    return collection_list
+    
 @app.route('/blog/edit/<id>',methods=['GET', 'POST'])
 @flask_login.login_required
 def blog_edit(id=None):
@@ -158,7 +296,6 @@ def blog_edit(id=None):
     
     if id is None:
         flash('Could not find blog entry for id provided','alert-warning')
-        
     
     result = {}
     form = BlogForm()
@@ -166,21 +303,27 @@ def blog_edit(id=None):
     # and these should be unqiue
     blog = mongo.db.blog.find_one({'slug':id})    
 
+    collections = mongo.db.collections.find().sort([("collection",pymongo.ASCENDING),])
+    collection_list = [('none','none'),]
+    for collection in collections:
+        if 'collection' in collection:
+            collection_list.append((collection['collection'],collection['collection']))
+    form.collection.choices = collection_list
+      
     #form = BlogForm(request.form)
     form.body.data = blog['body']
     form.title.data = blog['title']
     form.slug.data = blog['slug']
     form.active.data = blog['status']
+    
+    if 'displayorder' in blog:
+        form.displayorder.data = blog['displayorder']
+    else:
+        form.displayorder.data = '1'
+        
     form.newimage = "0"
     if ('keywords') in blog:    
         form.keywords.data = blog['keywords']
-    
-    
-    
-    #portfolioitems  = []
-    #for item in mongo.db.portfolio.find():
-    #    portfolioitems.append([item['portfolio'],item['portfolio']])
-    #form.portfolio.choices = [(item['portfolio'], item['portfolio']) for item in mongo.db.portfolio.find()]
     
     if ('portfolio') in blog:
         form.portfolio.data = blog['portfolio']
@@ -191,6 +334,11 @@ def blog_edit(id=None):
         form.homepage.data = blog['homepage']
     
     result['files'] = blog['files']
+
+    if 'collection' in blog:
+        form.collection.data = blog['collection']
+    else:
+        blog['collection'] = 'none'
     
     if 'exif' in blog:  
         result['exif'] = blog['exif']
@@ -203,11 +351,11 @@ def blog_edit(id=None):
 
     if(request.method == 'POST'):
         form = BlogForm(request.form)
+        form.collection.choices = collection_list
         if(form.validate()):
-            
+
             logger.info("dumping " + str(request.files['photo']))
             #print(form.newimage)
-            
             
             if form.newimage.data == "1": 
                 result = util.save_file(request.files['photo'])
@@ -222,6 +370,12 @@ def blog_edit(id=None):
                 if slugcount >= 1:
                     flash('Slug already in use. Please select a unique slug','alert-warning')
                     return render_template('editblog.html',title='Edit Blog Post',id=id,form=form, blog=blog) 
+            
+            
+            collection_single = mongo.db.collections.find_one({"collection":form.collection.data})
+            if collection_single is None:
+                collection_single = {}
+                collection_single['slug'] = 'none'
             
             mongo.db.blog.update(
                {
@@ -238,7 +392,10 @@ def blog_edit(id=None):
                  "exif":result['exif'],
                  "portfolio": form.portfolio.data,
                  "keywords": form.keywords.data,
-                 "homepage": form.homepage.data
+                 "homepage": form.homepage.data,
+                 "collection": form.collection.data,
+                 "collection_slug": collection_single['slug'],
+                 "displayorder":form.displayorder.data
                }            
             )
 
@@ -246,7 +403,22 @@ def blog_edit(id=None):
         else:
             flash('Validation Error','alert-warning')
             
-    return render_template('editblog.html',title='Edit Blog Post',id=id,form=form, blog=blog,photo=photo)    
+    return render_template('editblog.html',title='Edit Blog Post',id=id,form=form, blog=blog,photo=photo,collection_choices=collection_list)    
+
+@app.route('/stories/<id>')
+def stories(id = None):
+    """ Collection Detail Display """
+    collection = None
+    
+    if id is not None:
+        collection = mongo.db.collections.find_one({'slug':id})
+        
+    if collection is None:
+        return redirect(url_for('notfound'))
+    
+    blogs = mongo.db.blog.find({'collection':collection['collection']}).sort('displayorder',1)
+
+    return render_template('story.html',title=collection['title'],collection=collection,blogs=blogs,baseurl=siteconfig.AMAZON_BASE_URL)
 
 @app.route('/notfound',methods=['GET','POST'])
 def notfound():
