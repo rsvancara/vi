@@ -48,7 +48,8 @@
       
       <div class="row">
         <div class="col-sm-12 fp-header frosty">
-          <h3>Collections</h3>
+          <h3>Photos by Categories</h3>
+          <hr/>
           <ul class="list-unstyled pinfo-list portfolio-items">
             <li><i class="fa fa-camera-retro fa-lg"></i>&nbsp;<a href="/portfolio/landscape">Landscape</a></li>
             <li><i class="fa fa-camera-retro fa-lg"></i>&nbsp;<a href="/portfolio/cityscapes">Cityscapes</a></li>
@@ -58,8 +59,14 @@
           </ul>
         </div>
       </div>
- <div class="grid">
-  <div class="grid-sizer"></div>
+      <div class="row">
+        <div class="col-sm-12 fp-header frosty" style="padding-top:30px;">
+          <h3>Read the Stories</h3>
+          <hr />
+        </div>
+      </div>
+      <div class="grid">
+      <div class="grid-sizer"></div>
  
  {% for blog in blogs %}
  {% if 'lrmedium' in blog['files'] %}
@@ -70,57 +77,14 @@
            src="{{baseurl}}{{ blog['files']['lrmedium']['path']}}"
            alt="{{blog['title']}}"/>
     </a>
-    <div class="pinfo" id="{{blog['slug']}}">
+    <div class="pinfo" id="{{blog['cslug']}}">
       <div class="button-bar">
-        <a class="pinfo-title" href="/photo/{{blog['slug']}}">{{blog['title']}}</a>
-      </div>
-      {% if 'exif' in blog %}
-      <ul class="list-unstyled pinfo-list">
-        <li>
-          <i class="fa fa-circle-o" aria-hidden="true"></i>
-          <span class="pinfo-label">Camera:</span>
-          <span class="pinfo-value">{{ blog['exif']['make'] }}</span>
-        </li>
-        <!--<li>
-          <i class="fa fa-circle-o" aria-hidden="true"></i>
-          <span class="pinfo-label">Model:</span>
-          <span class="pinfo-value">{{ blog['exif']['model'] }}</span>            
-        </li>-->
-        <li>
-          <i class="fa fa-circle-o" aria-hidden="true"></i>
-          <span class="pinfo-label">Exposure Time:</span>
-          <span class="pinfo-value">{{ blog['exif']['exposuretime'] }}</span>            
-        </li>
-        <li>
-          <i class="fa fa-circle-o" aria-hidden="true"></i>
-          <span class="pinfo-label">Aperture:</span>
-          <span class="pinfo-value">{{ blog['exif']['aperture'] }}</span>            
-        </li>
-        <li>
-          <i class="fa fa-circle-o" aria-hidden="true"></i>
-          <span class="pinfo-label">ISO:</span>
-          <span class="pinfo-value">{{ blog['exif']['iso'] }}</span>            
-        </li>
-        <li>
-          <i class="fa fa-circle-o" aria-hidden="true"></i>
-          <span class="pinfo-label">Focal Length:</span>
-          <span class="pinfo-value">{{ blog['exif']['focallength'] }}</span>            
-        </li>
-        <li>
-          <i class="fa fa-circle-o" aria-hidden="true"></i>
-          <span class="pinfo-label">Exposure Program:</span>
-          <span class="pinfo-value">{{ blog['exif']['exposureprogram'] }}</span>            
-        </li>
-        <li>
-          <i class="fa fa-circle-o" aria-hidden="true"></i>
-          <span class="pinfo-label">Exposure Bias:</span>
-          <span class="pinfo-value">{{ blog['exif']['exposurebias'] }}</span>            
-        </li>
-        
-      </ul>
-
-      {% endif %}
-      
+        <a class="pinfo-title" href="/stories/{{blog['cslug']}}">{{blog['ctitle']}}</a>
+        <hr />
+        <p>
+          {{ blog['summary'] }} 
+        </p>
+      </div>      
     </div>
   </div>
   {% endif %}
@@ -170,7 +134,7 @@
     $("div.grid-item").click(function() {
       var pinfo = $(this).children('div.pinfo');
       var id = pinfo.attr('id');
-      window.location.href = "/photo/" + id;
+      window.location.href = "/stories/" + id;
     });
         
 

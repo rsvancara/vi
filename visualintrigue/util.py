@@ -95,6 +95,23 @@ def slugify(value):
     return re.sub('[-\s]+', '-', value)
   
 
+def summary_text(text):
+    replace = ['&nbsp;',]
+    text = re.sub('<[^<]+?>', '', text)
+    for r in replace:
+        text = text.replace(r,'')
+    ret = ""
+    
+    items = text.split()
+    size = 100
+    if len(items) < 100:
+        size = len(items)
+    for item in items[0:size]:           
+        ret = ret + " " + item.strip()
+    
+    return ret
+
+
 def save_file(file):
     
     #n = datetime.now()

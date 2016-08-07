@@ -125,6 +125,11 @@ body { font-family: sans-serif; }*/
     color: #FFFFFF;
 }
 
+.pinfo a, .img-overlay a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
 .pinfo-button{
     float: right;
 }
@@ -143,7 +148,7 @@ body { font-family: sans-serif; }*/
 }
 
 .button-bar hr {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 1.0);
 }
 
 ul.pinfo-list {
@@ -167,8 +172,6 @@ ul.portfolio-items>li{
     margin-left: 5px;
     color: #FFFFFF;
 }
-
-
 
 .center-block {
   display: block;
@@ -209,7 +212,20 @@ div.vi-jumbo-center {
     background-color: rgba(0,0,0,.34);
 }
 
+.frosty a{
+  color: #FFFFFF;
+  text-decoration: None;  
+}
+
+.frosty hr {
+  border-top: 1px solid rgba(255, 255, 255, 1.0);
+}
+
 div.vi-jumbo h1, div.vi-jumbo p{
     margin-left: 10px;
     
+}
+
+div.story-spacer {
+  height: 10px;
 }

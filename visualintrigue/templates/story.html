@@ -38,23 +38,24 @@
       </ul>
     </nav>
       
-    <div class="container-fluid">
-       <div class="top-spacer" style="height: 100px;"></div> 
-       <div class="row">
-           <div class="col-md-2"></div>
-           <div class="col-md-6">
+    <div class="container">
+      <div class="top-spacer" style="height: 100px;"></div> 
+      <div class="row">
+        <div class="col-md-2">
+          
+        </div>
+        <div class="col-md-8">
             <h2>{{collection['title']}}</h2>
-               {{ collection['body'] |safe }}
-           </div>
-       </div>
-       {% for blog in blogs %}
-       <div class="row">
-          <div class="col-md-2">&nbsp;</div>
-          <div class="col-md-6">
+            <div class="content-body">
+            {{ collection['body'] |safe }}
+            </div>
+            <div class="story-spacer"></div>
+            
+            {% for blog in blogs %}
             <h3>{{blog['title']}}</h3>
             <div class="content-body">
               {{ blog['body']|safe }}
-            </div>
+            </div><!-- end content body -->
             <div class="image-body">
               <img 
                   data-src="{{baseurl}}{{ blog['files']['medium']['path']}}"
@@ -110,12 +111,13 @@
                   </li>
                 </ul>
                 {% endif %}
-              </div>
-            </div>
-          </div>
-       </div>
-       {% endfor %}
-    </div>  
+              </div><!-- end image overlay -->
+            </div><!-- end image body -->
+            <div class="story-spacer"></div> 
+            {% endfor %}
+        </div><!-- end column -->
+      </div><!--end row-->
+    </div><!-- end container-->  
     <script src="https://code.jquery.com/jquery-2.2.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.js"></script>
     <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
@@ -143,11 +145,7 @@
       var id = ibody.attr('id');
       window.location.href = "/photo/" + id;
     });
-        
-
     </script>
-      
-
   </body>
 </html>
 

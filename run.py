@@ -33,9 +33,24 @@ login_manager.init_app(app)
 @app.route('/index')
 def index():
     logger.info("requested index")
-    blogs = mongo.db.blog.find({'status':'active','homepage':'yes'}).sort("created",-1)
     
-    return render_template('frontpage.html',title='Home',blogs=blogs,baseurl=siteconfig.AMAZON_BASE_URL)
+    stories = []
+    #blogs = mongo.db.blog.find({'status':'active','homepage':'yes'}).sort("created",-1)
+    
+    collections = mongo.db.collections.find({'status':'active'}).sort("created",-1)
+    
+    for c in collections:
+        blogs = mongo.db.blog.find({'status':'active','collection':c['collection']}).sort('displayorder').limit(1)
+        
+        for b in blogs:
+            
+            b['ctitle'] = c['title']
+            b['cslug'] = c['slug']
+            b['summary'] = util.summary_text(c['body'])
+            stories.append(b)
+            break
+
+    return render_template('frontpage.html',title='Home',blogs=stories,baseurl=siteconfig.AMAZON_BASE_URL)
 
 @app.route('/portfolio/<portfolio>')
 def portfolio(portfolio=all):
