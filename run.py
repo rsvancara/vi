@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, session, redirect, url_for, render_template
+from flask import Flask, flash, request, session, redirect, url_for, render_template,jsonify
 import flask.ext.login as flask_login
 from flask.ext.pymongo import PyMongo
 from visualintrigue import siteconfig
@@ -9,6 +9,7 @@ import logging
 from visualintrigue.user import User
 from werkzeug.contrib.fixers import ProxyFix
 import pymongo
+import random
 
 
 
@@ -305,7 +306,7 @@ def blog_delete(id=None):
         flash("Blog entry deleted",'alert-success')
     
         logger.info("requested blog delete")
-        return redirect(url_for('blog_list'))
+        return redirect(url_for('blog_list_collection'))
 
     flash('Error deleting blog entry.  Please see logs for details.')
     return redirect(url_for('error'))
@@ -491,17 +492,25 @@ def error():
     return "ERROR"
 
 
-@app.route('/blog/frontpageservice',methods=['GET'])
+@app.route('/image/frontpageservice',methods=['GET'])
 @flask_login.login_required
 def frontpageservice():
     """ Returns a JSON String of the images included in the
         frontpage image rotation.  The order of the list is
         randomized
     """
+    imagelist = [{'url':'http://visualintrigue-vrt547.s3-website-us-west-2.amazonaws.com/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_1600px.jpeg'}]
+    blogs = mongo.db.blog.find({'homepage':'yes'})
+    if blogs is None:
+        return jsonify(imagelist)
     
-    imagelist = [{}]
     
-    return jsonify(imagelist)
+    
+    for blog in blogs:
+        imagelist.append({'url':siteconfig.AMAZON_BASE_URL + blog['files']['large']['path']})
+
+    return jsonify({'urls':imagelist})
+    #return("['"+"','".join(imagelist)+"']")
     
     
 @app.route('/logout')

@@ -100,6 +100,9 @@
     
     // init Isotope
     var grid = document.querySelector('.grid');
+    var fparray = []
+    var fptimer
+    var current_image = 0
     
     var msnry = new Masonry( grid, {
       itemSelector: '.grid-item',
@@ -134,7 +137,40 @@
       window.location.href = "/stories/" + id;
     });
         
-
+    $( document ).ready(function() {
+      var fpAPI = "/image/frontpageservice";
+      $.getJSON( fpAPI, {
+        //tags: "mount rainier",
+        //tagmode: "any",
+        format: "json"
+      })
+      .done(function( data ) {
+        $.each( data.urls, function( i, url ) {
+          //$( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
+          //if ( i === 3 ) {
+          //  return false;
+          //}
+          fparray.push(url.url)
+          console.log("Image: " + url.url)
+          
+        });
+      });
+      fptimer = setInterval(function(){ frontater() }, 5000);
+    });
+    
+    function frontater() {
+      console.log('rotating');
+      body = $('body');
+      
+      body.css('background','url('+ fparray[current_image] +') no-repeat center center fixed');
+      body.css('background-size','cover');
+      current_image = current_image + 1;
+      console.log(fparray.length + " " + current_image);
+      if (current_image > fparray.length-1) {
+        current_image = 0;
+      }
+    }
+    
     </script>
       
 
