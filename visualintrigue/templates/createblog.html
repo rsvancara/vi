@@ -41,7 +41,7 @@
     }
     
 </style>
-<form action="/blog/create" method="post" enctype="multipart/form-data" id="blog-form">
+<form action="/blog/create/{{ collection['slug']}}" method="post" enctype="multipart/form-data" id="blog-form">
     <div class="row">
         <div class="col-md-8">
             <fieldset>
@@ -58,7 +58,6 @@
            {{ render_field(form.keywords) }}
            {{ render_field(form.homepage) }}
            {{ render_field(form.portfolio) }}
-           {{ render_field(form.collection) }}
            {{ render_field(form.displayorder) }}
         </fieldset>
 

@@ -19,7 +19,6 @@ class BlogForm(Form):
     keywords = TextAreaField(u'Key Words',  [validators.Required(),validators.Length(min=4, max=128)])
     portfolio = SelectField(u'Portfolio',choices=[('landscape','Landscape'),('cityscape','Cityscape'),('macro','Macro')])
     homepage = SelectField(u'Show On Homepage',choices=[('yes', 'Yes'), ('no', 'No')])
-    collection = SelectField(u'Collection', choices=[('none','none')],coerce=str)
     displayorder = SelectField(u'Display Order',choices=[('1', '1'),
                                                           ('2', '2'),
                                                           ('3', '3'),

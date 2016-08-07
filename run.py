@@ -29,6 +29,7 @@ app.secret_key = siteconfig.SECRETKEY
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -52,6 +53,7 @@ def index():
 
     return render_template('frontpage.html',title='Home',blogs=stories,baseurl=siteconfig.AMAZON_BASE_URL)
 
+
 @app.route('/portfolio/<portfolio>')
 def portfolio(portfolio=all):
     logger.info("requested specific portfolio")
@@ -65,15 +67,18 @@ def portfolio(portfolio=all):
 
     return render_template('portfolio.html',title='Portfolio' + portfolio,blogs=blogs,portfolio=portfolio,baseurl=siteconfig.AMAZON_BASE_URL)
 
+
 @app.route('/blog/view/<slug>')
 def blog_view(slug):
     logger.info("requested blog view")
     return render_template('about.html',title=slug)
 
+
 @app.route('/about')
 def about():
     logger.info("requested about")
     return render_template('about.html',title='About')
+
 
 @app.route('/collection/create', methods=['GET', 'POST'])
 @flask_login.login_required
@@ -109,6 +114,7 @@ def collection_add():
     
     return render_template('createcollection.html',title='Create New Collection',form=form)
 
+
 @app.route('/collection/edit/<id>',methods=['GET', 'POST'])
 @flask_login.login_required
 def collection_edit(id=None):
@@ -130,7 +136,7 @@ def collection_edit(id=None):
     form.active.data = collection['status']
     if 'collection' in collection:
         form.collection.data = collection['collection']
-    if 'kewords' in collection:
+    if 'keywords' in collection:
         form.keywords.data = collection['keywords']     
 
     if(request.method == 'POST'):
@@ -167,23 +173,19 @@ def collection_edit(id=None):
             
     return render_template('editcollection.html',title='Edit Collection Post',id=id,form=form, collection=collection)    
 
-@app.route('/blog/create', methods=['GET', 'POST'])
+
+@app.route('/blog/create/<id>', methods=['GET', 'POST'])
 @flask_login.login_required
-def blog_add():
+def blog_add(id):
     logger.info("requested add blog")
-    collections = mongo.db.collections.find().sort([("collection",pymongo.ASCENDING),])
-    # generate array of tuples
-    collection_list = [('none','none'),]
-    for collection in collections:
-        if 'collection' in collection:
-            collection_list.append((collection['collection'],collection['collection']))
-            logger.debug(collection['collection'])
-    
+
     form = BlogForm(request.form)
-    form.collection.choices = collection_list
+    
+    collection = mongo.db.collections.find_one({'slug':id})
+    if collection is None:
+        return redirect(url_for('error'))    
 
     if(request.method == 'POST' and form.validate()):        
-        form.collection.choices = collection_list
         logger.info("dumping " + str(request.files['photo']))
         result = util.save_file(request.files['photo'])
         if result['status'] is False:
@@ -194,8 +196,6 @@ def blog_add():
         # Make sure that this contains a unique slug, since we are basing URLS off the slug
         # and these should be unqiue
         blog = mongo.db.blog.find_one({'slug':form.slug.data})
-
-        collection_single = mongo.db.collections.find_one({"collection":form.collection.data})
 
         if blog:
             flash('Slug already exists for blog entry, please use a different one.','alert-warning')
@@ -215,23 +215,41 @@ def blog_add():
             "keywords": form.keywords.data,
             "homepage": form.homepage.data,
             "displayorder": form.displayorder.data,
-            "collection": form.collection.data,
-            "collection_slug": collection_single['slug']
+            "collection": collection['collection'],
+            "collection_slug": collection['slug']
             
           }
         )
         
         flash('Blog entry successfully created','alert-success')
-        return redirect('/blog/list')
+        return redirect('/blogs/list/' + collection['slug'])
     
-    return render_template('createblog.html',title='Create New Blog Post',form=form)
+    return render_template('createblog.html',title='Create New Blog Post',form=form,collection=collection)
+
+
+@app.route('/blogs/list/<id>')
+@flask_login.login_required
+def blog_list_collection(id):
+    logger.info("requested blog list")
+    
+    collection = mongo.db.collections.find_one({'slug':id})
+    if collection is None:
+        return redirect(url_for('error'))
+    
+    blogs = mongo.db.blog.find({'collection':collection['collection']}).sort("created",-1)
+    if blogs is None:
+        return redirect(url_for('error'))
+    
+    return render_template('blog_list.html',title='Manage Blog Entries',blogs=blogs,collection=collection)
+
 
 @app.route('/blog/list')
 @flask_login.login_required
 def blog_list():
-    logger.info("requested blog list")
-    blogs = mongo.db.blog.find().sort("created",-1)    
-    return render_template('blog_list.html',title='Manage Blog Entries',blogs=blogs)
+    #logger.info("requested blog list")
+    #blogs = mongo.db.blog.find().sort("created",-1)    
+    #return render_template('blog_list.html',title='Manage Blog Entries',blogs=blogs)
+    return redirect(url_for('error'))
 
 @app.route('/collection/list')
 @flask_login.login_required
@@ -239,6 +257,7 @@ def collection_list():
     logger.info("requested blog list")
     collections = mongo.db.collections.find().sort("created",-1)
     return render_template('collection_list.html',title='Collection List',collections=collections)
+
 
 @app.route('/collection/delete/<id>',methods=['GET'])
 @flask_login.login_required
@@ -291,6 +310,7 @@ def blog_delete(id=None):
     flash('Error deleting blog entry.  Please see logs for details.')
     return redirect(url_for('error'))
 
+
 def getCollectionChoices():
     blog = mongo.db.blog.find_one({'slug':id})    
 
@@ -303,6 +323,7 @@ def getCollectionChoices():
             collection_list.append((collection['collection'],collection['collection']))
     
     return collection_list
+
     
 @app.route('/blog/edit/<id>',methods=['GET', 'POST'])
 @flask_login.login_required
@@ -316,15 +337,10 @@ def blog_edit(id=None):
     form = BlogForm()
     # Make sure that this contains a unique slug, since we are basing URLS off the slug
     # and these should be unqiue
-    blog = mongo.db.blog.find_one({'slug':id})    
+    blog = mongo.db.blog.find_one({'slug':id})
+    
+    collection = mongo.db.collections.find_one({'collection':blog['collection']})
 
-    collections = mongo.db.collections.find().sort([("collection",pymongo.ASCENDING),])
-    collection_list = [('none','none'),]
-    for collection in collections:
-        if 'collection' in collection:
-            collection_list.append((collection['collection'],collection['collection']))
-    form.collection.choices = collection_list
-      
     #form = BlogForm(request.form)
     form.body.data = blog['body']
     form.title.data = blog['title']
@@ -349,11 +365,6 @@ def blog_edit(id=None):
         form.homepage.data = blog['homepage']
     
     result['files'] = blog['files']
-
-    if 'collection' in blog:
-        form.collection.data = blog['collection']
-    else:
-        blog['collection'] = 'none'
     
     if 'exif' in blog:  
         result['exif'] = blog['exif']
@@ -366,7 +377,7 @@ def blog_edit(id=None):
 
     if(request.method == 'POST'):
         form = BlogForm(request.form)
-        form.collection.choices = collection_list
+
         if(form.validate()):
 
             logger.info("dumping " + str(request.files['photo']))
@@ -386,12 +397,6 @@ def blog_edit(id=None):
                     flash('Slug already in use. Please select a unique slug','alert-warning')
                     return render_template('editblog.html',title='Edit Blog Post',id=id,form=form, blog=blog) 
             
-            
-            collection_single = mongo.db.collections.find_one({"collection":form.collection.data})
-            if collection_single is None:
-                collection_single = {}
-                collection_single['slug'] = 'none'
-            
             mongo.db.blog.update(
                {
                 "slug":id,
@@ -408,17 +413,18 @@ def blog_edit(id=None):
                  "portfolio": form.portfolio.data,
                  "keywords": form.keywords.data,
                  "homepage": form.homepage.data,
-                 "collection": form.collection.data,
-                 "collection_slug": collection_single['slug'],
+                 "collection": collection['collection'],
+                 "collection_slug": collection['slug'],
                  "displayorder":form.displayorder.data
                }            
             )
 
-            return redirect('/blog/list')
+            return redirect('/blogs/list/'+collection['slug'])
         else:
             flash('Validation Error','alert-warning')
             
-    return render_template('editblog.html',title='Edit Blog Post',id=id,form=form, blog=blog,photo=photo,collection_choices=collection_list)    
+    return render_template('editblog.html',title='Edit Blog Post',id=id,form=form, blog=blog,photo=photo,collection=collection)    
+
 
 @app.route('/stories/<id>')
 def stories(id = None):
@@ -435,10 +441,12 @@ def stories(id = None):
 
     return render_template('story.html',title=collection['title'],collection=collection,blogs=blogs,baseurl=siteconfig.AMAZON_BASE_URL)
 
+
 @app.route('/notfound',methods=['GET','POST'])
 def notfound():
     
     return render_template('404.html',title='Page Not Found')
+
 
 @app.route('/photo/<id>', methods=['GET'])
 def photo(id=None):
@@ -477,9 +485,11 @@ def login():
 
     return 'Bad login'
 
+
 @app.route('/error', methods=['GET','POST'])
 def error():
     return "ERROR"
+
 
 @app.route('/blog/frontpageservice',methods=['GET'])
 @flask_login.login_required
@@ -493,8 +503,7 @@ def frontpageservice():
     
     return jsonify(imagelist)
     
-
-
+    
 @app.route('/logout')
 @flask_login.login_required
 def logout():
@@ -521,6 +530,7 @@ def protected():
 class User(flask_login.UserMixin):
     pass
 
+
 @login_manager.user_loader
 def user_loader(email):
     if email not in siteconfig.USERS:
@@ -536,7 +546,6 @@ def request_loader(request):
     email = request.form.get('email')
     if email not in siteconfig.USERS:
         return
-
     user = User()
     user.id = email
 
@@ -546,17 +555,19 @@ def request_loader(request):
 
     return user
 
+
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return render_template('unauthorized.html',title='Unauthorized Request')
+
 
 @app.template_filter()
 def datetimefilter(value, format='%Y/%m/%d %H:%M'):
     """convert a datetime to a different format."""
     return value.strftime(format)
 
-app.wsgi_app = ProxyFix(app.wsgi_app)
 
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
     
