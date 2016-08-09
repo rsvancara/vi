@@ -360,8 +360,14 @@ def blog_edit(id=None):
     # Make sure that this contains a unique slug, since we are basing URLS off the slug
     # and these should be unqiue
     blog = mongo.db.blog.find_one({'slug':id})
-    
-    collection = mongo.db.collections.find_one({'collection':blog['collection']})
+    if blog is None:
+        flash('Could not find blog entry for id provided','alert-warning')
+        return redirect(url_for('error'))  
+    collection = {'collection':'none','slug':'none'}
+
+    if 'collection' in blog: 
+        collection = mongo.db.collections.find_one({'collection':blog['collection']})
+
 
     #form = BlogForm(request.form)
     form.body.data = blog['body']
