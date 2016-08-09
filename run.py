@@ -404,7 +404,7 @@ def blog_edit(id=None):
         if 'collection' in collection:
             collection_list.append((collection['collection'],collection['collection']))
             logger.debug(collection['collection'])
-
+    form.collection.choices = collection_list
 
     if(request.method == 'POST'):
         form = BlogForm(request.form)
