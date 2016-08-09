@@ -180,12 +180,25 @@ def collection_edit(id=None):
 def blog_add(id):
     logger.info("requested add blog")
 
-    form = BlogForm(request.form)
-    
+    # get the collection slug
     collection = mongo.db.collections.find_one({'slug':id})
     if collection is None:
         return redirect(url_for('error'))    
 
+    collections = mongo.db.collections.find().sort([("collection",pymongo.ASCENDING),])
+    # generate array of tuples
+    collection_list = [('none','none'),]
+    for collectionitem in collections:
+        if 'collection' in collectionitem:
+            collection_list.append((collectionitem['collection'],collectionitem['collection']))
+            logger.debug(collectionitem['collection'])
+    
+    form = BlogForm(request.form)
+    
+    form.collection.data = collection['collection']
+    
+    form.collection.choices = collection_list
+    
     if(request.method == 'POST' and form.validate()):        
         logger.info("dumping " + str(request.files['photo']))
         result = util.save_file(request.files['photo'])
@@ -201,6 +214,12 @@ def blog_add(id):
         if blog:
             flash('Slug already exists for blog entry, please use a different one.','alert-warning')
             return render_template('createblog.html',title='Create New Blog Post',form=form)
+        collection_single = mongo.db.collections.find_one({"collection":form.collection.data})
+        
+        if collection_single is None:
+            collection_single = {}
+            collection_single['slug'] = 'none'
+
         
         mongo.db.blog.insert(
           {
@@ -216,8 +235,10 @@ def blog_add(id):
             "keywords": form.keywords.data,
             "homepage": form.homepage.data,
             "displayorder": form.displayorder.data,
-            "collection": collection['collection'],
-            "collection_slug": collection['slug']
+            #"collection": collection['collection'],
+            #"collection_slug": collection['slug']
+            "collection": form.collection.data,
+            "collection_slug": collection_single['slug'],
             
           }
         )
@@ -375,9 +396,20 @@ def blog_edit(id=None):
     photo = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
     if 'files' in blog:
         photo = siteconfig.AMAZON_BASE_URL + blog['files']['medium']['path']
+    
+    collections = mongo.db.collections.find().sort([("collection",pymongo.ASCENDING),])
+    # generate array of tuples
+    collection_list = [('none','none'),]
+    for collection in collections:
+        if 'collection' in collection:
+            collection_list.append((collection['collection'],collection['collection']))
+            logger.debug(collection['collection'])
+
 
     if(request.method == 'POST'):
         form = BlogForm(request.form)
+        # Add the list after the form instantiation because it will disapear otherwise
+        form.collection.choices = collection_list
 
         if(form.validate()):
 
@@ -398,6 +430,11 @@ def blog_edit(id=None):
                     flash('Slug already in use. Please select a unique slug','alert-warning')
                     return render_template('editblog.html',title='Edit Blog Post',id=id,form=form, blog=blog) 
             
+            collection_single = mongo.db.collections.find_one({"collection":form.collection.data})
+            if collection_single is None:
+                collection_single = {}
+                collection_single['slug'] = 'none'
+            
             mongo.db.blog.update(
                {
                 "slug":id,
@@ -414,8 +451,10 @@ def blog_edit(id=None):
                  "portfolio": form.portfolio.data,
                  "keywords": form.keywords.data,
                  "homepage": form.homepage.data,
-                 "collection": collection['collection'],
-                 "collection_slug": collection['slug'],
+                 "collection": form.collection.data,
+                 "collection_slug": collection_single['slug'],
+                 #"collection": collection['collection'],
+                 #"collection_slug": collection['slug'],
                  "displayorder":form.displayorder.data
                }            
             )

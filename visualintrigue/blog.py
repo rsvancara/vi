@@ -37,6 +37,7 @@ class BlogForm(Form):
                                                           ('16', '16'),
                                                           ('17', '17'),
                                                           ('18', '18')],coerce=str)
+    collection = SelectField(u'Collection', choices=[('none','none')],coerce=str)
     
     
     
