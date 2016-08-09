@@ -168,7 +168,13 @@
       console.log(fparray.length + " " + current_image);
       if (current_image > fparray.length-1) {
         current_image = 0;
+        preloadImage(fparray[current_image + 1])
       }
+    }
+    
+    function preloadImage(url){
+        var img=new Image();
+        img.src=url;
     }
     
     </script>
