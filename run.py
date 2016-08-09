@@ -493,7 +493,6 @@ def error():
 
 
 @app.route('/image/frontpageservice',methods=['GET'])
-@flask_login.login_required
 def frontpageservice():
     """ Returns a JSON String of the images included in the
         frontpage image rotation.  The order of the list is
