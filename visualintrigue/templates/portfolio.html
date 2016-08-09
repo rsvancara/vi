@@ -150,7 +150,12 @@
       var pinfo = $(this).children('div.pinfo').eq(0);
       pinfo.hide();
     });
-                  
+
+    $("div.grid-item").click(function() {
+      var pinfo = $(this).children('div.pinfo');
+      var id = pinfo.attr('id');
+      window.location.href = "/photo/" + id;
+    });                  
     </script>
       
 
