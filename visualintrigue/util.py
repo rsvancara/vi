@@ -103,12 +103,13 @@ def summary_text(text):
     ret = ""
     
     items = text.split()
-    size = 100
-    if len(items) < 100:
+    size = 65
+    if len(items) < 65:
         size = len(items)
     for item in items[0:size]:           
         ret = ret + " " + item.strip()
-    
+    if len(items) >= 65:
+        ret = ret + "..." 
     return ret
 
 
