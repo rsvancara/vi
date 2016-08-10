@@ -204,7 +204,7 @@ def blog_add(id):
         result = util.save_file(request.files['photo'])
         if result['status'] is False:
             flash("No file has been provided, please select a file","alert-warning")
-            return render_template('createblog.html',title='Create New Blog Post',form=form)
+            return render_template('createblog.html',title='Create New Blog Post',form=form,collection=collection)
         form.newimage = 1
         
         # Make sure that this contains a unique slug, since we are basing URLS off the slug
@@ -213,7 +213,7 @@ def blog_add(id):
 
         if blog:
             flash('Slug already exists for blog entry, please use a different one.','alert-warning')
-            return render_template('createblog.html',title='Create New Blog Post',form=form)
+            return render_template('createblog.html',title='Create New Blog Post',form=form,collection=collection)
         collection_single = mongo.db.collections.find_one({"collection":form.collection.data})
         
         if collection_single is None:
@@ -316,6 +316,8 @@ def blog_delete(id=None):
         return redirect(url_for('blog_list'))
     
     blog = mongo.db.blog.find_one({'slug':id})
+    
+
     if blog:
         if 'files' not in blog:
             try:
@@ -327,7 +329,7 @@ def blog_delete(id=None):
         flash("Blog entry deleted",'alert-success')
     
         logger.info("requested blog delete")
-        return redirect(url_for('blog_list_collection'))
+        return redirect('/blogs/list/' + blog['collection_slug'])
 
     flash('Error deleting blog entry.  Please see logs for details.')
     return redirect(url_for('error'))
@@ -527,7 +529,7 @@ def login():
         
         flask_login.login_user(user)
         flash('You were successfully logged in','alert-success')
-        return redirect(url_for('blog_list'))
+        return redirect(url_for('collection_list'))
 
     return 'Bad login'
 
