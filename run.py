@@ -408,11 +408,13 @@ def blog_edit(id=None):
     collections = mongo.db.collections.find().sort([("collection",pymongo.ASCENDING),])
     # generate array of tuples
     collection_list = [('none','none'),]
-    for collection in collections:
-        if 'collection' in collection:
-            collection_list.append((collection['collection'],collection['collection']))
-            logger.debug(collection['collection'])
+    for c in collections:
+        if 'collection' in c:
+            collection_list.append((c['collection'],c['collection']))
+            logger.debug(c['collection'])
     form.collection.choices = collection_list
+    
+    form.collection.data = collection['collection']
 
     if(request.method == 'POST'):
         form = BlogForm(request.form)
