@@ -10,6 +10,8 @@ from visualintrigue.user import User
 from werkzeug.contrib.fixers import ProxyFix
 import pymongo
 import random
+import uuid
+
 
 
 
@@ -106,7 +108,8 @@ def collection_add():
             "created": datetime.now(),
             "updated": datetime.now(),
             "keywords": form.keywords.data,
-            "collection": form.collection.data
+            "collection": form.collection.data,
+            "collection" : uuid.uuid5
           }
         )
         
@@ -165,7 +168,8 @@ def collection_edit(id=None):
                  "updated": datetime.now(),
                  "created": collection['created'],
                  "collection": form.collection.data,
-                 "keywords": form.keywords.data
+                 "keywords": form.keywords.data,
+                 "uuid": uuid.uuid5
                }            
             )
 
@@ -240,6 +244,7 @@ def blog_add(id):
             #"collection_slug": collection['slug']
             "collection": form.collection.data,
             "collection_slug": collection_single['slug'],
+            "uuid": uuid.uuid5
             
           }
         )
@@ -466,7 +471,8 @@ def blog_edit(id=None):
                  "collection_slug": collection_single['slug'],
                  #"collection": collection['collection'],
                  #"collection_slug": collection['slug'],
-                 "displayorder":form.displayorder.data
+                 "displayorder":form.displayorder.data,
+                 "displayorder": uuid.uuid5,
                }            
             )
 
