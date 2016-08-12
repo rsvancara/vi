@@ -375,7 +375,8 @@ def blog_edit(id=None):
 
     if 'collection' in blog: 
         collection = mongo.db.collections.find_one({'collection':blog['collection']})
-
+    if collection is None:
+        collection = {'collection':'none','slug':'none'}
 
     #form = BlogForm(request.form)
     form.body.data = blog['body']
