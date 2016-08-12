@@ -164,7 +164,8 @@ def collection_edit(id=None):
                  "status": form.active.data,    
                  "updated": datetime.now(),
                  "created": collection['created'],
-                 "collection": form.collection.data
+                 "collection": form.collection.data,
+                 "keywords": form.keywords.data
                }            
             )
 
