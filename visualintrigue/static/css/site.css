@@ -29,6 +29,13 @@ body.dark-bg {
     width: 100%;
 }
 
+.home-pattern {
+    /*opacity: .33; */
+    background-image: url(/static/images/pattern.png);
+    background-repeat: repeat;
+    background-attachment: scroll;
+}
+
 .container-fluid {
     padding-right: 0px;
     padding-left: 0px;

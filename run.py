@@ -553,9 +553,24 @@ def frontpageservice():
         return jsonify(imagelist)
     
     
+    tlist = []
     
     for blog in blogs:
-        imagelist.append({'url':siteconfig.AMAZON_BASE_URL + blog['files']['large']['path']})
+        tlist.append(siteconfig.AMAZON_BASE_URL + blog['files']['large']['path'])
+    
+    
+        
+    i = len(tlist)-1
+    
+    while i > 1:
+        j = random.randrange(i)  # 0 <= j <= i
+        tlist[j], tlist[i] = tlist[i], tlist[j]
+        i = i - 1
+        
+    #tlist = random.shuffle(tlist)
+
+    for t in tlist:
+        imagelist.append({'url':t})
 
     return jsonify({'urls':imagelist})
     #return("['"+"','".join(imagelist)+"']")
