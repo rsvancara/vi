@@ -104,6 +104,7 @@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
     <script src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
     <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
+    <script src="/static/js/bgswitcher.js"></script>
     <script type="text/javascript">
       
     // external js: masonry.pkgd.js, imagesloaded.pkgd.js
@@ -165,22 +166,30 @@
           
         });
       });
-      fptimer = setInterval(function(){ frontater() }, 10000);
+      //fptimer = setInterval(function(){ frontater() }, 10000);
     });
     
-    function frontater() {
-      console.log('rotating');
-      body = $('body');
-      
-      body.css('background','url('+ fparray[current_image] +') no-repeat center center fixed');
-      body.css('background-size','cover');
-      current_image = current_image + 1;
-      console.log(fparray.length + " " + current_image);
-      if (current_image > fparray.length-1) {
-        current_image = 0;
-        preloadImage(fparray[current_image + 1])
-      }
-    }
+    //function frontater() {
+    //  console.log('rotating');
+    //  body = $('body');
+    //  
+    //  body.css('background','url('+ fparray[current_image] +') no-repeat center center fixed');
+    //  body.css('background-size','cover');
+    //  current_image = current_image + 1;
+    //  console.log(fparray.length + " " + current_image);
+    //  if (current_image > fparray.length-1) {
+    //    current_image = 0;
+    //    preloadImage(fparray[current_image + 1])
+    //  }
+    //}
+    
+    $(".frontpage").bgswitcher({
+      //images: ["pic1.jpg", "pic2.jpg", "pic3.jpg"],
+      images: fparray,
+      loop: true,
+      interval: 5000,
+      shuffle: true,
+    });
     
     function preloadImage(url){
         var img=new Image();
