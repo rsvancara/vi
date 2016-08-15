@@ -109,7 +109,7 @@ def collection_add():
             "updated": datetime.now(),
             "keywords": form.keywords.data,
             "collection": form.collection.data,
-            "collection" : uuid.uuid5
+            "uuid" : uuid.uuid4()
           }
         )
         
@@ -169,7 +169,7 @@ def collection_edit(id=None):
                  "created": collection['created'],
                  "collection": form.collection.data,
                  "keywords": form.keywords.data,
-                 "uuid": uuid.uuid5
+                 "uuid": uuid.uuid4()
                }            
             )
 
@@ -244,7 +244,7 @@ def blog_add(id):
             #"collection_slug": collection['slug']
             "collection": form.collection.data,
             "collection_slug": collection_single['slug'],
-            "uuid": uuid.uuid5
+            "uuid": uuid.uuid4()
             
           }
         )
@@ -473,7 +473,7 @@ def blog_edit(id=None):
                  #"collection": collection['collection'],
                  #"collection_slug": collection['slug'],
                  "displayorder":form.displayorder.data,
-                 "displayorder": uuid.uuid5,
+                 "uuid": uuid.uuid4(),
                }            
             )
 
