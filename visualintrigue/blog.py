@@ -17,7 +17,12 @@ class BlogForm(Form):
     photo = FileField(u'Photo', validators=[FileAllowed(['jpg','jpeg'], 'JPEG Images only!')])
     newimage = HiddenField(u"newimage")
     keywords = TextAreaField(u'Key Words',  [validators.Required(),validators.Length(min=4, max=128)])
-    portfolio = SelectField(u'Portfolio',choices=[('landscape','Landscape'),('cityscape','Cityscape'),('macro','Macro')])
+    portfolio = SelectField(u'Portfolio',choices=[('landscape','Landscape'),
+        ('cityscape','Cityscape'),
+        ('macro','Macro'),
+        ('street','Street Photography')])
+    
+    
     homepage = SelectField(u'Show On Homepage',choices=[('yes', 'Yes'), ('no', 'No')])
     displayorder = SelectField(u'Display Order',choices=[('1', '1'),
                                                           ('2', '2'),
