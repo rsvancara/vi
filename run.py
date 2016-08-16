@@ -495,7 +495,7 @@ def stories(id = None):
     if collection is None:
         return redirect(url_for('notfound'))
     
-    blogs = mongo.db.blog.find({'collection':collection['collection']}).sort('displayorder',1)
+    blogs = mongo.db.blog.find({'collection':collection['collection'],'status':'active'}).sort('displayorder',1)
 
     return render_template('story.html',title=collection['title'],collection=collection,blogs=blogs,baseurl=siteconfig.AMAZON_BASE_URL)
 
