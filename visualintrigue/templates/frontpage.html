@@ -78,7 +78,7 @@
  {% for blog in blogs %}
  {% if 'lrmedium' in blog['files'] %}
   <div class="grid-item" id="{{blog['slug']}}">
-    <a href="/photo/{{blog['slug']}}">
+    <a class="pinfo-title" href="/stories/{{blog['cslug']}}">
       <img style="width:{{blog['files']['medium']['width']}}px;" 
            data-src="{{baseurl}}{{ blog['files']['medium']['path']}}"
            src="{{baseurl}}{{ blog['files']['lrmedium']['path']}}"
