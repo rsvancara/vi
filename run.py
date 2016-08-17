@@ -600,11 +600,36 @@ def logout():
 def unauthorized():
     return render_template('unauthorized.html',title='Unauthorized Request')
 
-
 @app.route('/protected')
 @flask_login.login_required
 def protected():
-    return 'Logged in as: ' + flask_login.current_user.id
+    return "Article View"
+
+@app.route('/article/<id>')
+def article_view(id):
+    """ View Article """
+    return render_template('article.html',title="Article")
+
+@app.route('/article/list')
+@flask_login.login_required
+def article_list():
+    """ List articles """
+    
+    articles = None
+    
+    return render_template('article_list.html',title="List Articles",articles=articles   )
+
+@app.route('/article/create')
+@flask_login.login_required
+def article_create():
+    """ Create article """
+    return "Create"
+
+@app.route('/article/edit/<id>')
+@flask_login.login_required
+def article_edit():
+    """ Edit article """
+    return "edit"
 
 
 class User(flask_login.UserMixin):
