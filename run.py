@@ -80,7 +80,7 @@ def blog_view(slug):
 @app.route('/about')
 def about():
     logger.info("requested about")
-    return render_template('about.html',title='About')
+    return render_template('about.html',title='Visual Intrigue Photography',container="container")
 
 
 @app.route('/collection/create', methods=['GET', 'POST'])

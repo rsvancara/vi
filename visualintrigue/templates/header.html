@@ -2,6 +2,12 @@
 <html>
   <head>
     <title>Visual Intrigue - {{ title }}</title>
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Visual Intrigue Photography">
+    <meta property="og:url" content="http://visualintrigue.com{{request.path}}">
+    <meta property="og:description" content="Visual Intrigue Photography">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
     <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/css/tether-theme-arrows.css" />
@@ -45,8 +51,11 @@
         {% endif %}        
       </ul>
     </nav>
-      
-    <div class="container-fluid">
+    {% if container %}
+      <div class="{{container}}">
+    {% else %}
+      <div class="container-fluid">
+    {% endif %}
         <h1>{{ title }}</h1>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages  %}
