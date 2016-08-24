@@ -4,6 +4,7 @@ from flask.ext.pymongo import PyMongo
 from visualintrigue import siteconfig
 from visualintrigue import util
 from visualintrigue.blog import BlogForm
+from visualintrigue.article import ArticleForm
 from visualintrigue.collection import CollectionForm
 import logging
 from visualintrigue.user import User
@@ -623,13 +624,17 @@ def article_list():
 @flask_login.login_required
 def article_create():
     """ Create article """
-    return "Create"
+    
+    form = ArticleForm()
+    return render_template('createarticle.html',title="Create Article",form=form)
 
 @app.route('/article/edit/<id>')
 @flask_login.login_required
 def article_edit():
     """ Edit article """
-    return "edit"
+    
+    form = ArticleForm()
+    return render_template('editarticle.html',title="Edit Article" )
 
 
 class User(flask_login.UserMixin):
