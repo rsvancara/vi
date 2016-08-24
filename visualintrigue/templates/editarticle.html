@@ -1,0 +1,23 @@
+{% include 'header.html' %}
+{% from "_formhelpers.html" import render_field %}
+<style type="text/css">
+
+    
+</style>
+<form action="/artcle/edit/{{ id }}" method="post" enctype="multipart/form-data">
+    <div class="row">
+
+    </div>
+</form>
+
+{% if form.errors %}
+    <ul class="errors">
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+                <li>{{ form[field_name].label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% include 'blogfooter.html' %}
