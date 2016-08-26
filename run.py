@@ -615,7 +615,7 @@ def article_view(id):
 @flask_login.login_required
 def article_list():
     """ List articles """
-    articles = mongo.db.articles.find().sort("created",-1)
+    articles = mongo.db.article.find().sort("created",-1)
     
     return render_template('article_list.html',title="List Articles",articles=articles   )
 
