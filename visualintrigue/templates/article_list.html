@@ -14,7 +14,7 @@
     </thead>
     <tbody class="table-striped">
       {% if articles is not none %}
-      {% for articles in articles %}
+      {% for article in articles %}
         {% if article['status'] == 'active' %}
         <tr>
             <td style="color: #666666;">{{ ['title'] }}</td>
