@@ -615,7 +615,7 @@ def article_view(id):
 @flask_login.login_required
 def article_list():
     """ List articles """
-    articles = mongo.db.article.find().sort("created",-1)
+    articles = mongo.db.articles.find().sort("created",-1)
     
     return render_template('article_list.html',title="List Articles",articles=articles   )
 
@@ -631,13 +631,13 @@ def article_create():
         
         if(form.validate()):
             
-            article = mongo.db.article.find_one({'slug':form.slug.data})
+            article = mongo.db.articles.find_one({'slug':form.slug.data})
     
             if article:
                 flash('Slug already exists for blog entry, please use a different one.','alert-warning')
                 return render_template('createarticle.html',title='Create New Article',form=form,)
      
-            mongo.db.article.insert(
+            mongo.db.articles.insert(
               {
                 "slug": util.slugify(form.slug.data),
                 "title": form.title.data,
