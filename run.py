@@ -631,7 +631,34 @@ def article_create():
         form = ArticleForm(request.form)
         
         if(form.validate()):
-            return redirect('/article/list/')
+            
+            article = mongo.db.article.find_one({'slug':form.slug.data})
+    
+            if article:
+                flash('Slug already exists for blog entry, please use a different one.','alert-warning')
+                return render_template('createarticle.html',title='Create New Article',form=form,)
+     
+            mongo.db.article.insert(
+              {
+                "slug": util.slugify(form.slug.data),
+                "title": form.title.data,
+                "body": form.body.data,
+                "status": form.active.data,
+                "created": datetime.now(),
+                "updated": datetime.now(),
+                "keywords": form.keywords.data,
+                "uuid": uuid.uuid4()
+                
+              }
+            )
+            
+            flash('Blog entry successfully created','alert-success')            
+            
+            return redirect('/article/list')
+        
+        
+        
+
         else:
             flash('Validation Error','alert-warning')
             
