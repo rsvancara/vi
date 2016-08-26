@@ -1,12 +1,75 @@
 {% include 'header.html' %}
 {% from "_formhelpers.html" import render_field %}
 <style type="text/css">
-
+    #blog-form input {
+        width: 100%
+    }
+    .mce-edit-area {
+        min-height: 500px;
+    }
+    .drop-area{
+        width:100%;
+        height:50px;
+        border: 1px solid #999;
+        text-align: center;
+        padding:10px;
+        cursor:pointer;
+        margin-bottom: 50px;
+        border-radius: 5px;
+        
+    }
+    
+    #thumbnail img{
+        width:100%;
+        /*height:100px;*/
+        margin:5px;
+    }
+    canvas{
+        border:1px solid red;
+    }
+    
+    #photo-upload-fieldset label, #photo-upload-fieldset input {
+        display: none;
+    }
+    
+    #title {
+        width: 100%;
+    }
+    
+    #slug {
+        width: 100%;
+    }
+    
+    #keywords {
+        width: 100%;
+    }
     
 </style>
-<form action="/artcle/edit/{{ id }}" method="post" enctype="multipart/form-data">
+<form action="/article/edit/{{ id }}" method="post" enctype="multipart/form-data">
     <div class="row">
+        <div class="col-md-8">
+            <fieldset>
+                <legend>Content</legend>
+                {{ render_field(form.body) }} 
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+        <fieldset>
+           <legend>General</legend>
+           {{ render_field(form.title) }}
+           {{ render_field(form.slug) }}
+           {{ render_field(form.active) }}
+           {{ render_field(form.keywords) }}
 
+           
+           
+        
+        </fieldset>
+    
+        {{ form.csrf_token }}
+        <input id="newimage" type="hidden" name="newimage" value="{{ form.newimage.data }}" />
+        <p><input class="btn btn-primary" type=submit value=Post></p>
+        </div>
     </div>
 </form>
 

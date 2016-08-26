@@ -651,7 +651,7 @@ def article_create():
               }
             )
             
-            flash('Blog entry successfully created','alert-success')            
+            flash('Article successfully created','alert-success')            
             
             return redirect('/article/list')
         else:
@@ -663,9 +663,51 @@ def article_create():
 @flask_login.login_required
 def article_edit():
     """ Edit article """
-    
     form = ArticleForm()
-    return render_template('editarticle.html',title="Edit Article" )
+    article = mongo.db.articles.find_one({'slug':id})
+    if article is None:
+        flash('Could not find article for id provided','alert-warning')
+        return redirect(url_for('error'))  
+
+
+    #form = BlogForm(request.form)
+    form.body.data = article['body']
+    form.title.data = article['title']
+    form.slug.data = article['slug']
+    form.active.data = article['status']
+    
+    if(request.method == 'POST'):
+        form = ArticleForm(request.form)
+        
+        if(form.validate()):
+            
+            article = mongo.db.articles.find_one({'slug':form.slug.data})
+    
+            if article:
+                flash('Slug already exists for blog entry, please use a different one.','alert-warning')
+                return render_template('createarticle.html',title='Create New Article',form=form,)
+     
+            mongo.db.articles.insert(
+              {
+                "slug": util.slugify(form.slug.data),
+                "title": form.title.data,
+                "body": form.body.data,
+                "status": form.active.data,
+                "created": datetime.now(),
+                "updated": datetime.now(),
+                "keywords": form.keywords.data,
+                "uuid": uuid.uuid4()
+                
+              }
+            )
+            
+            flash('Article successfully created','alert-success')            
+            
+            return redirect('/article/list')
+        else:
+            flash('Validation Error','alert-warning')
+    
+    return render_template('createarticle.html',title="Create Article",form=form)
 
 @app.route('/article/delete/<id>')
 @flask_login.login_required
