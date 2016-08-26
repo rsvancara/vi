@@ -615,8 +615,7 @@ def article_view(id):
 @flask_login.login_required
 def article_list():
     """ List articles """
-    
-    articles = None
+    articles = mongo.db.articles.find().sort("created",-1)
     
     return render_template('article_list.html',title="List Articles",articles=articles   )
 
@@ -655,15 +654,9 @@ def article_create():
             flash('Blog entry successfully created','alert-success')            
             
             return redirect('/article/list')
-        
-        
-        
-
         else:
             flash('Validation Error','alert-warning')
-            
-        
-        
+    
     return render_template('createarticle.html',title="Create Article",form=form)
 
 @app.route('/article/edit/<id>',methods=['GET', 'POST'])
