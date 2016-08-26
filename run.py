@@ -620,15 +620,26 @@ def article_list():
     
     return render_template('article_list.html',title="List Articles",articles=articles   )
 
-@app.route('/article/create')
+@app.route('/article/create',methods=['GET', 'POST'])
 @flask_login.login_required
 def article_create():
     """ Create article """
     
     form = ArticleForm()
+    
+    if(request.method == 'POST'):
+        form = ArticleForm(request.form)
+        
+        if(form.validate()):
+            return redirect('/article/list/')
+        else:
+            flash('Validation Error','alert-warning')
+            
+        
+        
     return render_template('createarticle.html',title="Create Article",form=form)
 
-@app.route('/article/edit/<id>')
+@app.route('/article/edit/<id>',methods=['GET', 'POST'])
 @flask_login.login_required
 def article_edit():
     """ Edit article """
