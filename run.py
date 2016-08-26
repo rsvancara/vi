@@ -667,6 +667,28 @@ def article_edit():
     form = ArticleForm()
     return render_template('editarticle.html',title="Edit Article" )
 
+@app.route('/article/delete/<id>')
+@flask_login.login_required
+def article_delete(id):
+    """ delete article by id """
+    if id is None:
+        flash("Invalid blog id passed to delete function!",'alert-warning')
+        return redirect(url_for('article_list'))
+    
+    article = mongo.db.articles.find_one({'slug':id})
+    
+
+    if article:
+
+        mongo.db.articles.remove({'slug':id})
+        
+        flash("Article deleted",'alert-success')
+
+        return redirect('/article/list')
+
+    flash('Error deleting article.  Please see logs for details.')
+    return redirect(url_for('error'))
+
 
 class User(flask_login.UserMixin):
     pass
