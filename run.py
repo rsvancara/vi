@@ -634,7 +634,7 @@ def article_create():
             article = mongo.db.articles.find_one({'slug':form.slug.data})
     
             if article:
-                flash('Slug already exists for blog entry, please use a different one.','alert-warning')
+                flash('Slug already exists for article, please use a different one.','alert-warning')
                 return render_template('createarticle.html',title='Create New Article',form=form,)
      
             mongo.db.articles.insert(
@@ -686,33 +686,37 @@ def article_edit(id):
         
         if(form.validate()):
             
-            article = mongo.db.articles.find_one({'slug':form.slug.data})
+            
+            # If the slug is different, then we need to check that it is not in use 
+            if article['slug'] != form.slug.data:
+                slugcount = mongo.db.articles.count({'slug':form.slug.data})
+                if slugcount >= 1:
+                    flash('Slug already in use. Please select a unique slug','alert-warning')
+                    return render_template('editarticle.html',title='Edit Article',id=id,form=form) 
     
-            if article:
-                flash('Slug already exists for blog entry, please use a different one.','alert-warning')
-                return render_template('createarticle.html',title='Create New Article',form=form,)
      
-            mongo.db.articles.insert(
+            mongo.db.articles.update(
+              {
+                "slug":id,
+              },
               {
                 "slug": util.slugify(form.slug.data),
                 "title": form.title.data,
                 "body": form.body.data,
                 "status": form.active.data,
-                "created": datetime.now(),
                 "updated": datetime.now(),
-                "keywords": form.keywords.data,
-                "uuid": uuid.uuid4()
+                "keywords": form.keywords.data
                 
               }
             )
             
-            flash('Article successfully created','alert-success')            
+            flash('Article successfully updated','alert-success')            
             
             return redirect('/article/list')
         else:
             flash('Validation Error','alert-warning')
     
-    return render_template('createarticle.html',title="Create Article",form=form)
+    return render_template('editarticle.html',title="Edit Article",form=form)
 
 @app.route('/article/delete/<id>')
 @flask_login.login_required
