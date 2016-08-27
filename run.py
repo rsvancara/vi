@@ -716,7 +716,7 @@ def article_edit(id):
         else:
             flash('Validation Error','alert-warning')
     
-    return render_template('editarticle.html',title="Edit Article",form=form)
+    return render_template('editarticle.html',title="Edit Article",form=form,id=id)
 
 @app.route('/article/delete/<id>')
 @flask_login.login_required
