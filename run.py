@@ -680,6 +680,7 @@ def article_edit(id):
     form.title.data = article['title']
     form.slug.data = article['slug']
     form.active.data = article['status']
+    form.keywordsdata = article['keywords']
     
     if(request.method == 'POST'):
         form = ArticleForm(request.form)
