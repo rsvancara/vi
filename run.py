@@ -706,7 +706,7 @@ def article_edit(id):
                 "body": form.body.data,
                 "status": form.active.data,
                 "updated": datetime.now(),
-                'create': article['created']
+                'create': article['created'],
                 "keywords": form.keywords.data
                 
               }
