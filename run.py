@@ -661,8 +661,13 @@ def article_create():
 
 @app.route('/article/edit/<id>',methods=['GET', 'POST'])
 @flask_login.login_required
-def article_edit():
+def article_edit(id):
     """ Edit article """
+    
+    if id is None:
+        flash("Invalid blog id passed to delete function!",'alert-warning')
+        return redirect(url_for('article_list'))
+    
     form = ArticleForm()
     article = mongo.db.articles.find_one({'slug':id})
     if article is None:
