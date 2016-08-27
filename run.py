@@ -681,7 +681,7 @@ def article_edit(id):
     form.slug.data = article['slug']
     form.active.data = article['status']
     form.keywords.data = article['keywords']
-    
+
     if(request.method == 'POST'):
         form = ArticleForm(request.form)
         
@@ -706,7 +706,7 @@ def article_edit(id):
                 "body": form.body.data,
                 "status": form.active.data,
                 "updated": datetime.now(),
-                'create': article['created'],
+                'created': article['created'],
                 "keywords": form.keywords.data
                 
               }
