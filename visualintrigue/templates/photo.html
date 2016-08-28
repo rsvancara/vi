@@ -1,14 +1,156 @@
-{% include 'header.html' %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Visual Intrigue - {{ title }}</title>
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Visual Intrigue Photography">
+    <meta property="og:url" content="http://visualintrigue.com{{request.path}}">
+    <meta property="og:description" content="Visual Intrigue Photography">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      
+    <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/css/tether-theme-arrows.css" />
+    <link rel="stylesheet" href="/static/css/site.css" />
+    <script src="https://use.fontawesome.com/df0741c26d.js"></script>
+    <script type="text/javascript">
+    // Google Analytics
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-57579922-2', 'auto');
+    ga('send', 'pageview');   
+    </script>
+    
+    <style type="text/css">
+        .photo-details{
+            background-color: #ececec;
+            padding: 10px;
+        }
+        .photo-title {
+            margin-left: 15px;
+        }
+    </style>
+  </head>
+  <body class="light-bg">
+    <nav class="navbar navbar-dark bg-inverse navbar-fixed-top">
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right pull-xs-right">
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="/collection/list">Manage Collections <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/article/list">Manage Articles<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('logout') }}">LogOut [ {{ current_user.id }} ] <span class="sr-only">(current)</span></a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('login') }}">Log In <span class="sr-only">(current)</span></a>
+        </li>
+        {% endif %}        
+      </ul>
+    </nav>
+    {% if container %}
+      <div class="{{container}}">
+    {% else %}
+      <div class="container-fluid">
+    {% endif %}
+        <h1 class="photo-title">{{ title }}</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages  %}
+        {% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
  
 <div class="row">
     <div class="col-md-8">
-        <img class="img-responsive" style="max-width: 100%; display: inline; margin-top: 0px;" id="photo" data-src="{{image_url}}" src="{{ lowrez_url }}" class="lazy" alt="{{title}}"/>
+        <img class="img-responsive" style="max-width: 100%; display: inline; margin-top: 0px;" id="photo" data-src="{{image_url}}" src="{{ lowrez_url }}" class="lazy" alt="{{title}} {{blog['keywords']}}"/>
     </div>
     <div class="col-md-4">
-        <div class="photo-text-content">
-            {{ blog['body'] |safe }}
-            
+        <div class="photo-info-header">
+            <h3>Photo Details</h3>
+        </div>
+        <div class="photo-details">
+            {% if 'exif' in blog %}
+            <ul class="list-unstyled">
+              <li>
+                <i class="fa fa-circle-o" aria-hidden="true"></i>
+                <span class="pinfo-label">Camera:</span>
+                <span class="pinfo-value">{{ blog['exif']['make'] }}</span>
+              </li>
+              <!--<li>
+                <i class="fa fa-circle-o" aria-hidden="true"></i>
+                <span class="pinfo-label">Model:</span>
+                <span class="pinfo-value">{{ blog['exif']['model'] }}</span>            
+              </li>-->
+              <li>
+                <i class="fa fa-circle-o" aria-hidden="true"></i>
+                <span class="pinfo-label">Exposure Time:</span>
+                <span class="pinfo-value">{{ blog['exif']['exposuretime'] }}</span>            
+              </li>
+              <li>
+                <i class="fa fa-circle-o" aria-hidden="true"></i>
+                <span class="pinfo-label">Aperture:</span>
+                <span class="pinfo-value">{{ blog['exif']['aperture'] }}</span>            
+              </li>
+              <li>
+                <i class="fa fa-circle-o" aria-hidden="true"></i>
+                <span class="pinfo-label">ISO:</span>
+                <span class="pinfo-value">{{ blog['exif']['iso'] }}</span>            
+              </li>
+              <li>
+                <i class="fa fa-circle-o" aria-hidden="true"></i>
+                <span class="pinfo-label">Focal Length:</span>
+                <span class="pinfo-value">{{ blog['exif']['focallength'] }}</span>            
+              </li>
+              <li>
+                <i class="fa fa-circle-o" aria-hidden="true"></i>
+                <span class="pinfo-label">Exposure Program:</span>
+                <span class="pinfo-value">{{ blog['exif']['exposureprogram'] }}</span>            
+              </li>
+              <li>
+                <i class="fa fa-circle-o" aria-hidden="true"></i>
+                <span class="pinfo-label">Exposure Bias:</span>
+                <span class="pinfo-value">{{ blog['exif']['exposurebias'] }}</span>            
+              </li>
+            </ul>
+            {% endif %}
         </div>
     </div>
 </div>
-{% include 'footer.html' %}
+    </div>  
+      
+      <script src="https://code.jquery.com/jquery-2.2.0.min.js" crossorigin="anonymous"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.js"></script>
+      <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+      <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
+
+      
+      <script type="text/javascript">
+        
+        $( document ).ready(function() {
+            console.log( "lazyload activated" );
+            $("img.lazy").lazyload({
+                effect : "fadeIn"
+            });
+            
+        });
+              
+      </script>
+  </body>
+</html>
