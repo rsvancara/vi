@@ -12,11 +12,6 @@ from werkzeug.contrib.fixers import ProxyFix
 import pymongo
 import random
 import uuid
-
-
-
-
-#from wtforms import Form, BooleanField, TextField, PasswordField, SelectField, validators
 from werkzeug import secure_filename
 import os
 from datetime import datetime
@@ -518,8 +513,7 @@ def photo(id=None):
     
     if blog is None:
         return redirect(url_for('notfound'))
-    
-    
+     
     image_url = siteconfig.AMAZON_BASE_URL + blog['files']['large']['path']
     lowrez_url = siteconfig.AMAZON_BASE_URL + blog["files"]['lrlarge']['path']
     return render_template('photo.html',title=blog['title'],blog=blog,image_url=image_url,lowrez_url=lowrez_url)
@@ -536,7 +530,6 @@ def login():
     if request.form['pw'] == siteconfig.USERS[email]['pw']:
         user = User()
         user.id = email
-        
         
         flask_login.login_user(user)
         flash('You were successfully logged in','alert-success')
@@ -561,28 +554,22 @@ def frontpageservice():
     if blogs is None:
         return jsonify(imagelist)
     
-    
     tlist = []
     
     for blog in blogs:
         tlist.append(siteconfig.AMAZON_BASE_URL + blog['files']['large']['path'])
-    
-    
-        
+         
     i = len(tlist)-1
     
     while i > 1:
         j = random.randrange(i)  # 0 <= j <= i
         tlist[j], tlist[i] = tlist[i], tlist[j]
         i = i - 1
-        
-    #tlist = random.shuffle(tlist)
 
     for t in tlist:
         imagelist.append({'url':t})
 
     return jsonify({'urls':imagelist})
-    #return("['"+"','".join(imagelist)+"']")
     
     
 @app.route('/logout')
@@ -590,9 +577,6 @@ def frontpageservice():
 def logout():
     """Logout the current user."""
     logger.info("requested logout")
-    #session.clear()
-    #user = current_user
-    #user.authenticated = False
     flask_login.logout_user()
     return redirect(url_for('index'))
 
@@ -601,15 +585,12 @@ def logout():
 def unauthorized():
     return render_template('unauthorized.html',title='Unauthorized Request')
 
-@app.route('/protected')
-@flask_login.login_required
-def protected():
-    return "Article View"
 
 @app.route('/article/<id>')
 def article_view(id):
     """ View Article """
     return render_template('article.html',title="Article")
+
 
 @app.route('/article/list')
 @flask_login.login_required
@@ -618,6 +599,7 @@ def article_list():
     articles = mongo.db.articles.find().sort("created",-1)
     
     return render_template('article_list.html',title="List Articles",articles=articles   )
+
 
 @app.route('/article/create',methods=['GET', 'POST'])
 @flask_login.login_required
@@ -659,6 +641,7 @@ def article_create():
     
     return render_template('createarticle.html',title="Create Article",form=form)
 
+
 @app.route('/article/edit/<id>',methods=['GET', 'POST'])
 @flask_login.login_required
 def article_edit(id):
@@ -674,20 +657,15 @@ def article_edit(id):
         flash('Could not find article for id provided','alert-warning')
         return redirect(url_for('error'))  
 
-
     #form = BlogForm(request.form)
     form.body.data = article['body']
     form.title.data = article['title']
     form.slug.data = article['slug']
     form.active.data = article['status']
     form.keywords.data = article['keywords']
-
     if(request.method == 'POST'):
         form = ArticleForm(request.form)
-        
         if(form.validate()):
-            
-            
             # If the slug is different, then we need to check that it is not in use 
             if article['slug'] != form.slug.data:
                 slugcount = mongo.db.articles.count({'slug':form.slug.data})
@@ -720,6 +698,7 @@ def article_edit(id):
     
     return render_template('editarticle.html',title="Edit Article",form=form,id=id)
 
+
 @app.route('/article/delete/<id>')
 @flask_login.login_required
 def article_delete(id):
@@ -730,7 +709,6 @@ def article_delete(id):
     
     article = mongo.db.articles.find_one({'slug':id})
     
-
     if article:
 
         mongo.db.articles.remove({'slug':id})

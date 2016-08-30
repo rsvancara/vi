@@ -52,6 +52,7 @@ body.dark-bg {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    
 }
 
 .fp-header h1, .fp-header h2, .fp-header h3, .fp-header h4{
@@ -96,14 +97,18 @@ body { font-family: sans-serif; }*/
 
 /* ---- .grid-item ---- */
 
-.grid-sizer,
+/*.grid-sizer,
 .grid-item {
   width: 33.333%;
+}*/
+
+.grid-sizer, .grid-item { width: 100%; }
+
+@media screen and (min-width: 768px) {
+  /* 5 columns for larger screens */
+  .grid-sizer, .grid-item { width: 33.33%; }
 }
 
-.grid-item {
-  float: left;
-}
 
 .grid-item img {
   display: block;
@@ -122,15 +127,22 @@ body { font-family: sans-serif; }*/
 }
 
 .pinfo, .img-overlay {
-    display: none;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+    display: block;
     background-color: rgba(0,0,0,0.65);
     cursor: pointer;
     color: #FFFFFF;
+}
+
+@media screen and (min-width: 768px) {
+  .pinfo, .img-overlay {
+    display: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+
 }
 
 .pinfo a, .img-overlay a {

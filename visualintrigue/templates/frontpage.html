@@ -7,8 +7,9 @@
     <meta property="og:url" content="http://visualintrigue.com{{request.path}}">
     <meta property="og:description" content="Visual Intrigue Photography">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/css/tether-theme-arrows.css" />
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/static/css/site.css" />
@@ -64,23 +65,22 @@
       
       <div class="row">
         <div class="col-sm-12 fp-header frosty home-pattern">
-          <h3>Photos by Categories</h3>
+          <h3 style"margin-top:10px; padding-bottom:5px;">Photos by Categories</h3>
           <hr/>
           <ul class="list-unstyled pinfo-list portfolio-items">
             <li><i class="fa fa-camera-retro fa-lg"></i>&nbsp;<a href="/portfolio/landscape">Landscape</a></li>
             <li><i class="fa fa-camera-retro fa-lg"></i>&nbsp;<a href="/portfolio/cityscape">Cityscapes</a></li>
             <li><i class="fa fa-camera-retro fa-lg"></i>&nbsp;<a href="/portfolio/macro">Macro</a></li>
             <li><i class="fa fa-camera-retro fa-lg"></i>&nbsp;<a href="/portfolio/street">Street</a></li>
-
           </ul>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 fp-header frosty home-pattern" style="padding-top:30px;">
-          <h3>Read the Stories</h3>
+          <div class="" style="clear:both;height: 20px;"></div>
+          <h3 style"padding-top:5px; padding-bottom:5px;">Read the Stories</h3>
           <hr />
+          <div class="" style="min-height: 20px;clear:both;"></div>
         </div>
       </div>
+      
+      
       <div class="grid">
       <div class="grid-sizer"></div>
  
@@ -95,7 +95,7 @@
     </a>
     <div class="pinfo home-pattern" id="{{blog['cslug']}}">
       <div class="button-bar">
-        <a class="pinfo-title" href="/stories/{{blog['cslug']}}">{{blog['ctitle']}}</a>
+        <h3><a href="/stories/{{blog['cslug']}}">{{blog['ctitle']}}</a></h3>
         <hr />
         <p>
           {{ blog['summary'] }} 
@@ -107,9 +107,9 @@
   {% endfor %}
 
 </div>     
-    <script src="https://code.jquery.com/jquery-2.2.0.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.js"></script>
-    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
     <script src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
     <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
@@ -134,8 +134,8 @@
       // layout Masonry after each image loads
       msnry.layout();
     });
-    console.log("Done");
     
+    // Only fire this event if the screen size is greater than 1024
     $("div.grid-item").mouseover(function() {
       console.log("mouse me baby");
       console.log($(this).parent().width())
@@ -144,7 +144,7 @@
         pinfo.show();
       }
     });
-    
+
     $("div.grid-item").mouseout(function() {
       console.log("mouse out baby");
       var pinfo = $(this).children('div.pinfo').eq(0);
@@ -158,8 +158,7 @@
     });
         
     $( document ).ready(function() {
-      
-      
+
       var fpAPI = "/image/frontpageservice";
       $.getJSON( fpAPI, {
         //tags: "mount rainier",
