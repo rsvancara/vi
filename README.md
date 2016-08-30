@@ -16,7 +16,7 @@ learned a lot about flask and hope to continue to build on my 15 years of PHP ex
 
 ## Demo
 You can check out the examples here
-- Front Page] -> http://visualintrigue.com)
+- Front Page -> http://visualintrigue.com
 - Story -> http://visualintrigue.com/stories/rialto-beach
 - Image View -> http://visualintrigue.com/photo/where-did-the-first-stack-go
 
