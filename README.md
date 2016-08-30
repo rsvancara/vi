@@ -1,7 +1,7 @@
 # Visual Intrigue Source Code
 
 ## About
-This is the source code for the visual intrigue project.  It is the project code used to run [[Visual Intrigue|http://visualintrigue.com]], my 
+This is the source code for the visual intrigue project.  It is the project code used to run [Visual Intrigue]|(http://visualintrigue.com), my 
 photography blog
 The code is all written in python flask.  At the time of this writing it is a very ugly mess and I will eventually upgrade it
 use the blueprint framework.  But for now, until this refactor happens, this is the unfortunate state of this project.  I have
@@ -16,9 +16,9 @@ learned a lot about flask and hope to continue to build on my 15 years of PHP ex
 
 ## Example
 You can check out the examples here
-- [[Front Page|http://visualintrigue.com]]
-- [[Story|http://visualintrigue.com/stories/rialto-beach]]
-- [[Image View|http://visualintrigue.com/photo/where-did-the-first-stack-go]]
+- [Front Page]|(http://visualintrigue.com)
+- [Story]|(http://visualintrigue.com/stories/rialto-beach)
+- [Image View]|(http://visualintrigue.com/photo/where-did-the-first-stack-go)
 
 
 
