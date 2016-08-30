@@ -192,14 +192,24 @@ ul.pinfo-list>li>span {
 ul.portfolio-items>li{
     display: inline-block;
     float: left;
-    width: 150px;
+    width: 100%;
     height: 30px;
-    border-radius: 5px;
-    border: 1px solid #FFFFFF;
     margin-left: 5px;
     color: #FFFFFF;
 }
 
+
+ul.portfolio-items>li a{
+    display: inline-block;
+    width: 250px;
+    height: 25px;
+    border-radius: 5px;
+    border: 1px solid #FFFFFF;
+}
+
+ul.portfolio-items>li a i{
+    margin-left: 5px;
+}
 .center-block {
   display: block;
   margin-left: auto;
