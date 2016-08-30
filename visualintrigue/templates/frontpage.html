@@ -158,6 +158,8 @@
     });
         
     $( document ).ready(function() {
+      
+      
       var fpAPI = "/image/frontpageservice";
       $.getJSON( fpAPI, {
         //tags: "mount rainier",
@@ -169,17 +171,18 @@
           fparray.push(url.url)
           console.log("Image: " + url.url)
           
+          $(".frontpage").bgswitcher({
+          //images: ["pic1.jpg", "pic2.jpg", "pic3.jpg"],
+            images: fparray,
+            loop: true,
+            interval: 5000,
+            shuffle: true,
+          });          
         });
       });
     });
     
-    $(".frontpage").bgswitcher({
-      //images: ["pic1.jpg", "pic2.jpg", "pic3.jpg"],
-      images: fparray,
-      loop: true,
-      interval: 5000,
-      shuffle: true,
-    });
+
     </script>
       
 
