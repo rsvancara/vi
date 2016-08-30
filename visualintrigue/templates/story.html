@@ -67,7 +67,7 @@
                   data-src="{{baseurl}}{{ blog['files']['medium']['path']}}"
                   src="{{baseurl}}{{ blog['files']['lrmedium']['path']}}"
                   alt="{{blog['title']}}"/>
-              <div id="{{blog['slug']}}" class="img-overlay">
+              <div id="{{blog['slug']}}" class="img-overlay story-mobile">
                 <div class="button-bar">
                   <a class="pinfo-title" href="/photo/{{blog['slug']}}">{{blog['title']}}</a>
                   <hr style="color: #FFFFFF; width: 100%;"/>
@@ -134,10 +134,17 @@
     
     $("div.image-body").mouseover(function() {
       console.log("mouse me baby");
-      //console.log($(this).parent().width())
-      var ibody = $(this).children('div.img-overlay').eq(0);
-      ibody.show();
-      console.log(ibody.attr('id'))
+      console.log($(this).parent().width())
+      if ($(this).parent().width() > 600 ) {
+        var ibody = $(this).children('div.img-overlay').eq(0);
+        console.log("showing")
+        ibody.show();
+      }
+      else
+      {
+        var ibody = $(this).children('div.img-overlay').eq(0);
+        ibody.hide();
+      }
     });
     
     $("div.image-body").mouseout(function() {
@@ -151,6 +158,7 @@
       var id = ibody.attr('id');
       window.location.href = "/photo/" + id;
     });
+    
     </script>
   </body>
 </html>

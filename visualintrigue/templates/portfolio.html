@@ -62,7 +62,7 @@
   <div class="grid-item" id="{{blog['slug']}}">
     <a href="/photo/{{blog['slug']}}">
       <img data-src="{{baseurl}}{{ blog['files']['medium']['path']}}" src="{{baseurl}}{{ blog['files']['lrmedium']['path']}}" alt="{{blog['title']}}"/></a>
-      <div class="pinfo">
+      <div class="pinfo portfolio-mobile">
         <div class="button-bar">
           <a class="pinfo-title" href="/photo/{{blog['slug']}}">{{blog['title']}}</a>
         </div>
@@ -145,11 +145,16 @@
     console.log("Done");
     
     $("div.grid-item").mouseover(function() {
-      console.log("mouse me baby");
+
       console.log($(this).parent().width())
-      if ($(this).parent().width() > 479 ) {
+      if ($(this).parent().width() > 768 ) {
         var pinfo = $(this).children('div.pinfo').eq(0);
         pinfo.show();
+      }
+      else
+      {
+        var pinfo = $(this).children('div.pinfo').eq(0);
+        pinfo.hide();
       }
       
     });

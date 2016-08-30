@@ -126,7 +126,7 @@ body { font-family: sans-serif; }*/
   max-width: 100%;
 }
 
-.pinfo, .img-overlay {
+.pinfo, .img-overlay, .story-mobile {
     display: block;
     background-color: rgba(0,0,0,0.65);
     cursor: pointer;
@@ -134,7 +134,7 @@ body { font-family: sans-serif; }*/
 }
 
 @media screen and (min-width: 768px) {
-  .pinfo, .img-overlay {
+  .pinfo, .img-overlay, .story-mobile {
     display: none;
     top: 0;
     left: 0;
@@ -142,7 +142,11 @@ body { font-family: sans-serif; }*/
     width: 100%;
     position: absolute;
   }
+}
 
+.portfolio-mobile, .story-mobile, .img-overlay{
+  display: none;
+  
 }
 
 .pinfo a, .img-overlay a {
