@@ -120,7 +120,7 @@
     
     // init Isotope
     var grid = document.querySelector('.grid');
-    var fparray = []
+    var fparray = ["http://visualintrigue-vrt547.s3-website-us-west-2.amazonaws.com/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_1600px.jpeg"]
     var fptimer
     var current_image = 0
     
@@ -175,36 +175,7 @@
           
         });
       });
-      //fptimer = setInterval(function(){ frontater() }, 10000);
     });
-    
-    //function frontater() {
-    //  console.log('rotating');
-    //  body = $('body');
-    //  
-    //  body.css('background','url('+ fparray[current_image] +') no-repeat center center fixed');
-    //  body.css('background-size','cover');
-    //  current_image = current_image + 1;
-    //  console.log(fparray.length + " " + current_image);
-    //  if (current_image > fparray.length-1) {
-    //    current_image = 0;
-    //    preloadImage(fparray[current_image + 1])
-    //  }
-    //}
-    
-    $(".frontpage").bgswitcher({
-      //images: ["pic1.jpg", "pic2.jpg", "pic3.jpg"],
-      images: fparray,
-      loop: true,
-      interval: 5000,
-      shuffle: true,
-    });
-    
-    function preloadImage(url){
-        var img=new Image();
-        img.src=url;
-    }
-    
     </script>
       
 
