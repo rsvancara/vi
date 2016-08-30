@@ -193,6 +193,9 @@ ul.portfolio-items>li{
     display: inline-block;
     float: left;
     width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #FFFFFF;
     margin-left: 5px;
     color: #FFFFFF;
 }
