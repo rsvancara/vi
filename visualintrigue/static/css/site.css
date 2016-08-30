@@ -144,7 +144,7 @@ body { font-family: sans-serif; }*/
   }
 }
 
-.portfolio-mobile, .story-mobile, .img-overlay{
+.portfolio-mobile, .story-mobile{
   display: none;
   
 }
