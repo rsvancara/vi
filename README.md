@@ -14,11 +14,11 @@ learned a lot about flask and hope to continue to build on my 15 years of PHP ex
 - Uses Amazon S3 for image storage, but can be adapted to use Amazon cloud front
 - Uses mongodb to help reduce the number of backend queries to the database
 
-## Example
+## Demo
 You can check out the examples here
-- [Front Page]|(http://visualintrigue.com)
-- [Story]|(http://visualintrigue.com/stories/rialto-beach)
-- [Image View]|(http://visualintrigue.com/photo/where-did-the-first-stack-go)
+- Front Page] -> http://visualintrigue.com)
+- Story -> http://visualintrigue.com/stories/rialto-beach
+- Image View -> http://visualintrigue.com/photo/where-did-the-first-stack-go
 
 
 
