@@ -159,13 +159,19 @@
         
     $( document ).ready(function() {
 
-      var fpAPI = "/image/frontpageservice";
+      var screen_size = "lrlarge";
+    
+      if ($(window).width() < 768) {
+        screen_size = "lrmedium";
+      }
+      var fpAPI = "/image/frontpageservice/" + screen_size;
       $.getJSON( fpAPI, {
         //tags: "mount rainier",
         //tagmode: "any",
         format: "json"
       })
       .done(function( data ) {
+        
         $.each( data.urls, function( i, url ) {
           fparray.push(url.url)
           console.log("Image: " + url.url)

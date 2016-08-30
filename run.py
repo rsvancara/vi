@@ -543,8 +543,8 @@ def error():
     return "ERROR"
 
 
-@app.route('/image/frontpageservice',methods=['GET'])
-def frontpageservice():
+@app.route('/image/frontpageservice/<size>',methods=['GET'])
+def frontpageservice(size):
     """ Returns a JSON String of the images included in the
         frontpage image rotation.  The order of the list is
         randomized
@@ -557,7 +557,7 @@ def frontpageservice():
     tlist = []
     
     for blog in blogs:
-        tlist.append(siteconfig.AMAZON_BASE_URL + blog['files']['large']['path'])
+        tlist.append(siteconfig.AMAZON_BASE_URL + blog['files'][size]['path'])
          
     i = len(tlist)-1
     
