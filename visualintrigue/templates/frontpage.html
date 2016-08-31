@@ -121,7 +121,7 @@
     
     // init Isotope
     var grid = document.querySelector('.grid');
-    var fparray = []
+    var fparray = ['https://s3.amazonaws.com/visualintrigue-3556/9ed571af-7c64-43e7-a669-7c560b0563df_lowrez_1600px.jpeg']
     var fptimer
     var current_image = 0
     
@@ -175,9 +175,9 @@
         $.each( data.urls, function( i, url ) {
           fparray.push(url.url)
           console.log("Image: " + url.url)
-          
+                    
           $(".frontpage").bgswitcher({
-          //images: ["pic1.jpg", "pic2.jpg", "pic3.jpg"],
+          
             images: fparray,
             loop: true,
             interval: 5000,
