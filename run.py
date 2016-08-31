@@ -17,6 +17,7 @@ import os
 from datetime import datetime
 
 
+
 app = Flask('visualintrigue')
 app.config['MONGO_URI'] = siteconfig.MONGO_URI
 
@@ -549,7 +550,7 @@ def frontpageservice(size):
         frontpage image rotation.  The order of the list is
         randomized
     """
-    imagelist = [{'url':'http://visualintrigue-vrt547.s3-website-us-west-2.amazonaws.com/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_1600px.jpeg'}]
+    imagelist = [{'url':'https://visualintrigue-vrt547.s3-website-us-west-2.amazonaws.com/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_1600px.jpeg'}]
     blogs = mongo.db.blog.find({'homepage':'yes'})
     if blogs is None:
         return jsonify(imagelist)
