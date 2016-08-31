@@ -1,5 +1,5 @@
 body.frontpage { 
-  background: url(http://visualintrigue-vrt547.s3-website-us-west-2.amazonaws.com/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_1600px.jpeg) no-repeat center center fixed; 
+  background: url(https://visualintrigue-vrt547.s3-website-us-west-2.amazonaws.com/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_1600px.jpeg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -42,7 +42,7 @@ body.dark-bg {
 }
 
 #home {
-    background: url(http://visualintrigue.com/sites/all/themes/vi/rotator_images/img9998.jpg) no-repeat 50% 0 fixed;
+    background: url(https://visualintrigue.com/sites/all/themes/vi/rotator_images/img9998.jpg) no-repeat 50% 0 fixed;
     height: auto;
     margin: 0 auto;
     min-height: 720px;
