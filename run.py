@@ -591,7 +591,8 @@ def unauthorized():
 @app.route('/article/<id>')
 def article_view(id):
     """ View Article """
-    return render_template('article.html',title="Article")
+    article = mongo.db.articles.find_one({'slug':id})
+    return render_template('article.html',title=article['title'],article=article)
 
 
 @app.route('/article/list')
