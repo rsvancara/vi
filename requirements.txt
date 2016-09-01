@@ -1,0 +1,7 @@
+flask
+flask-login
+boto3
+boto 
+flask-pymongo
+flask-wtf
+exifread

@@ -1,0 +1,51 @@
+    </div>  
+      
+      <script src="https://code.jquery.com/jquery-2.2.0.min.js" crossorigin="anonymous"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.js"></script>
+      <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+      <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
+      <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+      <script>
+
+        jQuery(function($){
+            console.log("loading jquery")
+        });
+        
+        tinymce.init({ selector:'textarea#body',
+                            height: 500,
+                            theme: 'modern',
+                            file_picker_types: 'image',
+                            file_picker_callback: function(callback, value, meta) {
+                              imageFilePicker(callback, value, meta);
+                            },
+                            //file_browser_callback_types: 'image',
+                            plugins: ["image"],
+
+                          });
+        
+var imageFilePicker = function (callback, value, meta) {               
+    tinymce.activeEditor.windowManager.open({
+        title: 'Image Picker',
+        url: '/images/getimages',
+        width: 650,
+        height: 550,
+        buttons: [{
+            text: 'Insert',
+            onclick: function () {
+                //.. do some work
+                tinymce.activeEditor.windowManager.close();
+            }
+        }, {
+            text: 'Close',
+            onclick: 'close'
+        }],
+    }, {
+        oninsert: function (url) {
+            callback(url);
+            console.log("derp");
+        },
+    });
+};
+      </script>
+  </body>
+</html>
