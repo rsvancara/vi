@@ -723,6 +723,11 @@ def article_delete(id):
     flash('Error deleting article.  Please see logs for details.')
     return redirect(url_for('error'))
 
+@app.route('/filebrowser')
+@flask_login.login_required
+def file_browser():
+    
+    return render_template('fbrowse.html')
 
 class User(flask_login.UserMixin):
     pass
