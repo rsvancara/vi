@@ -60,10 +60,6 @@
            {{ render_field(form.slug) }}
            {{ render_field(form.active) }}
            {{ render_field(form.keywords) }}
-
-           
-           
-        
         </fieldset>
     
         {{ form.csrf_token }}
@@ -81,5 +77,4 @@
         {% endfor %}
     </ul>
 {% endif %}
-
-{% include 'blogfooter.html' %}
+{% include 'articlefooter.html' %}
