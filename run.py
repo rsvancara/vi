@@ -324,7 +324,12 @@ def blog_delete(id=None):
     if blog:
         if 'files' not in blog:
             try:
-                util.delete_image(blog['files'])
+               util.delete_image(blog['original'])
+               util.delete_image(blog['thumb']['path'])
+               util.delete_image(blog['medium']['path'])
+               util.delete_image(blog['lrmedium']['path'])
+               util.delete_image(blog['large']['path'])
+               util.delete_image(blog['lrlarge']['path'])
             except Exception as e:
                 logger.error("Error deleting blog %s with error: %s" %(id,e))
         mongo.db.blog.remove({'slug':id})
@@ -512,7 +517,6 @@ def notfound():
     
     return render_template('404.html',title='Page Not Found')
 
-
 @app.route('/photo/<id>', methods=['GET'])
 def photo(id=None):
     """
@@ -562,14 +566,15 @@ def frontpageservice(size):
     """
     #imagelist = [{'url':'https://s3.amazonaws.com/visualintrigue-3556/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_lowrez_1600px.jpeg'}]
     imagelist = []
-    blogs = mongo.db.blog.find({'homepage':'yes'})
+    blogs = mongo.db.blog.find({'homepage':'yes','active':'yes'})
     if blogs is None:
         return jsonify(imagelist)
     
     tlist = []
     
     for blog in blogs:
-        tlist.append(siteconfig.AMAZON_BASE_URL + blog['files'][size]['path'])
+        if size in blog['files']:
+            tlist.append(siteconfig.AMAZON_BASE_URL + blog['files'][size]['path'])
          
     i = len(tlist)-1
     
