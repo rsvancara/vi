@@ -160,6 +160,40 @@
     });
     
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "NewsArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://visualintrigue.com/stories/{{collection['slug']}}"
+      },
+      "headline": "Article headline",
+      "image": {
+        "@type": "ImageObject",
+        "url": "{{baseurl}}{{firstblog['files']['medium']['path']}}",
+        "height": {{firstblog['files']['medium']['height']}},
+        "width": {{firstblog['files']['medium']['width']}}
+      },
+      "datePublished": "{{collection['created']}}",
+      "dateModified": "{{collection['updated']}}",
+      "author": {
+        "@type": "Person",
+        "name": "Randall Svancara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Visual Intrigue",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://example.com/logo.jpg",
+          "width": 600,
+          "height": 60
+        }
+      },
+      "description": "{{description}}"
+    }
+    </script>
   </body>
 </html>
 

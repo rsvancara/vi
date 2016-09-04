@@ -51,7 +51,7 @@ def index():
             stories.append(b)
             break
 
-    return render_template('frontpage.html',title='Home',blogs=stories,baseurl=siteconfig.AMAZON_BASE_URL)
+    return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',blogs=stories,baseurl=siteconfig.AMAZON_BASE_URL)
 
 
 @app.route('/portfolio/<portfolio>')
@@ -494,7 +494,17 @@ def stories(id = None):
     
     blogs = mongo.db.blog.find({'collection':collection['collection'],'status':'active'}).sort('displayorder',1)
 
-    return render_template('story.html',title=collection['title'],collection=collection,blogs=blogs,baseurl=siteconfig.AMAZON_BASE_URL)
+    description = util.summary_text(collection['body'])
+    firstblog = None
+    if blogs:
+        firstblog = blogs[0]
+        
+
+    return render_template('story.html',title=collection['title'],
+                           collection=collection,blogs=blogs,
+                           baseurl=siteconfig.AMAZON_BASE_URL,
+                           firstblog=firstblog,
+                           description=description)
 
 
 @app.route('/notfound',methods=['GET','POST'])
