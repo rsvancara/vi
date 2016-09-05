@@ -757,6 +757,15 @@ def user_loader(email):
     user.id = email
     return user
 
+@app.route('/search')
+def search():   
+    return render_template("search.html",title="Search")
+
+@app.route('/contact')
+def contact():   
+    return render_template("contact.html",title="Contact")
+
+    
 
 @login_manager.request_loader
 def request_loader(request):
