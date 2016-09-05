@@ -566,7 +566,7 @@ def frontpageservice(size):
     """
     #imagelist = [{'url':'https://s3.amazonaws.com/visualintrigue-3556/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_lowrez_1600px.jpeg'}]
     imagelist = []
-    blogs = mongo.db.blog.find({'homepage':'yes','active':'yes'})
+    blogs = mongo.db.blog.find({'homepage':'yes','status':'active'})
     if blogs is None:
         return jsonify(imagelist)
     
