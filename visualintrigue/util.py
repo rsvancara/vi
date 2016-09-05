@@ -186,23 +186,18 @@ def save_file(file):
             data = open(os.path.join(siteconfig.UPLOAD_PATH,uploadfile), 'rb')
             s3.Bucket(siteconfig.AMAZON_BUCKET).put_object(Key=os.path.basename(uploadfile), Body=data, ContentType='image/jpeg')
             data.close()
-        
-        
 
-        
         bare_files_list = []
         # clean up the files
         for uploadfile in file_array:
             os.remove(uploadfile)
             bare_files_list.append(os.path.basename(uploadfile))
-        
-        
-        
+
         return {'status':True,'message':"File upload was a success", 'files':image_dict,'exif':exif}
     else:
         return {'status':False,'message':"No file provided",'files':None}
 
-def delete_image(files = {}):
+def delete_image(files = []):
     
     # upload file(s) to s3
     for s3file in files:
@@ -211,9 +206,9 @@ def delete_image(files = {}):
         
         bucket = s3.Bucket(siteconfig.AMAZON_BUCKET)
         
-        key = s3.Key(s3file)
         
-        bucket.delete_key(key)
+        
+        bucket.delete_key(s3file)
     
 
 def resize_image(filepath,width,dest,quality=100):
