@@ -5,33 +5,22 @@
     </head>
     <body>
         <div class="fbrowse" data-src="http://visualintrigue.com/somefile.png">
-            Some File            
+            Not Yet Implemented          
         </div>
-         <script src="https://code.jquery.com/jquery-2.2.0.min.js" crossorigin="anonymous"></script>
-<script type="text/javascript" language="javascript">
-    
-    ////$('div.fbrowse').click(function(){
-    //$(document).on("click","div.fbrowse",function(){
-    //  console.log("click");
-    //  item_url = $(this).data("src");
-    //  var args = top.tinymce.activeEditor.windowManager.getParams();
-    //  win = (args.window);
-    //  input = (args.input);
-    //  win.document.getElementById(input).value = item_url;
-    //  top.tinymce.activeEditor.windowManager.close();
-    //});
-    
-$(function(){
-    $('div.fbrowse').on('click', function(event){
-        mySubmit($(this).data("src"), { alt: "My image" });
-    });
-});
-
-function mySubmit(url,objVals) {
-    top.tinymce.activeEditor.windowManager.getParams().oninsert(url, objVals);
-    top.tinymce.activeEditor.windowManager.close();
-}
-</script>
+        <script src="https://code.jquery.com/jquery-2.2.0.min.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" language="javascript">
+  
+        $(function(){
+            $('div.fbrowse').on('click', function(event){
+                mySubmit($(this).data("src"), { alt: "My image" });
+            });
+        });
+        
+        function mySubmit(url,objVals) {
+            top.tinymce.activeEditor.windowManager.getParams().oninsert(url, objVals);
+            top.tinymce.activeEditor.windowManager.close();
+        }
+        </script>
     </body>
     
     
