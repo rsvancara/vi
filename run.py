@@ -742,7 +742,16 @@ def article_delete(id):
 @flask_login.login_required
 def file_browser():
     
-    return render_template('fbrowse.html')
+    files = {'status':'error'}
+    if os.path.exists(siteconfig.MEDIA):
+        files = util.path_hierarchy(siteconfig.MEDIA)
+
+        #return(jsonify(files))
+    
+    
+    
+    
+    return render_template('fbrowse.html',files=files)
 
 class User(flask_login.UserMixin):
     pass

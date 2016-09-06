@@ -11,6 +11,7 @@ import subprocess
 import exifread
 import json
 import logging
+import errno
 
 
 def get_exif(path):
@@ -236,9 +237,6 @@ def get_image_size(filepath):
     
     return (width, height)
 
-
-
-
 def pathtodir(path):
     if not os.path.exists(path):
         l=[]
@@ -250,6 +248,27 @@ def pathtodir(path):
             i = i + 1
             if not os.path.exists(p):
                 os.mkdir(p)
+
+def path_hierarchy(path):
+    hierarchy = {
+        'type': 'folder',
+        'name': os.path.basename(path),
+        'path': path,
+    }
+
+    try:
+        hierarchy['children'] = [
+            path_hierarchy(os.path.join(path, contents))
+            for contents in os.listdir(path)
+        ]
+    except OSError as e:
+        if e.errno != errno.ENOTDIR:
+            raise
+        hierarchy['type'] = 'file'
+
+    return hierarchy
+
+
 def main():
     pass
 

@@ -2,12 +2,59 @@
 <html>
     <head>
         <title>File Browser</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/css/tether-theme-arrows.css" />
+        <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
+        <style type="text/css">
+            div.folder {
+                margin-bottom: 10px;
+                cursor: pointer;
+            }
+            div.file {
+                margin-top: 5px;
+                margin-bottom: 5px;
+                padding-left: 10px;
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
+        
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+     <div class="panel panel-default">   
+
+        {% for k,v in files.items()  %}
+        
+          {% if k == 'children' %}
+        
+            {% for item in v %}
+              <div class="folder panel-heading" role="tab" id="heading-{{item.name}}">
+              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{item.name}}" aria-expanded="true" aria-controls="collapse-{{item.name}}">
+                <i class="fa fa-folder fa-lg" aria-hidden="true"> {{item.name}}</i>
+              </a>
+              {% if 'children' in item %}
+                <div id="collapse-{{item.name}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{item.name}}">
+                {% for file in item['children'] %}
+                  <div class="fbrowse file" data-src="http://visualintrigue.com/static/media/{{item.name}}/{{file['name']}}">
+                  <i class="fa fa-file-image-o fa-lg" aria-hidden="true"> {{file['name'] }}</i> 
+                  </div>
+                {% endfor %}
+                </div>
+              {% endif %}
+              </div>
+            {% endfor %}
+          {% endif  %}
+        
+        {% endfor %}
+    
+        
         <div class="fbrowse" data-src="http://visualintrigue.com/somefile.png">
-            Not Yet Implemented          
+                   
         </div>
-        <script src="https://code.jquery.com/jquery-2.2.0.min.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
         <script type="text/javascript" language="javascript">
   
         $(function(){
