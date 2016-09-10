@@ -8,6 +8,7 @@ class ArticleForm(Form):
     title = TextField(u'Title', [validators.Required(),validators.Length(min=4, max=128)])
     slug = TextField(u'Slug', [validators.Required(),validators.Length(min=4, max=128)])
     active = SelectField(u'Status',choices=[('active', 'Active'), ('disabled', 'Disabled')])
+    article_type = SelectField(u'Article Type',choices=[('review', 'review'), ('rant', 'rant'),('article', 'article'),('guide','guide')])
     body = TextAreaField(u'Body', [validators.Required()])
     keywords = TextAreaField(u'Key Words',  [validators.Required(),validators.Length(min=4, max=128)])  
     
