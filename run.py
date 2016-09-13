@@ -41,7 +41,7 @@ def index():
     collections = mongo.db.collections.find({'status':'active'}).sort("created",-1)
     
     for c in collections:
-        blogs = mongo.db.blog.find({'status':'active','collection':c['collection']}).sort('displayorder',1).limit(1)
+        blogs = mongo.db.blog.find({'status':'active','collection':c['collection'],'homepage':'yes'}).sort('displayorder').limit(1)
         
         for b in blogs:
             
