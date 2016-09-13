@@ -19,10 +19,13 @@
   {% include 'navbar.html' %}
       
     <div class="container">
-      <div class="top-spacer" style="height: 100px;"></div> 
+      <div class="top-spacer" style="height: 100px;"></div>
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item">{{collection['title']}</li>
+      </ol>
       <div class="row">
         <div class="col-md-2">
-          
         </div>
         <div class="col-md-8">
             <h2>{{collection['title']}}</h2>
