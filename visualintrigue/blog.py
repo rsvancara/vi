@@ -16,6 +16,8 @@ class BlogForm(Form):
     body = TextAreaField(u'Body', [validators.Required()])
     photo = FileField(u'Photo', validators=[FileAllowed(['jpg','jpeg'], 'JPEG Images only!')])
     newimage = HiddenField(u"newimage")
+    lat = HiddenField(u"lat")
+    lng = HiddenField(u"lng")
     keywords = TextAreaField(u'Key Words',  [validators.Required(),validators.Length(min=4, max=128)])
     portfolio = SelectField(u'Portfolio',choices=[('landscape','Landscape'),
         ('cityscape','Cityscape'),
