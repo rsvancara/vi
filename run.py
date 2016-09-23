@@ -216,6 +216,7 @@ def blog_add(id):
         if blog:
             flash('Slug already exists for blog entry, please use a different one.','alert-warning')
             return render_template('createblog.html',title='Create New Blog Post',form=form,collection=collection)
+        
         collection_single = mongo.db.collections.find_one({"collection":form.collection.data})
         
         if collection_single is None:
@@ -237,8 +238,8 @@ def blog_add(id):
             "keywords": form.keywords.data,
             "homepage": form.homepage.data,
             "displayorder": form.displayorder.data,
-            #"collection": collection['collection'],
-            #"collection_slug": collection['slug']
+            "lat": form.lat.data,
+            "lng": form.lng.data,
             "collection": form.collection.data,
             "collection_slug": collection_single['slug'],
             "uuid": uuid.uuid4()
@@ -386,6 +387,14 @@ def blog_edit(id=None):
     form.slug.data = blog['slug']
     form.active.data = blog['status']
     
+    form.lat.data = 0
+    form.lng.data = 0
+    
+    if 'lat' in blog:
+        form.lat.data = blog['lat']
+    if 'lng' in blog:
+        form.lng.data = blog['lng']
+    
     if 'displayorder' in blog:
         form.displayorder.data = blog['displayorder']
     else:
@@ -472,8 +481,8 @@ def blog_edit(id=None):
                  "homepage": form.homepage.data,
                  "collection": form.collection.data,
                  "collection_slug": collection_single['slug'],
-                 #"collection": collection['collection'],
-                 #"collection_slug": collection['slug'],
+                 "lat": form.lat.data,
+                 "lng": form.lng.data,
                  "displayorder":form.displayorder.data,
                  "uuid": uuid.uuid4(),
                }            
