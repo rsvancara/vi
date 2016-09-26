@@ -9,6 +9,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+    <link rel="canonical" href="http://visualintrigue.com{{request.path}}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/css/tether-theme-arrows.css" />
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
@@ -29,7 +30,8 @@
         </div>
         <div class="col-md-8">
             <h1>{{collection['title']}}</h2>
-            <h6>by <a rel="author" href="https://plus.google.com/+RandallSvancara">Randall Svancara</a></h6>
+            <h6>by <a rel="author" href="https://plus.google.com/+RandallSvancara">Randall Svancara</a></h6> 
+            <div class="social-media-bar"><div class="g-plusone" data-annotation="inline" data-width="300"></div></div>
             <div class="content-body">
             {{ collection['body'] |safe }}
             </div>
@@ -108,6 +110,7 @@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
     <script src="https://unpkg.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript">
     
     $("div.image-body").mouseover(function() {
