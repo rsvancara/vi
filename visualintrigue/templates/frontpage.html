@@ -24,7 +24,6 @@
   </head>
   <body class="frontpage">
   {% include 'navbar.html' %}
-      
     <div class="container-fluid">
       <div class="jumbotron-fluid vi-jumbo">
         <div class="vi-jumbo-center home-pattern">
@@ -32,7 +31,6 @@
         <p class="lead">Sharing adventures one picture at a time!</p>
         </div>
       </div>
-      
       <div class="row">
         <div class="col-sm-12 fp-header frosty home-pattern">
           <h3 style"margin-top:10px; padding-bottom:5px;">Photos by Categories</h3>
@@ -147,11 +145,11 @@
           console.log("Image: " + url.url)
                     
           $(".frontpage").bgswitcher({
-          
             images: fparray,
             loop: true,
+            effect: 'fade',
             interval: 5000,
-            shuffle: true,
+            shuffle: false,
           });          
         });
       });

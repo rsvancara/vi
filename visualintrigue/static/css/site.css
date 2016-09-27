@@ -1,5 +1,6 @@
 body.frontpage { 
-  background: url(https://s3.amazonaws.com/visualintrigue-3556/9ed571af-7c64-43e7-a669-7c560b0563df_lowrez_1600px.jpeg) no-repeat center center fixed; 
+  background: #ECECEC url(https://s3.amazonaws.com/visualintrigue-3556/9ed571af-7c64-43e7-a669-7c560b0563df_lowrez_1600px.jpeg) no-repeat center center fixed; */
+  background-color: #ECECEC;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
