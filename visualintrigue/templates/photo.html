@@ -33,6 +33,9 @@
         .photo-title {
             margin-left: 15px;
         }
+        div.button-pad{
+          margin-bottom: 5px;
+        }
     </style>
   </head>
   <body class="light-bg">
@@ -43,6 +46,7 @@
       <div class="container-fluid">
     {% endif %}
         <h1 class="photo-title">{{ title }}</h1>
+         
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages  %}
         {% for category, message in messages %}
@@ -50,7 +54,12 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
- 
+ <div class="row">
+  <div class="col-md-12 button-pad">
+    <a class="btn btn-primary" href="/stories/{{blog['collection_slug']}}">Back to Story</a>
+    <a class="btn btn-primary" href="/portfolio/{{blog['portfolio']}}">More Photos Like This</a>
+  </div>
+ </div>
 <div class="row">
     <div class="col-md-8">
         <img class="img-responsive lazy" style="max-width: 100%; display: inline; margin-top: 0px;" id="photo" data-src="{{image_url}}" src="{{ lowrez_url }}" class="lazy" alt="{{title}} {{blog['keywords']}}"/>
