@@ -510,7 +510,7 @@ def stories(id = None):
 
     description = util.summary_text(collection['body'])
     firstblog = None
-    if blogs:
+    if blogs.count() > 0:
         firstblog = blogs[0]
         
 
