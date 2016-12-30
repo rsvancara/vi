@@ -4,6 +4,7 @@ from flask.ext.pymongo import PyMongo
 from visualintrigue import siteconfig
 from visualintrigue import util
 from visualintrigue.blog import BlogForm
+from visualintrigue.photo import PhotoForm
 from visualintrigue.article import ArticleForm
 from visualintrigue.collection import CollectionForm
 import logging
@@ -41,9 +42,9 @@ def index():
     collections = mongo.db.collections.find({'status':'active'}).sort("created",-1)
     
     for c in collections:
-        blogs = mongo.db.blog.find({'status':'active','collection':c['collection'],'homepage':'yes'}).sort('displayorder').limit(1)
+        photos = mongo.db.photos.find({'status':'active','collection':c['collection'],'homepage':'yes'}).sort('displayorder').limit(1)
         
-        for b in blogs:
+        for b in photos:
             
             b['ctitle'] = c['title']
             b['cslug'] = c['slug']
@@ -51,7 +52,7 @@ def index():
             stories.append(b)
             break
 
-    return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',blogs=stories,baseurl=siteconfig.AMAZON_BASE_URL)
+    return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',photos=stories,baseurl=siteconfig.AMAZON_BASE_URL)
 
 
 @app.route('/portfolio/<portfolio>')
@@ -68,9 +69,9 @@ def portfolio(portfolio=all):
     return render_template('portfolio.html',title='Portfolio' + portfolio,blogs=blogs,portfolio=portfolio,baseurl=siteconfig.AMAZON_BASE_URL)
 
 
-@app.route('/blog/view/<slug>')
-def blog_view(slug):
-    logger.info("requested blog view")
+@app.route('/photo/view/<slug>')
+def photo_view(slug):
+    logger.info("requested photo view")
     return render_template('about.html',title=slug)
 
 
@@ -122,15 +123,13 @@ def collection_edit(id=None):
     logger.info("requested add collection")
     
     if id is None:
-        flash('Could not find blog entry for id provided','alert-warning')
+        flash('Could not find photo entry for id provided','alert-warning')
         
     result = {}
     form = CollectionForm()
     # Make sure that this contains a unique slug, since we are basing URLS off the slug
     # and these should be unqiue
     collection = mongo.db.collections.find_one({'slug':id})    
-
-    #form = BlogForm(request.form)
     form.body.data = collection['body']
     form.title.data = collection['title']
     form.slug.data = collection['slug']
@@ -177,10 +176,10 @@ def collection_edit(id=None):
     return render_template('editcollection.html',title='Edit Collection Post',id=id,form=form, collection=collection)    
 
 
-@app.route('/blog/create/<id>', methods=['GET', 'POST'])
+@app.route('/photo/create/<id>', methods=['GET', 'POST'])
 @flask_login.login_required
-def blog_add(id):
-    logger.info("requested add blog")
+def photo_add(id):
+    logger.info("requested add photo")
 
     # get the collection slug
     collection = mongo.db.collections.find_one({'slug':id})
@@ -195,7 +194,7 @@ def blog_add(id):
             collection_list.append((collectionitem['collection'],collectionitem['collection']))
             logger.debug(collectionitem['collection'])
     
-    form = BlogForm(request.form)
+    form = PhotoForm(request.form)
     
     form.collection.data = collection['collection']
     
@@ -206,16 +205,16 @@ def blog_add(id):
         result = util.save_file(request.files['photo'])
         if result['status'] is False:
             flash("No file has been provided, please select a file","alert-warning")
-            return render_template('createblog.html',title='Create New Blog Post',form=form,collection=collection)
+            return render_template('createphoto.html',title='Create New Photo Post',form=form,collection=collection)
         form.newimage = 1
         
         # Make sure that this contains a unique slug, since we are basing URLS off the slug
         # and these should be unqiue
-        blog = mongo.db.blog.find_one({'slug':form.slug.data})
+        photo = mongo.db.photos.find_one({'slug':form.slug.data})
 
-        if blog:
-            flash('Slug already exists for blog entry, please use a different one.','alert-warning')
-            return render_template('createblog.html',title='Create New Blog Post',form=form,collection=collection)
+        if photo:
+            flash('Slug already exists for photo entry, please use a different one.','alert-warning')
+            return render_template('createphoto.html',title='Create New Photo Post',form=form,collection=collection)
         
         collection_single = mongo.db.collections.find_one({"collection":form.collection.data})
         
@@ -224,7 +223,7 @@ def blog_add(id):
             collection_single['slug'] = 'none'
 
         
-        mongo.db.blog.insert(
+        mongo.db.photos.insert(
           {
             "slug": util.slugify(form.slug.data),
             "title": form.title.data,
@@ -247,31 +246,31 @@ def blog_add(id):
           }
         )
         
-        flash('Blog entry successfully created','alert-success')
-        return redirect('/blogs/list/' + collection['slug'])
+        flash('Photo entry successfully created','alert-success')
+        return redirect('/photo/list/' + collection['slug'])
     
-    return render_template('createblog.html',title='Create New Blog Post',form=form,collection=collection)
+    return render_template('createphoto.html',title='Create New Blog Post',form=form,collection=collection)
 
 
-@app.route('/blogs/list/<id>')
+@app.route('/photo/list/<id>')
 @flask_login.login_required
-def blog_list_collection(id):
-    logger.info("requested blog list")
+def photo_list_collection(id):
+    logger.info("requested photo list")
     
     collection = mongo.db.collections.find_one({'slug':id})
     if collection is None:
         return redirect(url_for('error'))
     
-    blogs = mongo.db.blog.find({'collection':collection['collection']}).sort("created",-1)
-    if blogs is None:
+    photos = mongo.db.photos.find({'collection':collection['collection']}).sort("created",-1)
+    if photos is None:
         return redirect(url_for('error'))
     
-    return render_template('blog_list.html',title='Manage Blog Entries',blogs=blogs,collection=collection)
+    return render_template('photo_list.html',title='Manage Photo Entries',photos=photos,collection=collection)
 
 
-@app.route('/blog/list')
+@app.route('/photo/list')
 @flask_login.login_required
-def blog_list():
+def photo_list():
     #logger.info("requested blog list")
     #blogs = mongo.db.blog.find().sort("created",-1)    
     #return render_template('blog_list.html',title='Manage Blog Entries',blogs=blogs)
@@ -311,18 +310,18 @@ def collection_delete(id=None):
     return redirect(url_for('error'))
 
 
-@app.route('/blog/delete/<id>',methods=['GET'])
+@app.route('/photo/delete/<id>',methods=['GET'])
 @flask_login.login_required
 def blog_delete(id=None):
     
     if id is None:
-        flash("Invalid blog id passed to delete function!",'alert-warning')
-        return redirect(url_for('blog_list'))
+        flash("Invalid photo id passed to delete function!",'alert-warning')
+        return redirect(url_for('photo_list'))
     
-    blog = mongo.db.blog.find_one({'slug':id})
+    photo = mongo.db.photos.find_one({'slug':id})
     
 
-    if blog:
+    if photo:
         if 'files' not in blog:
             try:
                util.delete_image(blog['original'])
@@ -332,20 +331,20 @@ def blog_delete(id=None):
                util.delete_image(blog['large']['path'])
                util.delete_image(blog['lrlarge']['path'])
             except Exception as e:
-                logger.error("Error deleting blog %s with error: %s" %(id,e))
+                logger.error("Error deleting photo %s with error: %s" %(id,e))
         mongo.db.blog.remove({'slug':id})
         
-        flash("Blog entry deleted",'alert-success')
+        flash("Photo entry deleted",'alert-success')
     
-        logger.info("requested blog delete")
-        return redirect('/blogs/list/' + blog['collection_slug'])
+        logger.info("requested photo delete")
+        return redirect('/photos/list/' + blog['collection_slug'])
 
-    flash('Error deleting blog entry.  Please see logs for details.')
+    flash('Error deleting photo entry.  Please see logs for details.')
     return redirect(url_for('error'))
 
 
 def getCollectionChoices():
-    blog = mongo.db.blog.find_one({'slug':id})    
+    photo = mongo.db.photos.find_one({'slug':id})    
 
     collections = mongo.db.collections.find().sort([("collection",pymongo.ASCENDING),])
 
@@ -358,70 +357,70 @@ def getCollectionChoices():
     return collection_list
 
     
-@app.route('/blog/edit/<id>',methods=['GET', 'POST'])
+@app.route('/photo/edit/<id>',methods=['GET', 'POST'])
 @flask_login.login_required
 def blog_edit(id=None):
-    logger.info("requested add blog")
+    logger.info("requested add photo")
     
     if id is None:
-        flash('Could not find blog entry for id provided','alert-warning')
+        flash('Could not find photo entry for id provided','alert-warning')
     
     result = {}
-    form = BlogForm()
+    form = PhotoForm()
     # Make sure that this contains a unique slug, since we are basing URLS off the slug
     # and these should be unqiue
-    blog = mongo.db.blog.find_one({'slug':id})
-    if blog is None:
-        flash('Could not find blog entry for id provided','alert-warning')
+    photo = mongo.db.photos.find_one({'slug':id})
+    if photo is None:
+        flash('Could not find photo entry for id provided','alert-warning')
         return redirect(url_for('error'))  
     collection = {'collection':'none','slug':'none'}
 
-    if 'collection' in blog: 
-        collection = mongo.db.collections.find_one({'collection':blog['collection']})
+    if 'collection' in photo: 
+        collection = mongo.db.collections.find_one({'collection':photo['collection']})
     if collection is None:
         collection = {'collection':'none','slug':'none'}
 
     #form = BlogForm(request.form)
-    form.body.data = blog['body']
-    form.title.data = blog['title']
-    form.slug.data = blog['slug']
-    form.active.data = blog['status']
+    form.body.data = photo['body']
+    form.title.data = photo['title']
+    form.slug.data = photo['slug']
+    form.active.data = photo['status']
     
     form.lat.data = 0
     form.lng.data = 0
     
-    if 'lat' in blog:
-        form.lat.data = blog['lat']
-    if 'lng' in blog:
-        form.lng.data = blog['lng']
+    if 'lat' in photo:
+        form.lat.data = photo['lat']
+    if 'lng' in photo:
+        form.lng.data = photo['lng']
     
-    if 'displayorder' in blog:
-        form.displayorder.data = blog['displayorder']
+    if 'displayorder' in photo:
+        form.displayorder.data = photo['displayorder']
     else:
         form.displayorder.data = '1'
         
     form.newimage = "0"
-    if ('keywords') in blog:    
-        form.keywords.data = blog['keywords']
+    if ('keywords') in photo:    
+        form.keywords.data = photo['keywords']
     
-    if ('portfolio') in blog:
-        form.portfolio.data = blog['portfolio']
+    if ('portfolio') in photo:
+        form.portfolio.data = photo['portfolio']
     else:
         form.portfolio.data = 'master'
     
-    if('homepage') in blog:
-        form.homepage.data = blog['homepage']
+    if('homepage') in photo:
+        form.homepage.data = photo['homepage']
     
-    result['files'] = blog['files']
+    result['files'] = photo['files']
     
-    if 'exif' in blog:  
-        result['exif'] = blog['exif']
+    if 'exif' in photo:  
+        result['exif'] = photo['exif']
     else:
         result['exif'] = {}
     
-    photo = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
-    if 'files' in blog:
-        photo = siteconfig.AMAZON_BASE_URL + blog['files']['medium']['path']
+    image = "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"
+    if 'files' in photo:
+        image = siteconfig.AMAZON_BASE_URL + photo['files']['medium']['path']
     
     collections = mongo.db.collections.find().sort([("collection",pymongo.ASCENDING),])
     # generate array of tuples
@@ -448,22 +447,22 @@ def blog_edit(id=None):
                 result = util.save_file(request.files['photo'])
                 if result['status'] is False:
                     flash("No file has been provided, please select a file","alert-warning")
-                    return render_template('createblog.html',title='Create New Blog Post',form=form)
+                    return render_template('createimage.html',title='Create New Blog Post',form=form)
             
             # If the slug is different, then we need to check that it is not in use 
-            if blog['slug'] != form.slug.data:
+            if photo['slug'] != form.slug.data:
                 logger.info("Found duplicate slug")
-                slugcount = mongo.db.blog.count({'slug':form.slug.data})
+                slugcount = mongo.db.photos.count({'slug':form.slug.data})
                 if slugcount >= 1:
                     flash('Slug already in use. Please select a unique slug','alert-warning')
-                    return render_template('editblog.html',title='Edit Blog Post',id=id,form=form, blog=blog) 
+                    return render_template('editphoto.html',title='Edit Blog Post',id=id,form=form, photo=photo) 
             
             collection_single = mongo.db.collections.find_one({"collection":form.collection.data})
             if collection_single is None:
                 collection_single = {}
                 collection_single['slug'] = 'none'
             
-            mongo.db.blog.update(
+            mongo.db.photos.update(
                {
                 "slug":id,
                },
@@ -473,7 +472,7 @@ def blog_edit(id=None):
                  "body": form.body.data,
                  "status": form.active.data,    
                  "updated": datetime.now(),
-                 "created": blog['created'],
+                 "created": photo['created'],
                  "files": result['files'],
                  "exif":result['exif'],
                  "portfolio": form.portfolio.data,
@@ -488,11 +487,11 @@ def blog_edit(id=None):
                }            
             )
 
-            return redirect('/blogs/list/'+collection['slug'])
+            return redirect('/photo/list/'+collection['slug'])
         else:
             flash('Validation Error','alert-warning')
             
-    return render_template('editblog.html',title='Edit Blog Post',id=id,form=form, blog=blog,photo=photo,collection=collection)    
+    return render_template('editphoto.html',title='Edit Photo Post',id=id,form=form, photo=photo,image=image,collection=collection)    
 
 
 @app.route('/stories/<id>')
@@ -506,18 +505,18 @@ def stories(id = None):
     if collection is None:
         return redirect(url_for('notfound'))
     
-    blogs = mongo.db.blog.find({'collection':collection['collection'],'status':'active'}).sort('displayorder',1)
+    photos = mongo.db.photos.find({'collection':collection['collection'],'status':'active'}).sort('displayorder',1)
 
     description = util.summary_text(collection['body'])
-    firstblog = None
-    if blogs.count() > 0:
-        firstblog = blogs[0]
+    firstphoto = None
+    if photos.count() > 0:
+        firstphoto = photos[0]
         
 
     return render_template('story.html',title=collection['title'],
-                           collection=collection,blogs=blogs,
+                           collection=collection,photos=photos,
                            baseurl=siteconfig.AMAZON_BASE_URL,
-                           firstblog=firstblog,
+                           firstphoto=firstphoto,
                            description=description)
 
 
@@ -531,16 +530,16 @@ def photo(id=None):
     """
     Photo detail display
     """
-    blog = None
+    photo = None
     if id is not None:
-        blog = mongo.db.blog.find_one({'slug':id}) 
+        photo = mongo.db.photos.find_one({'slug':id}) 
     
-    if blog is None:
+    if photo is None:
         return redirect(url_for('notfound'))
      
-    image_url = siteconfig.AMAZON_BASE_URL + blog['files']['large']['path']
-    lowrez_url = siteconfig.AMAZON_BASE_URL + blog["files"]['lrlarge']['path']
-    return render_template('photo.html',title=blog['title'],blog=blog,image_url=image_url,lowrez_url=lowrez_url)
+    image_url = siteconfig.AMAZON_BASE_URL + photo['files']['large']['path']
+    lowrez_url = siteconfig.AMAZON_BASE_URL + photo["files"]['lrlarge']['path']
+    return render_template('photo.html',title=photo['title'],photo=photo,image_url=image_url,lowrez_url=lowrez_url)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -575,15 +574,15 @@ def frontpageservice(size):
     """
     #imagelist = [{'url':'https://s3.amazonaws.com/visualintrigue-3556/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_lowrez_1600px.jpeg'}]
     imagelist = []
-    blogs = mongo.db.blog.find({'homepage':'yes','status':'active'})
-    if blogs is None:
+    photos = mongo.db.photos.find({'homepage':'yes','status':'active'})
+    if photos is None:
         return jsonify(imagelist)
     
     tlist = []
     
-    for blog in blogs:
-        if size in blog['files']:
-            tlist.append(siteconfig.AMAZON_BASE_URL + blog['files'][size]['path'])
+    for photo in photos:
+        if size in photo['files']:
+            tlist.append(siteconfig.AMAZON_BASE_URL + photo['files'][size]['path'])
          
     i = len(tlist)-1
     
@@ -675,7 +674,7 @@ def article_edit(id):
     """ Edit article """
     
     if id is None:
-        flash("Invalid blog id passed to delete function!",'alert-warning')
+        flash("Invalid article id passed to delete function!",'alert-warning')
         return redirect(url_for('article_list'))
     
     form = ArticleForm()
@@ -731,7 +730,7 @@ def article_edit(id):
 def article_delete(id):
     """ delete article by id """
     if id is None:
-        flash("Invalid blog id passed to delete function!",'alert-warning')
+        flash("Invalid article id passed to delete function!",'alert-warning')
         return redirect(url_for('article_list'))
     
     article = mongo.db.articles.find_one({'slug':id})

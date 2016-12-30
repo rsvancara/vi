@@ -1,0 +1,43 @@
+{% include 'header.html' %}
+<a class="btn btn-primary" href="/photo/create/{{collection['slug']}}">Create Entry</a>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-inverse">
+    <tr>
+        <th>Title</th>
+        <th>Collection</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody class="table-striped">
+      {% for photo in photos %}
+        {% if photo['status'] == 'active' %}
+        <tr>
+            <td style="color: #666666;">{{ photo['title'] }}</td>
+            <td style="color: #666666;">{{ photo['collection'] }}</td>
+            <td style="color: #666666;">{{ photo['created'] |datetimefilter}}</td>
+            <td style="color: #666666;">{{ photo['updated'] |datetimefilter}}</td>
+            <td><a class="btn btn-sm btn-primary" href="/photo/{{ photo['slug'] }}">View</a></td>
+            <td><a class="btn btn-sm btn-primary" href="/photo/edit/{{ photo['slug'] }}">Edit</a></td>
+            <td><a class="btn btn-sm btn-danger" href="/photo/delete/{{ photo['slug'] }}">Delete</a></td>      
+        </tr>
+        {% else %}
+        <tr>
+            <td style="color: #888888;">{{ photo['title'] }}</td>
+            <td style="color: #888888;">{{ photo['collection'] }}</td>
+            <td style="color: #888888;">{{ photo['created'] |datetimefilter}}</td>
+            <td style="color: #888888;">{{ photo['updated'] |datetimefilter}}</td>
+            <td><a class="btn btn-sm btn-primary" href="/photo/{{ photo['slug'] }}">View</a></td>
+            <td><a class="btn btn-sm btn-primary" href="/photo/edit/{{ blog['slug'] }}">Edit</a></td>
+            <td><a class="btn btn-sm btn-danger" href="/photo/delete/{{ blog['slug'] }}">Delete</a></td>
+        </tr>        
+        {% endif %}
+      {% endfor %}
+      </tbody>
+</table>
+
+{% include 'footer.html' %}

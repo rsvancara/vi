@@ -52,22 +52,22 @@
       <div class="grid">
       <div class="grid-sizer"></div>
  
- {% for blog in blogs %}
- {% if 'lrmedium' in blog['files'] %}
-  <div class="grid-item" id="{{blog['slug']}}">
-    <a class="pinfo-title" href="/stories/{{blog['cslug']}}">
-      <img style="width:{{blog['files']['medium']['width']}}px;" 
-           data-src="{{baseurl}}{{ blog['files']['medium']['path']}}"
-           src="{{baseurl}}{{ blog['files']['lrmedium']['path']}}"
-           alt="{{blog['title']}}"/>
+ {% for photo in photos %}
+ {% if 'lrmedium' in photo['files'] %}
+  <div class="grid-item" id="{{photo['slug']}}">
+    <a class="pinfo-title" href="/stories/{{photo['cslug']}}">
+      <img style="width:{{photo['files']['medium']['width']}}px;" 
+           data-src="{{baseurl}}{{ photo['files']['medium']['path']}}"
+           src="{{baseurl}}{{ photo['files']['lrmedium']['path']}}"
+           alt="{{photo['title']}}"/>
     </a>
-    <div class="pinfo home-pattern" id="{{blog['cslug']}}">
+    <div class="pinfo home-pattern" id="{{photo['cslug']}}">
       <div class="button-bar">
-        <h3><a href="/stories/{{blog['cslug']}}">{{blog['ctitle']}}</a></h3>
+        <h3><a href="/stories/{{photo['cslug']}}">{{photo['ctitle']}}</a></h3>
         <span>by <a rel="author" href="https://plus.google.com/+RandallSvancara">Randall Svancara</a></span>
         <hr />
         <p>
-          {{ blog['summary'] }} 
+          {{ photo['summary'] }} 
         </p>
       </div>      
     </div>
