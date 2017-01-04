@@ -549,8 +549,8 @@ def login():
         return render_template('login.html',title='')
 
     email = request.form['email']
-    
-    if request.form['pw'] == siteconfig.USERS[email]['pw']:
+     
+    if email in siteconfig.USERS and request.form['pw'] == siteconfig.USERS[email]['pw']:
         user = User()
         user.id = email
         
@@ -558,7 +558,7 @@ def login():
         flash('You were successfully logged in','alert-success')
         return redirect(url_for('collection_list'))
 
-    return 'Bad login'
+    return render_template('badlogin.html')
 
 
 @app.route('/error', methods=['GET','POST'])
