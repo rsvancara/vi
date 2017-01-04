@@ -18,7 +18,6 @@ import os
 from datetime import datetime
 
 
-
 app = Flask('visualintrigue')
 app.config['MONGO_URI'] = siteconfig.MONGO_URI
 
