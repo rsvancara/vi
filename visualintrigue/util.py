@@ -136,11 +136,13 @@ def save_file(file):
         
         exif = None
         exif = get_exif(os.path.join(siteconfig.UPLOAD_PATH,orig_filename))
-     
+    
+        image_dict = {}
+ 
         # Store the original information 
         file_array = [os.path.join(siteconfig.UPLOAD_PATH,orig_filename)]
         (width,height) = get_image_size(os.path.join(siteconfig.UPLOAD_PATH,orig_filename))
-        image_dict = {'original':{'path':orig_filename,height:height,width:width}}
+        image_dict['original'] = {'path':orig_filename,'height':height,'width':width}
         
         # create small thumbnail
         resize_image(os.path.join(siteconfig.UPLOAD_PATH,orig_filename),50,os.path.join(siteconfig.UPLOAD_PATH,path_uuid + "_50px.jpeg"))
