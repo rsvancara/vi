@@ -5,7 +5,6 @@ body.frontpage {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  padding-top: 55px;
   font-family: Roboto, Helvetica, Arial, sans-serif;
   color: #ffffff;
   transition: background 1s linear;
@@ -13,7 +12,6 @@ body.frontpage {
 
 
 body.light-bg {
-    padding-top: 55px;
     color: #666666;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     width: 100%;
@@ -22,7 +20,6 @@ body.light-bg {
 }
 
 body.dark-bg {
-    padding-top: 55px;
     color: #ffffff;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     padding-left: 0px;
