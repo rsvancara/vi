@@ -80,7 +80,7 @@ def about():
     return render_template('about.html',title='Visual Intrigue Photography',container="container")
 
 
-@app.route('/collection/create', methods=['GET', 'POST'])
+@app.route('/admin/collection/create', methods=['GET', 'POST'])
 @flask_login.login_required
 def collection_add():
     logger.info("requested add collection")
@@ -111,12 +111,12 @@ def collection_add():
         )
         
         flash('Collection entry successfully created','alert-success')
-        return redirect('/collection/list')
+        return redirect('/admin/collection/list')
     
     return render_template('createcollection.html',title='Create New Collection',form=form)
 
 
-@app.route('/collection/edit/<id>',methods=['GET', 'POST'])
+@app.route('/admin/collection/edit/<id>',methods=['GET', 'POST'])
 @flask_login.login_required
 def collection_edit(id=None):
     logger.info("requested add collection")
@@ -168,14 +168,14 @@ def collection_edit(id=None):
                }            
             )
 
-            return redirect('/collection/list')
+            return redirect('/admin/collection/list')
         else:
             flash('Validation Error','alert-warning')
             
     return render_template('editcollection.html',title='Edit Collection Post',id=id,form=form, collection=collection)    
 
 
-@app.route('/photo/create/<id>', methods=['GET', 'POST'])
+@app.route('/admin/photo/create/<id>', methods=['GET', 'POST'])
 @flask_login.login_required
 def photo_add(id):
     logger.info("requested add photo")
@@ -246,12 +246,12 @@ def photo_add(id):
         )
         
         flash('Photo entry successfully created','alert-success')
-        return redirect('/photo/list/' + collection['slug'])
+        return redirect('/admin/photo/list/' + collection['slug'])
     
     return render_template('createphoto.html',title='Create New Blog Post',form=form,collection=collection)
 
 
-@app.route('/photo/list/<id>')
+@app.route('/admin/photo/list/<id>')
 @flask_login.login_required
 def photo_list_collection(id):
     logger.info("requested photo list")
@@ -267,7 +267,7 @@ def photo_list_collection(id):
     return render_template('photo_list.html',title='Manage Photo Entries',photos=photos,collection=collection)
 
 
-@app.route('/photo/list')
+@app.route('/admin/photo/list')
 @flask_login.login_required
 def photo_list():
     #logger.info("requested blog list")
@@ -275,7 +275,7 @@ def photo_list():
     #return render_template('blog_list.html',title='Manage Blog Entries',blogs=blogs)
     return redirect(url_for('error'))
 
-@app.route('/collection/list')
+@app.route('/admin/collection/list')
 @flask_login.login_required
 def collection_list():
     logger.info("requested blog list")
@@ -283,7 +283,7 @@ def collection_list():
     return render_template('collection_list.html',title='Collection List',collections=collections)
 
 
-@app.route('/collection/delete/<id>',methods=['GET'])
+@app.route('/admin/collection/delete/<id>',methods=['GET'])
 @flask_login.login_required
 def collection_delete(id=None):
     
@@ -309,7 +309,7 @@ def collection_delete(id=None):
     return redirect(url_for('error'))
 
 
-@app.route('/photo/delete/<id>',methods=['GET'])
+@app.route('/admin/photo/delete/<id>',methods=['GET'])
 @flask_login.login_required
 def blog_delete(id=None):
     
@@ -336,7 +336,7 @@ def blog_delete(id=None):
         flash("Photo entry deleted",'alert-success')
     
         logger.info("requested photo delete")
-        return redirect('/photos/list/' + blog['collection_slug'])
+        return redirect('/admin/photos/list/' + blog['collection_slug'])
 
     flash('Error deleting photo entry.  Please see logs for details.')
     return redirect(url_for('error'))
@@ -356,7 +356,7 @@ def getCollectionChoices():
     return collection_list
 
     
-@app.route('/photo/edit/<id>',methods=['GET', 'POST'])
+@app.route('/admin/photo/edit/<id>',methods=['GET', 'POST'])
 @flask_login.login_required
 def blog_edit(id=None):
     logger.info("requested add photo")
@@ -486,7 +486,7 @@ def blog_edit(id=None):
                }            
             )
 
-            return redirect('/photo/list/'+collection['slug'])
+            return redirect('/admin/photo/list/'+collection['slug'])
         else:
             flash('Validation Error','alert-warning')
             
@@ -617,7 +617,7 @@ def article_view(id):
     return render_template('article.html',title=article['title'],article=article)
 
 
-@app.route('/article/list')
+@app.route('/admin/article/list')
 @flask_login.login_required
 def article_list():
     """ List articles """
@@ -626,7 +626,7 @@ def article_list():
     return render_template('article_list.html',title="List Articles",articles=articles   )
 
 
-@app.route('/article/create',methods=['GET', 'POST'])
+@app.route('/admin/article/create',methods=['GET', 'POST'])
 @flask_login.login_required
 def article_create():
     """ Create article """
@@ -660,14 +660,14 @@ def article_create():
             
             flash('Article successfully created','alert-success')            
             
-            return redirect('/article/list')
+            return redirect('/admin/article/list')
         else:
             flash('Validation Error','alert-warning')
     
     return render_template('createarticle.html',title="Create Article",form=form)
 
 
-@app.route('/article/edit/<id>',methods=['GET', 'POST'])
+@app.route('/admin/article/edit/<id>',methods=['GET', 'POST'])
 @flask_login.login_required
 def article_edit(id):
     """ Edit article """
@@ -717,14 +717,14 @@ def article_edit(id):
             
             flash('Article successfully updated','alert-success')            
             
-            return redirect('/article/list')
+            return redirect('/admin/article/list')
         else:
             flash('Validation Error','alert-warning')
     
     return render_template('editarticle.html',title="Edit Article",form=form,id=id)
 
 
-@app.route('/article/delete/<id>')
+@app.route('/admin/article/delete/<id>')
 @flask_login.login_required
 def article_delete(id):
     """ delete article by id """
@@ -740,7 +740,7 @@ def article_delete(id):
         
         flash("Article deleted",'alert-success')
 
-        return redirect('/article/list')
+        return redirect('/admin/article/list')
 
     flash('Error deleting article.  Please see logs for details.')
     return redirect(url_for('error'))
@@ -836,5 +836,5 @@ if __name__ == '__main__':
     app.jinja_env.filters['datetimefilter'] = datetimefilter
     
     
-    app.run()
+    app.run(host="0.0.0.0")
     

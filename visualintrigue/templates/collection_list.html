@@ -23,9 +23,9 @@
             <td style="color: #666666;">{{ collection['created'] |datetimefilter}}</td>
             <td style="color: #666666;">{{ collection['updated'] |datetimefilter}}</td>
             <td><a class="btn btn-sm btn-primary" href="/stories/{{ collection['slug'] }}">View</a></td>
-            <td><a class="btn btn-sm btn-primary" href="/photo/list/{{ collection['slug'] }}">Manage Photos</a></td>
-            <td><a class="btn btn-sm btn-primary" href="/collection/edit/{{ collection['slug'] }}">Edit</a></td>
-            <td><a class="btn btn-sm btn-danger" href="/collection/delete/{{ collection['slug'] }}">Delete</a></td>      
+            <td><a class="btn btn-sm btn-primary" href="/admin/photo/list/{{ collection['slug'] }}">Manage Photos</a></td>
+            <td><a class="btn btn-sm btn-primary" href="/admin/collection/edit/{{ collection['slug'] }}">Edit</a></td>
+            <td><a class="btn btn-sm btn-danger" href="/admin/collection/delete/{{ collection['slug'] }}">Delete</a></td>      
         </tr>
         {% else %}
         <tr>
@@ -34,9 +34,9 @@
             <td style="color: #888888;">{{ collection['created'] |datetimefilter}}</td>
             <td style="color: #888888;">{{ collection['updated'] |datetimefilter}}</td>
             <td><a class="btn btn-sm btn-primary" href="/stories/{{ collection['slug'] }}">View</a></td>
-            <td><a class="btn btn-sm btn-primary" href="/photo/list/{{ collection['slug'] }}">Manage Photos</a></td>
-            <td><a class="btn btn-sm btn-primary" href="/collection/edit/{{ collection['slug'] }}">Edit</a></td>
-            <td><a class="btn btn-sm btn-danger" href="/collection/delete/{{ collection['slug'] }}">Delete</a></td>
+            <td><a class="btn btn-sm btn-primary" href="/admin/photo/list/{{ collection['slug'] }}">Manage Photos</a></td>
+            <td><a class="btn btn-sm btn-primary" href="/admin/collection/edit/{{ collection['slug'] }}">Edit</a></td>
+            <td><a class="btn btn-sm btn-danger" href="/admin/collection/delete/{{ collection['slug'] }}">Delete</a></td>
         </tr>        
         {% endif %}
       {% endfor %}

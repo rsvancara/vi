@@ -10,10 +10,10 @@
       <ul class="nav navbar-nav navbar-right pull-xs-right">
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="/collection/list">Manage Collections <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/admin/collection/list">Manage Collections <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/article/list">Manage Articles<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/admin/article/list">Manage Articles<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('logout') }}">LogOut [ {{ current_user.id }} ] <span class="sr-only">(current)</span></a>

@@ -21,8 +21,8 @@
             <td style="color: #666666;">{% if article['created'] %}{{ article['created'] |datetimefilter}}{% endif %}</td>
             <td style="color: #666666;">{{ article['updated'] |datetimefilter}}</td>
             <td><a class="btn btn-sm btn-primary" href="/article/{{ article['slug'] }}">View</a></td>
-            <td><a class="btn btn-sm btn-primary" href="/article/edit/{{ article['slug'] }}">Edit</a></td>
-            <td><a class="btn btn-sm btn-danger" href="/article/delete/{{ article['slug'] }}">Delete</a></td>      
+            <td><a class="btn btn-sm btn-primary" href="/admin/article/edit/{{ article['slug'] }}">Edit</a></td>
+            <td><a class="btn btn-sm btn-danger" href="/admin/article/delete/{{ article['slug'] }}">Delete</a></td>      
         </tr>
         {% else %}
         <tr>
@@ -30,8 +30,8 @@
             <td style="color: #888888;">{{ article['created'] |datetimefilter}}</td>
             <td style="color: #888888;">{{ article['updated'] |datetimefilter}}</td>
             <td><a class="btn btn-sm btn-primary" href="/article/{{ article['slug'] }}">View</a></td>
-            <td><a class="btn btn-sm btn-primary" href="/article/edit/{{ article['slug'] }}">Edit</a></td>
-            <td><a class="btn btn-sm btn-danger" href="/article/delete/{{ article['slug'] }}">Delete</a></td>
+            <td><a class="btn btn-sm btn-primary" href="/admin/article/edit/{{ article['slug'] }}">Edit</a></td>
+            <td><a class="btn btn-sm btn-danger" href="/admin/article/delete/{{ article['slug'] }}">Delete</a></td>
         </tr>        
         {% endif %}
       {% endfor %}
