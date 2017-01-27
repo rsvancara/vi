@@ -1,6 +1,6 @@
 body.frontpage { 
-  background: #ECECEC url(https://s3.amazonaws.com/visualintrigue-3556/9ed571af-7c64-43e7-a669-7c560b0563df_lowrez_1600px.jpeg) no-repeat center center fixed; */
-  background-color: #ECECEC;
+  background: #1C1D1F  url(https://s3.amazonaws.com/visualintrigue-3556/fpbg.png) no-repeat center center fixed;  
+  background-color: #1C1D1F;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -10,6 +10,14 @@ body.frontpage {
   transition: background 1s linear;
 }
 
+/* Navbar override */
+.navbar {
+    background: rgba(0,0,0,0.6) !important;
+  }
+
+.navbar a {
+    color: #FFFFFF;
+}
 
 body.light-bg {
     color: #666666;

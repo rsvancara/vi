@@ -132,26 +132,37 @@
       if ($(window).width() < 768) {
         screen_size = "lrmedium";
       }
-      var fpAPI = "/image/frontpageservice/" + screen_size;
-      $.getJSON( fpAPI, {
-        //tags: "mount rainier",
-        //tagmode: "any",
-        format: "json"
-      })
-      .done(function( data ) {
-        $.each( data.urls, function( i, url ) {
-          fparray.push(url.url)
-          console.log("Image: " + url.url)
+ 
+      if ($(window).width() > 768) {
+
+        var fpAPI = "/image/frontpageservice/" + screen_size;
+        $.getJSON( fpAPI, {
+          //tags: "mount rainier",
+          //tagmode: "any",
+          format: "json"
+        })
+        .done(function( data ) {
+          $.each( data.urls, function( i, url ) {
+            fparray.push(url.url)
+            console.log("Image: " + url.url)
                     
-          $(".frontpage").bgswitcher({
-            images: fparray,
-            loop: true,
-            effect: 'fade',
-            interval: 5000,
-            shuffle: false,
-          });          
+            $(".frontpage").bgswitcher({
+              images: fparray,
+              loop: true,
+              effect: 'fade',
+              interval: 5000,
+              shuffle: false,
+            });          
+          });
         });
-      });
+      } else  { 
+        console.log("no load");
+        $(".frontpage").css("background","#1C1D1F  url(https://s3.amazonaws.com/visualintrigue-3556/fpbg.png) no-repeat center center fixed");
+        $(".vi-jumbo").css("min-height","300px");
+        $(".vi-jumbo-center").css("margin-top","40px");
+        $(".vi-jumbo-center").css("margin-bottom","40px");
+
+      }
     });
     </script>
     <script type="application/ld+json">
