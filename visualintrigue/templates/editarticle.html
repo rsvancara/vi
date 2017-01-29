@@ -44,6 +44,9 @@
         width: 100%;
     }
     
+    #headerurl {
+        width: 100%;
+    }
 </style>
 <form action="/admin/article/edit/{{ id }}" method="post" enctype="multipart/form-data">
     <div class="row">
@@ -61,6 +64,7 @@
            {{ render_field(form.active) }}
            {{ render_field(form.keywords) }}
            {{ render_field(form.article_type)}}
+           {{ render_field(form.headerurl)}}
 
         </fieldset>
     

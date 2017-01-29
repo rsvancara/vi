@@ -653,7 +653,8 @@ def article_create():
                 "created": datetime.now(),
                 "updated": datetime.now(),
                 "keywords": form.keywords.data,
-                "uuid": uuid.uuid4()
+                "uuid": uuid.uuid4(),
+                "headerurl": form.headerurl.data
                 
               }
             )
@@ -687,6 +688,9 @@ def article_edit(id):
     form.title.data = article['title']
     form.slug.data = article['slug']
     form.active.data = article['status']
+    if 'headerurl' in article:
+        form.headerurl.data = article['headerurl']
+
     form.keywords.data = article['keywords']
     if(request.method == 'POST'):
         form = ArticleForm(request.form)
@@ -710,7 +714,8 @@ def article_edit(id):
                 "status": form.active.data,
                 "updated": datetime.now(),
                 'created': article['created'],
-                "keywords": form.keywords.data
+                "keywords": form.keywords.data,
+                "headerurl": form.headerurl.data
                 
               }
             )

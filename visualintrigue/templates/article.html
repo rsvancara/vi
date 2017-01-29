@@ -25,16 +25,35 @@
       div.text-content img { 
         margin: 5px;
       }
+
+      body.article {
+        background-color: #FFFFFF;
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+        color: #ffffff;
+        transition: background 1s linear;
+        width: 100%;
+      }
+
+      @media screen and (min-width: 768px) {
+        body.article {
+          width: 100%; background: #1C1D1F  url({{ article['headerurl']}})  no-repeat center center fixed;   -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;
+
+
+        }
+        div.article-content {
+           width: 60%
+        }
+      }
+
     </style>
   </head>
-  <body class="light-bg">
+  <body class="article">
   {% include 'navbar.html' %}
     {% if container %}
       <div class="{{container}}">
     {% else %}
       <div class="container-fluid">
     {% endif %}
-        <h1>{{ title }}</h1>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages  %}
         {% for category, message in messages %}
@@ -42,15 +61,19 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
+
+      <div class="jumbotron-fluid vi-jumbo">
+        <div class="vi-jumbo-article-center home-pattern">
+        <h1> {{ article['title']}}</h1>
+        </div>
+      </div>
  
-<div class="row">
-    <div class="col-md-10">
+<div class="article-content">
         <div class="text-content">
 
             {{ article['body'] |safe }}
 
         </div>
-    </div>
 </div>
     </div>  
       <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

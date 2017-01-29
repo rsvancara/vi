@@ -10,6 +10,22 @@ body.frontpage {
   transition: background 1s linear;
 }
 
+body.article { 
+  background: #FFFFFF  url(https://s3.amazonaws.com/visualintrigue-3556/fpbg.png) no-repeat center center fixed;  
+  background-color: #FFFFFF;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  color: #ffffff;
+  transition: background 1s linear;
+  width: 100%;
+}
+
+
+
+
 /* Navbar override */
 .navbar {
     background: rgba(0,0,0,0.6) !important;
@@ -60,6 +76,9 @@ body.dark-bg {
     background-size: cover;
     
 }
+
+
+
 
 .fp-header h1, .fp-header h2, .fp-header h3, .fp-header h4{
     font-family: 'Roboto', sans-serif;
@@ -237,13 +256,35 @@ ul.portfolio-items>li a i{
 }
 
 div.vi-jumbo {
-    min-height: 600px;
+    min-height: 300px;
     padding-top: 0px;
     margin-top 0px;
     width: 100%;
     color: #FFFFFF;
     text-shadow: 2px 2px #000000;
 }
+
+div.article-content {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    color: #000000;
+    background-color: #FFFFFF;
+    padding: 30px 15px 15px 15px;
+    border-radius: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  div.vi-jumbo {
+    min-height: 600px;
+  }
+
+  div.article-content {
+    width: 60%
+  }
+}
+
+
 
 div.vi-jumbo-center {
     margin-left: auto;
@@ -256,9 +297,27 @@ div.vi-jumbo-center {
     border-radius: 5px;
     text-align: center;
     background-color: rgba(0,0,0,.34);
-    
+    font-size: 4vw; 
 }
 
+div.vi-jumbo-article-center>h1 {
+  font-size: 4vw;
+}
+
+div.vi-jumbo-article-center {
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 200px;
+    max-width: 800px;
+    margin-top: 100px;
+    border: 1px solid #ececec;
+    padding: 30px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: rgba(0,0,0,.34);
+}
+
+.frosty {
 .frosty {
     background-color: rgba(0,0,0,.34);
 }
