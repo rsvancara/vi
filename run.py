@@ -47,11 +47,33 @@ def index():
             
             b['ctitle'] = c['title']
             b['cslug'] = c['slug']
+            b['created'] = c['created']
             b['summary'] = util.summary_text(c['body'])
+            b['type'] = 'photo'
             stories.append(b)
             break
 
-    return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',photos=stories,baseurl=siteconfig.AMAZON_BASE_URL)
+    articles = mongo.db.articles.find({'status':'active'}).sort("created",-1)
+
+    for a in articles:
+        r = {}
+        r['created'] = a['created']
+        r['summary'] = util.summary_text(a['body'])
+        r['cslug'] = a['slug']
+        r['type'] = 'article'
+        r['title'] = a['title']
+        r['teaserurl'] = a['teaserurl'] 
+        stories.append(r)
+
+    sorted_stories = sorted(stories,key=lambda x:x['created'],reverse=True)
+    #d = {d['created']:d for d in stories} 
+ 
+    #sorted_stories = []
+    #for k in sorted(d.keys()):
+    #    sorted_stories.append(k)
+
+
+    return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',photos=sorted_stories,baseurl=siteconfig.AMAZON_BASE_URL)
 
 
 @app.route('/portfolio/<portfolio>')
@@ -654,7 +676,8 @@ def article_create():
                 "updated": datetime.now(),
                 "keywords": form.keywords.data,
                 "uuid": uuid.uuid4(),
-                "headerurl": form.headerurl.data
+                "headerurl": form.headerurl.data,
+                "teaserurl": form.teaserurl.data
                 
               }
             )
@@ -691,7 +714,11 @@ def article_edit(id):
     if 'headerurl' in article:
         form.headerurl.data = article['headerurl']
 
+    if 'teaserurl' in article:
+        form.teaserurl.data = article['teaserurl']
+
     form.keywords.data = article['keywords']
+
     if(request.method == 'POST'):
         form = ArticleForm(request.form)
         if(form.validate()):
@@ -715,8 +742,8 @@ def article_edit(id):
                 "updated": datetime.now(),
                 'created': article['created'],
                 "keywords": form.keywords.data,
-                "headerurl": form.headerurl.data
-                
+                "headerurl": form.headerurl.data,
+                "teaserurl": form.teaserurl.data
               }
             )
             

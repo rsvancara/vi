@@ -52,6 +52,7 @@
       <div class="grid-sizer"></div>
  
  {% for photo in photos %}
+ {% if photo['type'] == 'photo' %}
  {% if 'lrmedium' in photo['files'] %}
   <div class="grid-item" id="{{photo['slug']}}">
     <a class="pinfo-title" href="/stories/{{photo['cslug']}}">
@@ -60,7 +61,7 @@
            src="{{baseurl}}{{ photo['files']['lrmedium']['path']}}"
            alt="{{photo['title']}}"/>
     </a>
-    <div class="pinfo home-pattern" id="{{photo['cslug']}}">
+    <div class="pinfo home-pattern" id="{{photo['cslug']}}" data-role="photo">
       <div class="button-bar">
         <h3><a href="/stories/{{photo['cslug']}}">{{photo['ctitle']}}</a></h3>
         <span>by <a rel="author" href="https://plus.google.com/+RandallSvancara">Randall Svancara</a></span>
@@ -71,6 +72,28 @@
       </div>      
     </div>
   </div>
+  {% endif %}
+  {% else %}
+
+  <div class="grid-item" id="{{photo['slug']}}">
+    <a class="pinfo-title" href="/article/{{photo['cslug']}}">
+      <img style="width:900px;"
+           data-src="{{ photo['teaserurl']}}"
+           src="{{ photo['teaserurl']}}"
+           alt="{{photo['title']}}"/>
+    </a>
+    <div class="pinfo home-pattern" id="{{photo['cslug']}}" data-role="article">
+      <div class="button-bar">
+        <h3><a href="/article/{{photo['cslug']}}">{{photo['title']}}</a></h3>
+        <span>by <a rel="author" href="https://plus.google.com/+RandallSvancara">Randall Svancara</a></span>
+        <hr />
+        <p>
+          {{ photo['summary'] }}
+        </p>
+      </div>
+    </div>
+  </div>
+
   {% endif %}
   {% endfor %}
 
@@ -105,8 +128,6 @@
     
     // Only fire this event if the screen size is greater than 1024
     $("div.grid-item").mouseover(function() {
-      console.log("mouse me baby");
-      console.log($(this).parent().width())
       if ($(this).parent().width() > 1024 ) {
         var pinfo = $(this).children('div.pinfo').eq(0);
         pinfo.show();
@@ -114,7 +135,6 @@
     });
 
     $("div.grid-item").mouseout(function() {
-      console.log("mouse out baby");
       var pinfo = $(this).children('div.pinfo').eq(0);
       pinfo.hide();
     });
@@ -122,7 +142,12 @@
     $("div.grid-item").click(function() {
       var pinfo = $(this).children('div.pinfo');
       var id = pinfo.attr('id');
-      window.location.href = "/stories/" + id;
+      var role = pinfo.attr("data-role");
+      if (role == 'photo') {
+        window.location.href = "/stories/" + id;
+      } else {
+        window.location.href = "/article/" + id;
+      }
     });
         
     $( document ).ready(function() {
@@ -144,7 +169,6 @@
         .done(function( data ) {
           $.each( data.urls, function( i, url ) {
             fparray.push(url.url)
-            console.log("Image: " + url.url)
                     
             $(".frontpage").bgswitcher({
               images: fparray,

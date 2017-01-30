@@ -12,6 +12,7 @@ class ArticleForm(Form):
     body = TextAreaField(u'Body', [validators.Required()])
     keywords = TextAreaField(u'Key Words',  [validators.Required(),validators.Length(min=4, max=128)])  
     headerurl = TextField(u'Header Image',  [validators.Required(),validators.Length(min=4, max=1024)])  
+    teaserurl = TextField(u'Teaser Image',  [validators.Required(),validators.Length(min=4, max=1024)])  
     
     # email = TextField('Email Address', [validators.Length(min=6, max=35)])
     # password = PasswordField('New Password', [

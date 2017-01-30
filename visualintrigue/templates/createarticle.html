@@ -39,6 +39,12 @@
     #slug {
         width: 100%;
     }
+    #headerurl {
+        width: 100%;
+    }
+    #teaserurl {
+        width: 100%;
+    }
     
 </style>
 <form action="/admin/article/create" method="post" enctype="multipart/form-data" id="article-form">
@@ -58,6 +64,7 @@
            {{ render_field(form.keywords)}}
            {{ render_field(form.article_type)}}
            {{ render_field(form.headerurl)}}
+           {{ render_field(form.teaserurl)}}
         </fieldset>
 
         {{ form.csrf_token }}
