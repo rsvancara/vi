@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Visual Intrigue - {{ title }}</title>
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Visual Intrigue Photography">
+    <meta property="og:url" content="http://visualintrigue.com{{request.path}}">
+    <meta property="og:description" content="Visual Intrigue Photography">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+    <link rel="canonical" href="http://visualintrigue.com{{request.path}}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/site.css" />
+    <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
+    <script type="text/javascript">
+    // Google Analytics
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-57579922-2', 'auto');
+    ga('send', 'pageview');   
+    </script>
+    
+    <style type="text/css">
+        .photo-details{
+            background-color: #ececec;
+            padding: 10px;
+        }
+        .photo-title {
+            margin-left: 15px;
+        }
+        div.button-pad{
+          margin-bottom: 5px;
+        }
+        
+    </style>
+  </head>
+  <body class="light-bg">
+  {% include 'navbar.html' %}
+    {% if container %}
+      <div class="{{container}}">
+    {% else %}
+      <div class="container-fluid">
+    {% endif %}
+        <h1 class="photo-title">{{ title }}</h1>
+         
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages  %}
+        {% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+ <div class="row">
+  <div class="col-md-12 button-pad">
+    <a class="btn btn-primary" href="/revies">Back to Articles</a>
+  </div>
+ </div>
+<div class="row">
+</div>
+    </div>  
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>      
+      <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      
+      <script type="text/javascript">
+        
+        $( document ).ready(function() {
+            console.log( "lazyload activated" );
+            $("img.lazy").lazyload({
+                effect : "fadeIn"
+            });
+            
+        });
+              
+      </script>
+  </body>
+</html>

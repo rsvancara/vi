@@ -75,6 +75,13 @@ def index():
 
     return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',photos=sorted_stories,baseurl=siteconfig.AMAZON_BASE_URL)
 
+@app.route('/articles')
+def articles():
+    return render_template('articles.html',title="Visual Intrigue Articles")
+
+@app.route('/reviews')
+def reviews():
+    return render_template('reviews.html',title="Visual Intrigue Articles")
 
 @app.route('/portfolio/<portfolio>')
 def portfolio(portfolio=all):
