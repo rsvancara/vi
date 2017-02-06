@@ -77,7 +77,15 @@ def index():
 
 @app.route('/articles')
 def articles():
-    return render_template('articles.html',title="Visual Intrigue Articles")
+
+    articles = mongo.db.articles.find({'status':'active'}).sort("created",-1)
+    
+    new_articles = []
+    for article in articles:
+      article['summary'] = util.summary_text(article['body'])
+      new_articles.append(article)
+    
+    return render_template('articles.html',title="Visual Intrigue Articles",articles=new_articles)
 
 @app.route('/reviews')
 def reviews():
