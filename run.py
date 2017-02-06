@@ -98,9 +98,9 @@ def portfolio(portfolio=all):
     blogs = None
     
     if portfolio != 'all':
-        blogs = mongo.db.blog.find({'status':'active','homepage':'yes','portfolio':portfolio}).sort("created",-1)
+        blogs = mongo.db.photos.find({'status':'active','homepage':'yes','portfolio':portfolio}).sort("created",-1)
     else:
-        blogs = mongo.db.blog.find({'status':'active','homepage':'yes'}).sort("created",-1)
+        blogs = mongo.db.photos.find({'status':'active','homepage':'yes'}).sort("created",-1)
 
     return render_template('portfolio.html',title='Portfolio' + portfolio,blogs=blogs,portfolio=portfolio,baseurl=siteconfig.AMAZON_BASE_URL)
 
