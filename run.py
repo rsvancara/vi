@@ -272,7 +272,7 @@ def photo_add(id):
             "portfolio": form.portfolio.data,
             "keywords": form.keywords.data,
             "homepage": form.homepage.data,
-            "displayorder": form.displayorder.data,
+            "displayorder": int(form.displayorder.data),
             "lat": form.lat.data,
             "lng": form.lng.data,
             "collection": form.collection.data,
@@ -518,7 +518,7 @@ def blog_edit(id=None):
                  "collection_slug": collection_single['slug'],
                  "lat": form.lat.data,
                  "lng": form.lng.data,
-                 "displayorder":form.displayorder.data,
+                 "displayorder":int(form.displayorder.data),
                  "uuid": uuid.uuid4(),
                }            
             )
