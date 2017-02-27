@@ -84,8 +84,8 @@
         {% for article in articles %}
           <div class="article-containter"> 
           <div class="article-datebox">         
-          <div class="article-day">{{ article['created'].strftime('%d') }}</div> 
-          <div class="article-month-year">{{ article['created'].strftime('%B %Y: %A') }}</div> 
+          <div class="article-day">{{ article['created'] | getday  }}</div> 
+          <div class="article-month-year">{{ article['created'] | getmonthyear  }}</div> 
           </div>
           <div class=article-title">
           <h2><a href="/article/{{article['slug']}}">{{ article['title'] }}</a></h2>

@@ -12,6 +12,17 @@ import exifread
 import json
 import logging
 import errno
+import requests
+import json
+
+def getUrl(path):
+    """ 
+    Helper function that obtains the results for a given URL
+    """
+    resp = None
+    resp = requests.get(siteconfig.API + path)
+    if resp.ok:
+        return  json.loads(resp.content.decode('utf-8'))
 
 
 def get_exif(path):
