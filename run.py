@@ -1,5 +1,4 @@
 from flask import Flask, flash, request, session, redirect, url_for, render_template,jsonify
-import flask.ext.login as flask_login
 from flask.ext.pymongo import PyMongo
 from visualintrigue import siteconfig
 from visualintrigue import util
@@ -27,8 +26,6 @@ mongo = PyMongo(app)
 logger = logging.getLogger('app')
 
 app.secret_key = siteconfig.SECRETKEY 
-login_manager = flask_login.LoginManager()
-login_manager.init_app(app)
 
 
 @app.route('/')
@@ -155,28 +152,6 @@ def article_view(id):
     return render_template('article.html',title=article['title'],article=article)
 
 
-@app.route('/filebrowser')
-@flask_login.login_required
-def file_browser():
-    
-    files = {'status':'error'}
-    if os.path.exists(siteconfig.MEDIA):
-        files = util.path_hierarchy(siteconfig.MEDIA)
-        #return(jsonify(files))
-    return render_template('fbrowse.html',files=files)
-
-class User(flask_login.UserMixin):
-    pass
-
-
-@login_manager.user_loader
-def user_loader(email):
-    if email not in siteconfig.USERS:
-        return None
-
-    user = User()
-    user.id = email
-    return user
 
 @app.route('/search')
 def search():   
@@ -185,25 +160,6 @@ def search():
 @app.route('/contact')
 def contact():   
     return render_template("contact.html",title="Contact")
-
-@login_manager.request_loader
-def request_loader(request):
-    email = request.form.get('email')
-    if email not in siteconfig.USERS:
-        return
-    user = User()
-    user.id = email
-
-    # DO NOT ever store passwords in plaintext and always compare password
-    # hashes using constant-time comparison!
-    user.is_authenticated = request.form['pw'] == users[email]['pw']
-
-    return user
-
-
-@login_manager.unauthorized_handler
-def unauthorized_handler():
-    return render_template('unauthorized.html',title='Unauthorized Request')
 
 
 @app.template_filter()
