@@ -102,6 +102,7 @@ def photo(id=None):
      
     image_url = siteconfig.AMAZON_BASE_URL + photo['files']['large']['path']
     lowrez_url = siteconfig.AMAZON_BASE_URL + photo["files"]['lrlarge']['path']
+    small_url = siteconfig.AMAZON_BASE_URL + photo["files"]['lrmedium']['path']
     return render_template('photo.html',title=photo['title'],photo=photo,image_url=image_url,lowrez_url=lowrez_url)
 
 @app.route('/error', methods=['GET','POST'])
