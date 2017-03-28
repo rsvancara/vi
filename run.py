@@ -1,32 +1,18 @@
 from flask import Flask, flash, request, session, redirect, url_for, render_template,jsonify
-from flask.ext.pymongo import PyMongo
 from visualintrigue import siteconfig
 from visualintrigue import util
-from visualintrigue.blog import BlogForm
-from visualintrigue.photo import PhotoForm
-from visualintrigue.article import ArticleForm
-from visualintrigue.collection import CollectionForm
 import logging
-from visualintrigue.user import User
 from werkzeug.contrib.fixers import ProxyFix
-import pymongo
-import random
-import uuid
 from werkzeug import secure_filename
 import os
 from datetime import datetime
 import requests
 
-
 app = Flask('visualintrigue')
-app.config['MONGO_URI'] = siteconfig.MONGO_URI
-
-mongo = PyMongo(app)
 
 logger = logging.getLogger('app')
 
 app.secret_key = siteconfig.SECRETKEY 
-
 
 @app.route('/')
 @app.route('/index')
@@ -93,10 +79,6 @@ def photo(id=None):
 
     photo = util.getUrl("/dbapi/api/v1.0/getphoto/" + id)
 
-    #photo = None
-    #if id is not None:
-    #    photo = mongo.db.photos.find_one({'slug':id}) 
-    # 
     if photo is None:
         return redirect(url_for('notfound'))
      
@@ -116,43 +98,18 @@ def frontpageservice(size):
         frontpage image rotation.  The order of the list is
         randomized
     """
-    #imagelist = [{'url':'https://s3.amazonaws.com/visualintrigue-3556/92ff9249-ca37-48ed-aa65-c5e0f7a6b66b_lowrez_1600px.jpeg'}]
-    imagelist = []
-    photos = mongo.db.photos.find({'homepage':'yes','status':'active'})
-    if photos is None:
-        return jsonify(imagelist)
-    
-    tlist = []
-    
-    for photo in photos:
-        if size in photo['files']:
-            tlist.append(siteconfig.AMAZON_BASE_URL + photo['files'][size]['path'])
-         
-    i = len(tlist)-1
-    
-    while i > 1:
-        j = random.randrange(i)  # 0 <= j <= i
-        tlist[j], tlist[i] = tlist[i], tlist[j]
-        i = i - 1
-
-    for t in tlist:
-        imagelist.append({'url':t})
-
-    return jsonify({'urls':imagelist})
-    
+    photos = util.getUrl("/dbapi/api/v1.0/frontpageservice/" + size)
+    return jsonify(photos)
 
 @app.route('/unauthorized')
 def unauthorized():
     return render_template('unauthorized.html',title='Unauthorized Request')
 
-
 @app.route('/article/<id>')
 def article_view(id):
     """ View Article """
-    article = mongo.db.articles.find_one({'slug':id})
+    util.getUrl("/dbapi/api/v1.0/article/" + id)
     return render_template('article.html',title=article['title'],article=article)
-
-
 
 @app.route('/search')
 def search():   
@@ -161,7 +118,6 @@ def search():
 @app.route('/contact')
 def contact():   
     return render_template("contact.html",title="Contact")
-
 
 @app.template_filter()
 def datetimefilter(value, format='%Y/%m/%d %H:%M'):
@@ -183,16 +139,12 @@ def getmonthyear(value):
     date_obj = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%fZ')
     return date_obj.strftime('%B %Y: %A')
 
-
-
-
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
     
     
     app.debug = True
-    
     
     if app.debug == True:
         logger.setLevel(logging.DEBUG)
