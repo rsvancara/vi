@@ -108,7 +108,7 @@ def unauthorized():
 @app.route('/article/<id>')
 def article_view(id):
     """ View Article """
-    util.getUrl("/dbapi/api/v1.0/article/" + id)
+    article = util.getUrl("/dbapi/api/v1.0/article/" + id)
     return render_template('article.html',title=article['title'],article=article)
 
 @app.route('/search')
