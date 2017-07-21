@@ -201,14 +201,17 @@ body { font-family: sans-serif; }*/
     padding-right: 30px;
     width: 100%;
 }
+.button-bar p {
+  font-size: .65rem;
+}
 
 .button-bar hr {
   border-top: 1px solid rgba(255, 255, 255, 1.0);
 }
 
 ul.pinfo-list {
-    padding-left: 30px;
-    padding-top: 30px;
+    padding-left: 40px;
+    padding-top: 40px;
 }
 
 ul.pinfo-list>li>span {
@@ -233,7 +236,7 @@ ul.portfolio-items>li{
 ul.portfolio-items>li a{
     display: inline-block;
     width: 250px;
-    height: 25px;
+    height: 30px;
     border-radius: 5px;
     color: #FFFFFF;
     border: 1px solid #FFFFFF;

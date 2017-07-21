@@ -135,8 +135,10 @@
     });
 
     $("div.grid-item").mouseout(function() {
-      var pinfo = $(this).children('div.pinfo').eq(0);
-      pinfo.hide();
+      if ($(this).parent().width() > 1024 ) {
+        var pinfo = $(this).children('div.pinfo').eq(0);
+        pinfo.hide();
+      }
     });
     
     $("div.grid-item").click(function() {
