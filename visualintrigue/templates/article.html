@@ -1,87 +1,77 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Visual Intrigue - {{ title }}</title>
+    <title>{{ title }}</title>
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Visual Intrigue Photography">
     <meta property="og:url" content="http://visualintrigue.com{{request.path}}">
     <meta property="og:description" content="Visual Intrigue Photography">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+    <link rel="canonical" href="http://visualintrigue.com{{request.path}}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/css/tether-theme-arrows.css" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/static/css/site.css" />
-    <script type="text/javascript">
-    // Google Analytics
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-57579922-2', 'auto');
-    ga('send', 'pageview');   
-    </script>
-    <style>
-      div.text-content img { 
-        margin: 5px;
-      }
-
-      body.article {
-        background-color: #FFFFFF;
-        font-family: Roboto, Helvetica, Arial, sans-serif;
-        color: #ffffff;
-        transition: background 1s linear;
-        width: 100%;
-      }
-
-      @media screen and (min-width: 768px) {
-        body.article {
-          width: 100%; background: #1C1D1F  url({{ article['headerurl']}})  no-repeat center center fixed;   -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;
-
-
-        }
-        div.article-content {
-           width: 60%
-        }
-        div.vi-jumbo {
-          min-height: 300px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
+    <link rel="alternate" href="https://visualintrigue.com/" hreflang="en-us" />
   </head>
-  <body class="article">
+  <body class="story">
   {% include 'navbar.html' %}
-    {% if container %}
-      <div class="{{container}}">
-    {% else %}
-      <div class="container-fluid">
-    {% endif %}
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages  %}
-        {% for category, message in messages %}
-            <div class="alert {{ category }}">{{ message }}</div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-      <div class="jumbotron-fluid vi-jumbo">
-        <div class="vi-jumbo-article-center home-pattern">
-        <h1> {{ article['title']}}</h1>
+      
+    <div class="container">
+      <div class="top-spacer" style="height: 100px;"></div>
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item">{{article['title']}}</li>
+      </ol>
+      <div class="row">
+        <div class="col-md-2">
         </div>
-      </div>
- 
-<div class="article-content">
-        <div class="text-content">
-
-            {{ article['body'] |safe }}
-
-        </div>
-</div>
-    </div>  
-      <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>      
-      <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
-      <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+        <div class="col-md-8">
+            <h1>{{ title }}</h2>
+            <h6>by <a rel="author" href="https://plus.google.com/+RandallSvancara">Randall Svancara</a></h6> 
+            <div class="social-media-bar"><div class="g-plusone" data-annotation="inline" data-width="300"></div></div>
+            <div class="content-body">
+            {{ article['body'] |safe }} 
+            </div>
+        </div><!-- end column -->
+      </div><!--end row-->
+    </div><!-- end container--> 
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> 
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "NewsArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://visualintrigue.com/articles/{{article['slug']}}"
+      },
+      "headline": "{{ title }}",
+      "datePublished": "{{article['created']}}",
+      "dateModified": "{{article['updated']}}",
+      "author": {
+        "@type": "Person",
+        "name": "Randall Svancara"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Visual Intrigue",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://visualintrigue.com/logo.jpg",
+          "width": 600,
+          "height": 60
+        }
+      },
+      "description": "{{description}}"
+    }
+    </script>
   </body>
 </html>
+

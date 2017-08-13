@@ -20,6 +20,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/static/css/site.css" />
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
+    <link rel="alternate" href="https://visualintrigue.com/" hreflang="en-us" />
   </head>
   <body class="frontpage">
   {% include 'navbar.html' %}
@@ -138,6 +139,7 @@
       if ($(this).parent().width() > 1024 ) {
         var pinfo = $(this).children('div.pinfo').eq(0);
         pinfo.hide();
+        console.log("hiding");
       }
     });
     

@@ -32,7 +32,7 @@ def articles():
 
 @app.route('/reviews')
 def reviews():
-    return render_template('reviews.html',title="Visual Intrigue Articles")
+    return render_template('reviews.html',title="Visual Intrigue Reviews")
 
 @app.route('/portfolio/<portfolio>')
 def portfolio(portfolio='all'):
