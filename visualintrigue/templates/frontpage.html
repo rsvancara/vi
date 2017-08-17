@@ -5,22 +5,22 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Visual Intrigue Photography Macro Landscape Street and Cityscape">
     <meta property="og:site_name" content="Visual Intrigue Photography">
-    <meta property="og:url" content="http://visualintrigue.com{{request.path}}">
+    <meta property="og:url" content="http://vi.photo{{request.path}}">
     <meta property="og:description" content="Visual Intrigue Photography including Photography, Gear Reviews and Adventure.">
-    <meta property="og:url" content="https://visualintrigue.com">
+    <meta property="og:url" content="https://vi.photo">
     <meta property="og:image" content="https://s3.amazonaws.com/visualintrigue-3556/9ed571af-7c64-43e7-a669-7c560b0563df_lowrez_1600px.jpeg">
     <meta property="fb:app_id" content="">
     <meta name="description" content="Visual Intrigue Photography including visually intriguing photography, gear reviews and adventure.">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
-    <link rel="canonical" href="http://visualintrigue.com{{request.path}}" />
-    <link rel"publisher" href="https://plus.google.com/u/0/+RandallSvancara"/>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="canonical" href="http://vi.photo{{request.path}}" />
+    <link rel="publisher" href="https://plus.google.com/u/0/+RandallSvancara"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/static/css/site.css" />
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
-    <link rel="alternate" href="https://visualintrigue.com/" hreflang="en-us" />
+    <link rel="alternate" href="https://vi.photo/" hreflang="en-us" />
   </head>
   <body class="frontpage">
   {% include 'navbar.html' %}
@@ -33,7 +33,7 @@
       </div>
       <div class="row">
         <div class="col-sm-12 fp-header frosty home-pattern">
-          <h3 style"margin-top:10px; padding-bottom:5px;">Photos by Categories</h3>
+          <h3 style="margin-top:10px; padding-bottom:5px;">Photos by Categories</h3>
           <hr/>
           <ul class="list-unstyled pinfo-list portfolio-items">
             <li><a href="/portfolio/landscape"><i class="fa fa-camera-retro fa-lg"></i>&nbsp; Landscape</a></li>
@@ -42,7 +42,7 @@
             <li><a href="/portfolio/street"><i class="fa fa-camera-retro fa-lg"></i>&nbsp; Street</a></li>
           </ul>
           <div class="" style="clear:both;height: 20px;"></div>
-          <h3 style"padding-top:5px; padding-bottom:5px;">Read the Stories</h3>
+          <h3 style="padding-top:5px; padding-bottom:5px;">Read the Stories</h3>
           <hr />
           <div class="" style="min-height: 20px;clear:both;"></div>
         </div>
@@ -55,7 +55,7 @@
  {% for photo in photos %}
  {% if photo['type'] == 'photo' %}
  {% if 'lrmedium' in photo['files'] %}
-  <div class="grid-item" id="{{photo['slug']}}">
+  <div class="grid-item" id="{{photo['slug']}}-grid">
     <a class="pinfo-title" href="/stories/{{photo['cslug']}}">
       <img style="width:{{photo['files']['medium']['width']}}px;" 
            data-src="{{baseurl}}{{ photo['files']['medium']['path']}}"
@@ -76,7 +76,7 @@
   {% endif %}
   {% else %}
 
-  <div class="grid-item" id="{{photo['slug']}}">
+  <div class="grid-item" id="{{photo['cslug']}}-article-item">
     <a class="pinfo-title" href="/article/{{photo['cslug']}}">
       <img style="width:900px;"
            data-src="{{ photo['teaserurl']}}"
@@ -199,7 +199,7 @@
       "@type": "WebSite",
       "name": "Visual Intrigue",
       "alternateName": "Visually Intriguing Photography",
-      "url": "http://visualintrigue.com"
+      "url": "http://vi.photo"
     }      
     </script>
     <script type="text/javascript">
@@ -212,6 +212,6 @@
     ga('create', 'UA-57579922-2', 'auto');
     ga('send', 'pageview');
     </script>  
-
+</div>
 </body>
 </html>
