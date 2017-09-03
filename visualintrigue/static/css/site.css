@@ -162,6 +162,7 @@ body { font-family: sans-serif; }*/
     background-color: rgba(0,0,0,0.65);
     cursor: pointer;
     color: #FFFFFF;
+    
 }
 
 @media screen and (min-width: 768px) {
@@ -200,7 +201,10 @@ body { font-family: sans-serif; }*/
     padding-left: 30px;
     padding-right: 30px;
     width: 100%;
+    padding-bottom: 50px;
 }
+
+
 .button-bar p {
   font-size: .65rem;
 }
