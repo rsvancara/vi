@@ -37,6 +37,11 @@ body > nav > ul:nth-child(2) > li.nav-item.dropdown > div {
   background: #292b2c !important;
 }
 
+#navbar-main-ddmenu-1 {
+    background: rgba(0,0,0,0.6) !important;
+
+}
+
 .navbar a {
     color: #FFFFFF;
 }
