@@ -206,7 +206,7 @@ body { font-family: sans-serif; }*/
     padding-left: 30px;
     padding-right: 30px;
     width: 100%;
-    padding-bottom: 50px;
+    padding-bottom: 5px;
 }
 
 
@@ -220,7 +220,7 @@ body { font-family: sans-serif; }*/
 
 ul.pinfo-list {
     padding-left: 40px;
-    padding-top: 40px;
+    padding-top: 5px;
 }
 
 ul.pinfo-list>li>span {

@@ -7,6 +7,7 @@ from werkzeug import secure_filename
 import os
 from datetime import datetime
 import requests
+import random
 
 app = Flask('visualintrigue')
 
@@ -14,8 +15,8 @@ logger = logging.getLogger('app')
 
 app.secret_key = siteconfig.SECRETKEY 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/old')
+@app.route('/oldindex')
 def index():
     logger.info("requested index")
 
@@ -23,18 +24,21 @@ def index():
 
     return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',photos=sorted_stories,baseurl=siteconfig.AMAZON_BASE_URL)
 
-@app.route('/test',methods=['GET'])
+@app.route('/',methods=['GET'])
+@app.route('/index',methods=['GET'])
 def test():
     logger.info("requested index")
 
     #sorted_stories = util.getUrl("/dbapi/api/v1.1/frontpage")
+    photos = util.getUrl("/dbapi/api/v1.0/frontpageservice/lrlarge")
+    randphoto = random.choice(photos['urls'])
+    
+    return render_template('test.html',title='Visually Intriguing Photography One Adventure at a Time',coverphoto=randphoto['url'],baseurl=siteconfig.AMAZON_BASE_URL)
 
-    return render_template('test.html',title='Visually Intriguing Photography One Adventure at a Time',baseurl=siteconfig.AMAZON_BASE_URL)
-
-@app.route('/testjson/<page>',methods=['GET'])
+@app.route('/frontpage/<page>',methods=['GET'])
 def testjson(page = 0):
     photos = util.getUrl("/dbapi/api/v1.1/getfrontpage/" + page )
-    return jsonify({"length":20,"photos":photos})
+    return jsonify({"length":100,"photos":photos})
 
 @app.route('/articles')
 def articles():
