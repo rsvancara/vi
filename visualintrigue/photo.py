@@ -24,7 +24,7 @@ class PhotoForm(Form):
         ('macro','Macro'),
         ('street','Street Photography')])
     
-    
+    coverphoto = SelectField(u'Show as Cover Photo',choices=[('yes', 'Yes'), ('no', 'No')])    
     homepage = SelectField(u'Show On Homepage',choices=[('yes', 'Yes'), ('no', 'No')])
     displayorder = SelectField(u'Display Order',choices=[(1, 1),
                                                           (2, 2),

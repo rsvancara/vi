@@ -158,7 +158,7 @@ body { font-family: sans-serif; }*/
 
 .image-body img{
   display: block;
-  padding: 5px;
+  /*padding: 5px; */
   max-width: 100%;
 }
 
@@ -355,6 +355,6 @@ div.vi-jumbo h1, div.vi-jumbo p{
     
 }
 
-div.story-spacer {
-  height: 10px;
+.story-spacer {
+  height: 20px;
 }

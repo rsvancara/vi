@@ -58,8 +58,9 @@
             {{ collection['body'] |safe }}
             </div>
             <div class="story-spacer"></div>
-            
+            {% set counter = 0 -%} 
             {% for photo in photos %}
+            {% set counter = counter + 1 %}
             <h3>{{photo['title']}}</h3>
             <div class="content-body">
               {{ photo['body']|safe }}
@@ -121,7 +122,13 @@
                 {% endif %}
               </div><!-- end image overlay -->
             </div><!-- end image body -->
-            <div class="story-spacer"></div> 
+            <div class="story-caption" style="background-color: #0e0e0e;padding:5px;font-size:.8em;color:#FFFFFF;min-height:20px;">
+            Figure {{ counter }} -
+            {% if "caption" in photo %}
+              {{ photo['caption'] }}
+            {% endif %}
+            </div>
+            <div class="story-spacer" style="height:20px"></div> 
             {% endfor %}
         </div><!-- end column -->
       </div><!--end row-->
