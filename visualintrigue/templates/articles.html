@@ -37,6 +37,14 @@
         div.button-pad{
           margin-bottom: 5px;
         }
+
+        div.story-datebox {
+          background: #eeeeee;
+          height: 65px;
+          overflow: hidden;
+          margin: 0 0 30px 0;
+        } 
+
         div.article-datebox {
           background: #eeeeee;
           height: 65px;
@@ -44,10 +52,18 @@
           margin: 0 0 30px 0;
         } 
 
+        
+        div.story-datebox > div.article-day {
+          background: #AA0000;
+        }
+
+        div.article-datebox > div.article-day {
+          background: #292b2c;
+        }
+
         div.article-day {
           width: 65px;
           height: 65px;
-          background: #292b2c;
           display: block;
           float: left;
           text-align: center;
@@ -56,6 +72,8 @@
           color: #fff;
           font-weight: 500;
         }
+
+
         div.article-month-year {
           float: left;
           font-size: 22px;
@@ -63,6 +81,27 @@
           font-weight: 400;
           color: #6b6b6b;
         }
+        div.article-content-summary {
+          margin-bottom: 40px;
+        }
+
+	h2.story-title {
+          color: #AA0000;
+	}
+
+        h2.article-title > a {
+          color: #292b2c;
+        }
+
+        h2.article-title {
+          color: #292b2c;
+	}
+
+        h2.story-title > a {
+          color: #AA0000;
+        }
+
+
     </style>
   </head>
   <body class="light-bg">
@@ -85,39 +124,44 @@
       <div class="col-md-12 button-pad">
         {% for article in articles %}
           <div class="article-containter"> 
-          <div class="article-datebox">         
-          <div class="article-day">{{ article['created'] | getday  }}</div> 
-          <div class="article-month-year">{{ article['created'] | getmonthyear  }}</div> 
-          </div>
-          <div class="article-title">
-          <h2><a href="/article/{{article['slug']}}">{{ article['title'] }}</a></h2>
+            {% if article['type'] == 'Story' %}
+            <div class="story-datebox">
+              <div class="article-day">{{ article['created'] | getday  }}</div> 
+              <div class="article-month-year">{{ article['created'] | getmonthyear  }}</div> 
+            </div>
+            {% endif %}
+
+            {% if article['type'] == 'Article' %}
+            <div class="article-datebox">
+              <div class="article-day">{{ article['created'] | getday  }}</div> 
+              <div class="article-month-year">{{ article['created'] | getmonthyear  }}</div> 
+            </div>
+            {% endif %}
+
+            <div class="article-title">
+
+            {% if article['type'] == 'Story' %}
+            <h2 class="story-title">{{ article['type'] }}: <a href="/stories/{{article['cslug']}}">{{ article['title'] }}</a></h2>
+            {% endif %}
+
+            {% if article['type'] == 'Article' %}
+            <h2 class="article-title">{{ article['type'] }}: <a href="/article/{{article['cslug']}}">{{ article['title'] }}</a></h2>
+            {% endif %}
+
+            </div>
           </div>
           <div class="article-content-summary">
           {{ article['summary'] }}
           </div>
         {% endfor %} 
-      </div>
-    </div>
-    </div>
-    </div>  
+      </div><!-- End button pad -->
+    </div><!-- End row -->
       <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>      
       <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
       <script src="https://apis.google.com/js/platform.js" async defer></script>
-      
-      <script type="text/javascript">
-        
-        $( document ).ready(function() {
-            console.log( "lazyload activated" );
-            $("img.lazy").lazyload({
-                effect : "fadeIn"
-            });
-            
-        });
-              
-      </script>
-  </div>
+  </div><!-- End Container -->
   </body>
 </html>

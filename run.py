@@ -43,9 +43,10 @@ def testjson(page = 0):
 @app.route('/articles')
 def articles():
 
-    articles = util.getUrl("/dbapi/api/v1.0/listarticles")
-    
-    return render_template('articles.html',title="Visual Intrigue Articles",articles=articles)
+    #articles = util.getUrl("/dbapi/api/v1.0/listarticles")
+    articles = util.getUrl("/dbapi/api/v1.0/frontpage")
+
+    return render_template('articles.html',title="Daily Stories, Articles and Reviews",articles=articles)
 
 @app.route('/reviews')
 def reviews():
@@ -67,6 +68,9 @@ def about():
     logger.info("requested about")
     return render_template('about.html',title='Visual Intrigue Photography',container="container")
 
+@app.route('/tos')
+def tos():
+    return render_template('tos.html',title='Visual Intrigue Photography',container="container")
 
 @app.route('/stories/<id>')
 def stories(id = None):
@@ -126,7 +130,8 @@ def unauthorized():
 def article_view(id):
     """ View Article """
     article = util.getUrl("/dbapi/api/v1.0/article/" + id)
-    return render_template('article.html',title=article['title'],article=article)
+    summary = util.summary_text(article['body'])
+    return render_template('article.html',title=article['title'],article=article,summary=summary)
 
 @app.route('/search')
 def search():   

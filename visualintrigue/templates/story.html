@@ -7,9 +7,10 @@
     <meta property="og:url" content="http://vi.photo{{request.path}}">
     <meta property="og:description" content="Visual Intrigue Photography">
     <meta property="og:image" content="{{baseurl}}{{ firstphoto['files']['lrmedium']['path']}}"> 
-    <meta property="fb:app_id" content="387356438288077">
+    <meta property="fb:app_id" content="1751936878442795" />
     <meta property="fb:admins" content="randall.svancara">
     <meta property="og:title" content="{{ title }}">
+    <meta name="description" content="{{ description }}">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
@@ -28,7 +29,7 @@
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=387356438288077";
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=1751936878442795";
             fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
     </script>
@@ -45,7 +46,7 @@
         </div>
         <div class="col-md-8">
             <h1>{{collection['title']}}</h1>
-            <h6>by <a rel="author" href="https://plus.google.com/+RandallSvancara">Randall Svancara</a></h6> 
+            <h6>by <a rel="author" href="/about">Randall Svancara</a></h6> 
             <div class="social-media-bar">
               <div class="social-container" style="min-width: 50px;height: 40px;margin-top:10px;display: inline-block;">
               <div class="g-plusone" data-annotation="inline" data-width="300"></div>
@@ -61,7 +62,7 @@
             {% set counter = 0 -%} 
             {% for photo in photos %}
             {% set counter = counter + 1 %}
-            <h3>{{photo['title']}}</h3>
+            <h2>{{photo['title']}}</h2>
             <div class="content-body">
               {{ photo['body']|safe }}
             </div><!-- end content body -->

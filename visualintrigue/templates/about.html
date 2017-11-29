@@ -1,32 +1,62 @@
 {% include 'header.html' %}
 
-<h1>Randall Svancara</h1>
+<h2>Randall Svancara</h2>
+<div class="row">
+<div class="col-md-4">
+<img src="https://s3.amazonaws.com/visualintrigue-3556/e1d99dec-15ff-4d04-8a4b-8bb00a9b0a61_orig.jpeg" />
+</div>
+<div class="col-md-8">
 <p>
-    Visual Intrigue is the home for my photography.  Based out of Seattle, I travel the Pacific
-    Northwest taking photos and I share some of my best work on this website.  My interest in photography started with a recommendation of a co-worker, Bruce Kinkead to
-    learn photography on a Pentax k1000,
-    a very simple film camera with match needle exposure. The Pentax K1000 is a film camera, but provided a great platform to learn the basics
-    of photography including understanding the principles of light and how to control it through the
-    use of aperture, ISO, and the shutter. From this simple platform,
-    my passion for landscape photography evolved and continues to evolve with every new adventure. I hope you enjoy
-    this site.
+Visual Intrigue is the home for my photography.  Based out of Seattle, I travel the Pacific
+Northwest taking photos and I share some of my best work on this website.  My interest in photography started with a recommendation of a co-worker, Bruce Kinkead to
+learn photography on a Pentax k1000,
+a very simple film camera with match needle exposure. The Pentax K1000 is a film camera, but provided a great platform to learn the basics
+of photography including understanding the principles of light and how to control it through the
+use of aperture, ISO, and the shutter. From this simple platform,
+my passion for landscape photography evolved and continues to evolve with every new adventure. I hope you enjoy
+this site.
 </p>
-<h1>About This Site</h1>
-<p>
-    Visual intrigue site started off as a
-platform to post my photography as well as stay up to date on technology.  I started this project using Drupal with a Postgresql
-database backend and quickly realized that platforms, like Wordpress and Drupal while greate for managing most content have challenges for the following reasons.  First they suffer
-from extreme code bloat. Code bloat means that the software and the code that make Wordpress and Drupal function contain
-a lot of unecessary execution routines that make the sites slow.  If you dont believe me, compare my load times of this site to 
-http://stuckincustoms.com, which is based on Wordpress.  Second both Drupal and Wordpress inherently have performance challenges due to the quantity of slow database interactions they make. A Drupal or Wordpress
-instance may make hundreds of database calls and each call introduces additional time to load a page.
-Lastly, they follow a cookie cutter recipe that prevents the level of customization I require.  As a result, I have built my own content management
-solution that makes sense for my use cases based on Python using a micro-web framework called flask using a scalable, nosql database backend.
-The end result is a light and fast website that performs well, can scale and is designed for serving photograpic content.  For those that disagree with me, that is fine, to each their own. If you are 
-interested in my site, I publish my code on Github.</p>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<p></p>
 
+<h2>About This Site</h2>
+<h3>First an Important Message, My Wordpress Rant</h3>
+<p>
+After several years of supporting popular websites such as <a href="http://stuckincustoms.com">Stuck In Customs</a> which is using the ever popular Wordpress blogging platform, I really became annoyed at the effort
+the poor, ofen underpaid, developers put forth altering Wordpress in ways that I felt were cumbersome to maintain.  The story was the same, over and over again, spending hours to implement features Wordpress simply was not good at usually resulting in
+kludgy implementations of code. The problem was further compounded by the notion by key decision makers that believed Wordpress was the best solution for everything ranging from e-commerce, content management to just about anything you can think of.
+From a code architecture perspective, the imfamous Wordpress "loop" is just a bad design in general and without lots of caching easily consumes all the memory and cpu on a server. 
+Even today, my professional opinion is that <a href="http://stuckincustoms.com">Stuck In Customs</a>
+loads slow and requires a lot of extra work to make it fast despite using several layers of caching including Cloudflare, a popular website caching service.  Not to mention that any Wordpress site these days might
+as well just paint a target on them that says "hack me". Lastly, just about every Wordpress site out there looks the same using cookie cutter recipe that while
+arguably has been successful for a lot of people, is not the entire solution.  For example, I will pick on poor  <a href="http://stuckincustoms.com">Stuck In Customs</a> which uses
+SmugMug for portfolio management because guess what, Wordpress is not good at rendering imagery for photographers.  I dont know about you, but personally photography is about portraying 
+your your art in the best possible light and quite frankly I am not convinced Wordpress is the best solution.
+</p>
+<h3>Doing it Better</h3>
+<p> 
+The Visual Intrigue website started off as a
+platform to post my photography as well as stay up to date on technology.  I started this project using Drupal with a Postgresql
+database backend and quickly realized that I was spending more of my efforts modifying Drupal to support features that I could of quickly built on my own, similar to my experiences with Wordpress.  
+What I needed was a toolkit, with good libaries.  I already knew Python and I was becoming fairly disgruntled with the direction of PHP so Python-Flask was a natural choice.  I felt that Django was overkill and I really wanted
+use a NoSQL backend to help reduce the number of queries to a database to optimize performance, so MongoDB was a natural choice.  Lastly, Python-Flask fits well in microservices architectures, whereas Django is a fairly monolithic 
+application. With Python-Flask I could separate out parts of the site into services to make the code base easier to maintain and the release cycle faster.  Futhermore efforts in performance optimization
+were easier due to the modular nature of micro-services architecture.  
+</p>
+<h3>Making Progress</h3>
+<p>
+I continue to iterate on the Visual Intrigue code base.  In a short amount of time put together a highly functional photography site.  Sure there are problems here and there, 
+but the good news is that they are fixable.  I am not constrained to some one elses' code that just plain does not work.  Some things I plan on working on in the future include
+an image rendering engine using optimized go-lang and VIPS similar to <a href="http://500px.com">500px</a>, and implement at database tier caching layer based on memcache to 
+speed up query performnace, which is already fast, but not fast enough for me!
+</p>
 <p>
 You can find the project on
 <a href="https://github.com/rsvancara/vi">github.com</a>.  
 </p>
+</div>
+</div>
 {% include 'footer.html' %}
