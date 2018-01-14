@@ -20,7 +20,8 @@ def getUrl(path):
     Helper function that obtains the results for a given URL
     """
     resp = None
-    resp = requests.get(siteconfig.API + path)
+    params = {'key':'dkeiav38ganb72pa9a3ybvfg76425'}
+    resp = requests.get(siteconfig.API + path,params=params)
     if resp.ok:
         return  json.loads(resp.content.decode('utf-8'))
 
