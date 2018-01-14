@@ -33,7 +33,7 @@ def test():
     photos = util.getUrl("/dbapi/api/v1.0/frontpageservice/lrlarge")
     randphoto = random.choice(photos['urls'])
     
-    return render_template('test.html',title='Visually Intriguing Photography One Adventure at a Time',coverphoto=randphoto['url'],baseurl=siteconfig.AMAZON_BASE_URL)
+    return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',coverphoto=randphoto['url'],baseurl=siteconfig.AMAZON_BASE_URL)
 
 @app.route('/frontpage/<page>',methods=['GET'])
 def testjson(page = 0):
