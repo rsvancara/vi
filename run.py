@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, session, redirect, url_for, render_template,jsonify
+from flask import Flask, flash, request, session, redirect, url_for, render_template,jsonify,abort
 from visualintrigue import siteconfig
 from visualintrigue import util
 import logging
@@ -14,6 +14,11 @@ app = Flask('visualintrigue')
 logger = logging.getLogger('app')
 
 app.secret_key = siteconfig.SECRETKEY 
+
+
+@app.route('/google9514fb7e998b52fd.html')
+def google():
+    return "google-site-verification: google9514fb7e998b52fd.html"
 
 @app.route('/old')
 @app.route('/oldindex')
@@ -78,13 +83,18 @@ def stories(id = None):
     collection = None
 
     result = util.getUrl("/dbapi/api/v1.0/getstory/" + id)    
-
+    if result is None:
+        abort(404)
 
     return render_template('story.html',title=result['collection']['title'],
                            collection=result['collection'],photos=result['photos'],
                            baseurl=siteconfig.AMAZON_BASE_URL,
                            firstphoto=result['firstphoto'],
                            description=result['collection']['summary'])
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html',title='Page Not Found'),404
 
 
 @app.route('/notfound',methods=['GET','POST'])
