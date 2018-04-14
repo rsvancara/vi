@@ -4,7 +4,6 @@ from visualintrigue import util
 import logging
 from werkzeug.contrib.fixers import ProxyFix
 from werkzeug import secure_filename
-import os
 from datetime import datetime
 import requests
 import random
@@ -14,7 +13,6 @@ app = Flask('visualintrigue')
 logger = logging.getLogger('app')
 
 app.secret_key = siteconfig.SECRETKEY 
-
 
 @app.route('/google9514fb7e998b52fd.html')
 def google():
@@ -37,7 +35,7 @@ def test():
     #sorted_stories = util.getUrl("/dbapi/api/v1.1/frontpage")
     photos = util.getUrl("/dbapi/api/v1.0/frontpageservice/lrlarge")
     randphoto = random.choice(photos['urls'])
-    
+
     return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',coverphoto=randphoto['url'],baseurl=siteconfig.AMAZON_BASE_URL)
 
 @app.route('/frontpage/<page>',methods=['GET'])
@@ -60,9 +58,9 @@ def reviews():
 @app.route('/portfolio/<portfolio>')
 def portfolio(portfolio='all'):
     logger.info("requested specific portfolio")
-    
+
     photos = None
-     
+
     photos = util.getUrl("/dbapi/api/v1.0/listportfolios/" + portfolio)
 
 
@@ -99,7 +97,7 @@ def page_not_found(e):
 
 @app.route('/notfound',methods=['GET','POST'])
 def notfound():
-    
+
     return render_template('404.html',title='Page Not Found')
 
 @app.route('/photo/<id>', methods=['GET'])
@@ -112,7 +110,7 @@ def photo(id=None):
 
     if photo is None:
         return redirect(url_for('notfound'))
-     
+
     image_url = siteconfig.AMAZON_BASE_URL + photo['files']['large']['path']
     lowrez_url = siteconfig.AMAZON_BASE_URL + photo["files"]['lrlarge']['path']
     small_url = siteconfig.AMAZON_BASE_URL + photo["files"]['lrmedium']['path']
@@ -144,11 +142,11 @@ def article_view(id):
     return render_template('article.html',title=article['title'],article=article,summary=summary)
 
 @app.route('/search')
-def search():   
+def search(): 
     return render_template("search.html",title="Search")
 
 @app.route('/contact')
-def contact():   
+def contact():
     return render_template("contact.html",title="Contact")
 
 @app.template_filter()
@@ -165,7 +163,7 @@ def formatmongodb_datetime_filter(value):
 def getday(value):
     date_obj = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%fZ')
     return date_obj.strftime('%d')
-  
+
 @app.template_filter()
 def getmonthyear(value):
     date_obj = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%fZ')
@@ -174,15 +172,14 @@ def getmonthyear(value):
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
-    
-    
+
     app.debug = True
-    
+
     if app.debug == True:
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.ERROR) 
-        
+
     # create a file handler
 
     handler = logging.FileHandler('app.log')
@@ -196,11 +193,9 @@ if __name__ == '__main__':
     # add the handlers to the logger
 
     logger.addHandler(handler)
-        
+
     logger.info("Application started")
-    
+
     app.jinja_env.filters['datetimefilter'] = datetimefilter
-    
-    
+
     app.run(host="0.0.0.0")
-    

@@ -6,3 +6,5 @@ flask-pymongo
 flask-wtf
 exifread
 gunicorn
+requests
+
