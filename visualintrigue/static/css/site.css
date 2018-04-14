@@ -24,6 +24,7 @@ body.article {
 }
 
 /* Navbar override */
+/*
 body.frontpage > .navbar, body.article > .navbar, body.portfolio > .navbar {
     background: rgba(0,0,0,0.6) !important;
   }
@@ -45,6 +46,8 @@ body > nav > ul:nth-child(2) > li.nav-item.dropdown > div {
 .navbar a {
     color: #FFFFFF;
 }
+
+*/
 
 body.light-bg {
     color: #666666;

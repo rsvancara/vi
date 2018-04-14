@@ -2,6 +2,7 @@ from visualintrigue import siteconfig
 import logging
 import requests
 import json
+import re
 
 def getUrl(path):
     """ 

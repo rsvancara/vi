@@ -18,24 +18,11 @@ app.secret_key = siteconfig.SECRETKEY
 def google():
     return "google-site-verification: google9514fb7e998b52fd.html"
 
-@app.route('/old')
-@app.route('/oldindex')
-def index():
-    logger.info("requested index")
-
-    sorted_stories = util.getUrl("/dbapi/api/v1.0/frontpage")  
-
-    return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',photos=sorted_stories,baseurl=siteconfig.AMAZON_BASE_URL)
-
 @app.route('/',methods=['GET'])
 @app.route('/index',methods=['GET'])
 def test():
-    logger.info("requested index")
-
-    #sorted_stories = util.getUrl("/dbapi/api/v1.1/frontpage")
     photos = util.getUrl("/dbapi/api/v1.0/frontpageservice/lrlarge")
     randphoto = random.choice(photos['urls'])
-
     return render_template('frontpage.html',title='Visually Intriguing Photography One Adventure at a Time',coverphoto=randphoto['url'],baseurl=siteconfig.AMAZON_BASE_URL)
 
 @app.route('/frontpage/<page>',methods=['GET'])
@@ -45,10 +32,7 @@ def testjson(page = 0):
 
 @app.route('/articles')
 def articles():
-
-    #articles = util.getUrl("/dbapi/api/v1.0/listarticles")
     articles = util.getUrl("/dbapi/api/v1.0/frontpage")
-
     return render_template('articles.html',title="Daily Stories, Articles and Reviews",articles=articles)
 
 @app.route('/reviews')
@@ -63,12 +47,10 @@ def portfolio(portfolio='all'):
 
     photos = util.getUrl("/dbapi/api/v1.0/listportfolios/" + portfolio)
 
-
     return render_template('portfolio.html',title='Portfolio' + portfolio,blogs=photos,portfolio=portfolio,baseurl=siteconfig.AMAZON_BASE_URL)
 
 @app.route('/about')
 def about():
-    logger.info("requested about")
     return render_template('about.html',title='Visual Intrigue Photography',container="container")
 
 @app.route('/tos')
