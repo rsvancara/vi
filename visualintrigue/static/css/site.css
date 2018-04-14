@@ -23,32 +23,6 @@ body.article {
   width: 100%;
 }
 
-/* Navbar override */
-/*
-body.frontpage > .navbar, body.article > .navbar, body.portfolio > .navbar {
-    background: rgba(0,0,0,0.6) !important;
-  }
-
-body.frontpage > nav > ul:nth-child(2) > li.nav-item.dropdown > div,
-body.article > nav > ul:nth-child(2) > li.nav-item.dropdown > div {
-  background: rgba(0,0,0,0.6) !important;
-}
-
-body > nav > ul:nth-child(2) > li.nav-item.dropdown > div {
-  background: #292b2c !important;
-}
-
-#navbar-main-ddmenu-1 {
-    background: rgba(0,0,0,0.6) !important;
-
-}
-
-.navbar a {
-    color: #FFFFFF;
-}
-
-*/
-
 body.light-bg {
     color: #666666;
     font-family: Roboto, Helvetica, Arial, sans-serif;
@@ -66,7 +40,6 @@ body.dark-bg {
 }
 
 .home-pattern {
-    /*opacity: .33; */
     background-image: url(/static/images/pattern.png);
     background-repeat: repeat;
     background-attachment: scroll;
@@ -91,9 +64,6 @@ body.dark-bg {
     
 }
 
-
-
-
 .fp-header h1, .fp-header h2, .fp-header h3, .fp-header h4{
     font-family: 'Roboto', sans-serif;
 }
@@ -116,13 +86,6 @@ body.dark-bg {
      margin-right: auto;
 }
 
-/* force scrollbar */
-/*html { overflow-y: scroll; }
-
-body { font-family: sans-serif; }*/
-
-/* ---- grid ---- */
-
 .grid {
   background: #1C1D1F;
 }
@@ -133,13 +96,6 @@ body { font-family: sans-serif; }*/
   display: block;
   clear: both;
 }
-
-/* ---- .grid-item ---- */
-
-/*.grid-sizer,
-.grid-item {
-  width: 33.333%;
-}*/
 
 .grid-sizer, .grid-item { width: 100%; }
 
@@ -197,6 +153,7 @@ body { font-family: sans-serif; }*/
 .pinfo-button{
     float: right;
 }
+
 .pinfo-title{
     display: inline-block;
     color: #FFFFFF;
@@ -204,6 +161,7 @@ body { font-family: sans-serif; }*/
     font-size: 18px;
     font-size:1.2vw;
 }
+
 .button-bar {
     padding-top: 30px;
     padding-left: 30px;
@@ -211,7 +169,6 @@ body { font-family: sans-serif; }*/
     width: 100%;
     padding-bottom: 5px;
 }
-
 
 .button-bar p {
   font-size: .65rem;
@@ -280,7 +237,7 @@ ul.portfolio-items>li a i{
 div.vi-jumbo {
     min-height: 300px;
     padding-top: 0px;
-    margin-top 0px;
+    margin-top: 0px;
     width: 100%;
     color: #FFFFFF;
     text-shadow: 2px 2px #000000;
@@ -305,8 +262,6 @@ div.article-content {
     width: 60%
   }
 }
-
-
 
 div.vi-jumbo-center {
     margin-left: auto;
@@ -339,7 +294,6 @@ div.vi-jumbo-article-center {
     background-color: rgba(0,0,0,.34);
 }
 
-.frosty {
 .frosty {
     background-color: rgba(0,0,0,.34);
 }
