@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html="en">
   <head>
     <title>Visual Intrigue - {{ title }}</title>
     <meta property="og:type" content="article">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/static/css/site.css" />
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css" integrity="sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE" crossorigin="anonymous">
     {% include '_analytics.html' %}    
-    <style type="text/css">
+    <style>
         .photo-details{
             background-color: #ececec;
             padding: 10px;
@@ -59,16 +59,5 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
       <script src="https://apis.google.com/js/platform.js" async defer></script>
       
-      <script type="text/javascript">
-        
-        $( document ).ready(function() {
-            console.log( "lazyload activated" );
-            $("img.lazy").lazyload({
-                effect : "fadeIn"
-            });
-            
-        });
-              
-      </script>
   </body>
 </html>
