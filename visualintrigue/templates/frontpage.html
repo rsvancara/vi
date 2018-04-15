@@ -81,7 +81,18 @@
         background-repeat: repeat;
         background-attachment: scroll;
       }
+      
+      @media min-width: 600px {
+        #front-jumbo {
+            display: none;
+        }
+      }
 
+      @media screen and (max-width: 768px) {
+       #front-jumbo {
+          display: none;
+        }
+      }
 
       @media screen and (min-width: 768px) {
        div.vi-jumbo {
@@ -122,7 +133,7 @@
         margin-left: 10px;
 
       }
-
+      
       /* Remove the margin-bottom of the text */
       .media-box-content .media-box-text{
          margin-bottom: 0 !important;
@@ -159,16 +170,14 @@
   <body class="frontpage">
   {% include 'navbar_dark.html' %}
     <div class="container-fluid">
-      <div class="jumbotron-fluid vi-jumbo">
+      <div id="front-jumbo" class="jumbotron-fluid vi-jumbo">
         <div class="vi-jumbo-center home-pattern">
         <h1 class="display-3">Visual Intrigue</h1>
         <p class="lead">Sharing adventures one picture at a time!</p>
         </div>
       </div>
-      
       <div class="grid" id="mediabox">
       </div> 
-
 
     <!-- Jquery nuff said -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -223,7 +232,7 @@
           // Each type is rendered a bit differently
           if(val.type == "photo") {
 
-              // Big blog of stuff
+              // Big blob of stuff
               var itemstring = '<div class="media-box ' + val.portfolio + '" id="' + val.cslug + '-grid" >';
               itemstring += '<div class="media-box-image"><div data-height="' + val.files.medium.height + '" data-width="' + val.files.medium.width + '" data-thumbnail="{{baseurl}}' + val.files.medium.path + '"></div></div>';
               itemstring += '<div class="media-box-content">';

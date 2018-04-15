@@ -234,14 +234,6 @@ ul.portfolio-items>li a i{
    .mobile-hide{ display: block !important; }
 }
 
-div.vi-jumbo {
-    min-height: 300px;
-    padding-top: 0px;
-    margin-top: 0px;
-    width: 100%;
-    color: #FFFFFF;
-    text-shadow: 2px 2px #000000;
-}
 
 div.article-content {
     width: 90%;
@@ -253,64 +245,6 @@ div.article-content {
     border-radius: 10px;
 }
 
-@media screen and (min-width: 768px) {
-  div.vi-jumbo {
-    min-height: 600px;
-  }
-
-  div.article-content {
-    width: 60%
-  }
-}
-
-div.vi-jumbo-center {
-    margin-left: auto;
-    margin-right: auto;
-    min-height: 200px;
-    max-width: 600px;
-    margin-top: 100px;
-    border: 1px solid #ececec;
-    padding: 30px;
-    border-radius: 5px;
-    text-align: center;
-    background-color: rgba(0,0,0,.34);
-    font-size: 4vw; 
-}
-
-div.vi-jumbo-article-center>h1 {
-  font-size: 4vw;
-}
-
-div.vi-jumbo-article-center {
-    margin-left: auto;
-    margin-right: auto;
-    min-height: 200px;
-    max-width: 800px;
-    margin-top: 100px;
-    border: 1px solid #ececec;
-    padding: 30px;
-    border-radius: 5px;
-    text-align: center;
-    background-color: rgba(0,0,0,.34);
-}
-
-.frosty {
-    background-color: rgba(0,0,0,.34);
-}
-
-.frosty a{
-  color: #FFFFFF;
-  text-decoration: None;  
-}
-
-.frosty hr {
-  border-top: 1px solid rgba(255, 255, 255, 1.0);
-}
-
-div.vi-jumbo h1, div.vi-jumbo p{
-    margin-left: 10px;
-    
-}
 
 .story-spacer {
   height: 20px;
