@@ -41,7 +41,6 @@ def reviews():
 
 @app.route('/portfolio/<portfolio>')
 def portfolio(portfolio='all'):
-    logger.info("requested specific portfolio")
 
     photos = None
 
