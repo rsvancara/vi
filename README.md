@@ -1,18 +1,18 @@
 # Visual Intrigue Source Code
 
 ## About
-This is the source code for the visual intrigue project.  It is the project code used to run [Visual Intrigue]|(http://visualintrigue.com), my 
-photography blog
-The code is all written in python flask.  At the time of this writing it is a very ugly mess and I will eventually upgrade it
-use the blueprint framework.  But for now, until this refactor happens, this is the unfortunate state of this project.  I have
-learned a lot about flask and hope to continue to build on my 15 years of PHP experience.  
+This is the source code for the visual intrigue project.  The entire project is written
+in Python using Flask.  All this code currently runs  [Visual Intrigue]|(http://visualintrigue.com), my 
+photography blog.  I have kept the project small, and manageable by decoupling parts of the application
+into smaller micro-services.  There is a small service that provices database access.  There will be other
+services as the need arises.  
 
 # Notable Features
-- Responsive design using the latest twitter bootstrap 4 (yes, i know it is alpha code)
+- Responsive design using the latest twitter bootstrap 4.  
 - Mobile first, everything looks nice on your phone
 - Lightweight, not a lot of bloat
 - Uses Amazon S3 for image storage, but can be adapted to use Amazon cloud front
-- Uses mongodb to help reduce the number of backend queries to the database
+- Uses a services based backend for all data requests to properly abstract code away from database implementation
 
 ## Demo
 You can check out the examples here
