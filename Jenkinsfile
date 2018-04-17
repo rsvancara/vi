@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build'){
             steps {
-                sh 'vibuild.sh'
+                sh('vibuild.sh')
             }
         }
     }
