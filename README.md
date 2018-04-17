@@ -21,6 +21,11 @@ You can check out the examples here
 - Image View -> http://visualintrigue.com/photo/where-did-the-first-stack-go
 
 
-
 ## License
-All code is released under the GPLv2 license. Yes that is right, you are welcome to use this code for your projects.  
+All code is released under the GPLv2 license. Yes that is right, you are welcome to use this code for your projects. 
+
+# Future work
+1.  Look at using VIPS for image processing.
+2.  Look at openseadragon for implementing deep zoom.
+3.  Updating image processing architecture to be asynchronous and more scalable. 
+4.  Automation of deployment using CI pipeline
