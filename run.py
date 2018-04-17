@@ -14,7 +14,7 @@ logger = logging.getLogger('app')
 
 app.secret_key = siteconfig.SECRETKEY 
 
-@app.route('google9514fb7e998b52fd.html')
+@app.route('/google9514fb7e998b52fd.html')
 def google():
     return "google-site-verification: google9514fb7e998b52fd.html"
 
