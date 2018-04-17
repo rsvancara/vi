@@ -2,9 +2,10 @@ pipeline {
     agent any
 
     stages {
-        stage('Build'){
+        stage('Build') {
             steps {
-                sh('vibuild.sh')
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                sh 'vibuild.sh'
             }
         }
     }
