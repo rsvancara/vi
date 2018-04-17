@@ -8,9 +8,9 @@ set -e
 
 /usr/local/bin/virtualenv python
 
-python/bin/pip install -r requirements.txt
+python/bin/python3 python/bin/pip3 install -r requirements.txt
 
-python3/bin/python3 run.py
+python/bin/python3 run.py
 
 
 
