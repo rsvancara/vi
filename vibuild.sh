@@ -10,11 +10,9 @@ set -e
 
 python/bin/python3 python/bin/pip3 install -r requirements.txt
 
-
 cp visualintrigue/siteconfig.dev visualintrigue/siteconfig.py
 
-
-python/bin/python3 run.py
+python/bin/python3 test.py
 
 
 

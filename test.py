@@ -1,38 +1,42 @@
-import boto3
+import os
+import unittest
+import tempfile
+from flask import Flask
 from visualintrigue import siteconfig
+from visualintrigue import util
+from visualintrigue import app
+#import run
 
 
 
 
+class VisualIntrigueTestCase(unittest.TestCase):
+
+    def setUp(self):
+        #self.db_fd, vitest.app.config['DATABASE'] = tempfile.mkstemp()
+        #app = Flask('visualintrigue')
+        app.secret_key = siteconfig.SECRETKEY 
+        self.app_context = app.app_context()
+        self.app_context.push()
+        app.testing = True
+        self.app = app.test_client()
+        
+
+
+    def tearDown(self):
+        pass
+        #os.close(self.db_fd)
+        #os.unlink(vitest.app.config['DATABASE'])
+
+
+    def test_about_status_code(self):
+
+        result = self.app.get('/about')
+        print(result) 
+        self.assertEqual(result.status_code,200)
 
 
 
-def main():
-
-
-    
-    s3 = boto3.resource('s3',aws_access_key_id=siteconfig.AMAZON_KEY, aws_secret_access_key=siteconfig.AMAZON_SECRET)
-    data = open('/Users/rsvancara/Pictures/backgrounds/rattlesnake_lake.jpg', 'rb')
-    s3.Bucket(siteconfig.AMAZON_BUCKET).put_object(Key='rattlesnake_lake.jpg    ', Body=data, ContentType='image/jpeg')
-    data.close()
-    
-    # 
-    # 
-    # conn = S3Connection(siteconfig.AMAZON_KEY,siteconfig.AMAZON_SECRET)
-    # 
-    # rs = conn.get_all_buckets()
-    # 
-    # for i in rs:
-    #     print(i.name)
-    # 
-    # 
-    # abucket = conn.get_bucket("s3://" + siteconfig.AMAZON_BUCKET)
-    # 
-    # akey = Key(abucket)
-    # 
-    # akey.set_contents_from_filename('/Users/rsvancara/Pictures/backgrounds/rattlesnake_lake.jpg')
 
 if __name__ == '__main__':
-    
-    main()
-    
+    unittest.main()
