@@ -1,0 +1,9 @@
+import os
+
+_basedir = os.path.abspath(os.path.dirname(__file__))
+
+# Key required for dbapi
+APIKEY="xxxxxxxx"
+AMAZON_BASE_URL = "https://cdn.visualintrigue.com/"
+API = "http://127.0.0.1:8888"
+
